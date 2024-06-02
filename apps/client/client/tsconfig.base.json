@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Next.js Base",
-  "extends": "@repo/typescript-config/react.json",
+  "extends": "@repo/tsconfig/react.json",
   "compilerOptions": {
     "baseUrl": "./",
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",

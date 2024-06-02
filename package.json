@@ -12,8 +12,6 @@
     "preinstall": "npx --yes only-allow pnpm"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
     "prettier": "^3.2.5",
     "turbo": "latest"
   },
