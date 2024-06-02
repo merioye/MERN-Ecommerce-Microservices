@@ -1,8 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "React Library",
+  "display": "Node.js Default",
   "extends": "./base.json",
   "compilerOptions": {
-    "jsx": "react-jsx"
+    "module": "commonjs",
+    "target": "ES2021",
+    "lib": ["ES2021"]
   }
 }

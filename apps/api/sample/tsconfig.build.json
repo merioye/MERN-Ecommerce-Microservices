@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Nest.js Build",
+  "extends": "./tsconfig.base.json",
+  "include": ["src"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "**/*.e2e-spec.ts",
+    "**/*.e2e-test.ts",
+    "**/__tests__",
+    "**/__mocks__",
+    "**/test",
+    "**/mocks",
+    "**/tests",
+    "**/testSetup",
+    "**/test-setup.ts",
+    "**/test-setup-e2e.ts"
+  ]
+}

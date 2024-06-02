@@ -6,6 +6,9 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "typecheck": "turbo typecheck",
+    "clean": "git clean -xdf node_modules",
+    "clean:workspaces": "turbo clean",
     "preinstall": "npx --yes only-allow pnpm"
   },
   "devDependencies": {
