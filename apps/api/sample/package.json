@@ -3,15 +3,23 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "prebuild": "rimraf dist",
     "build": "tsc -p tsconfig.build.json",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "format:check": "prettier . --check",
+    "format:fix": "prettier . --write"
   },
   "keywords": [],
   "author": "Umair Saleem",
   "license": "ISC",
+  "dependencies": {
+    "rimraf": "^5.0.7"
+  },
   "devDependencies": {
     "@repo/tsconfig": "workspace:*",
+    "@repo/config": "workspace:*",
     "@types/node": "^20.11.24",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "prettier": "^3.3.0"
   }
 }
