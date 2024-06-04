@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "React.js Build",
+  "extends": "./tsconfig.base.json",
+  "include": ["src", "next-env.d.ts", ".next/types/**/*.ts"],
+  "exclude": [
+    "node_modules",
+    "**/__tests__",
+    "**/__mocks__",
+    "**/test",
+    "**/tests",
+    "**/mocks",
+    "**/*.{test,spec}.?(c|m)[jt]s?(x)",
+    "**/*.{e2e-test,e2e-spec}.?(c|m)[jt]s?(x)",
+    "**/setupTests.ts"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "React.js",
+  "extends": "./tsconfig.base.json",
+  "include": ["src", "next-env.d.ts", ".next/types/**/*.ts", "cypress"],
+  "exclude": ["node_modules"]
+}
