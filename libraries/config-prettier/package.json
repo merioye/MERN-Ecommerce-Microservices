@@ -1,11 +1,16 @@
 {
-  "name": "@repo/config",
+  "name": "@repo/config-prettier",
   "version": "0.0.0",
   "private": true,
   "author": "Umair Saleem",
   "files": [
-    "prettier/*"
+    "base.config.js",
+    "nest.config.js",
+    "react.config.js"
   ],
+  "scripts": {
+    "clean": "node scripts/clean.js"
+  },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.2.1"
   }

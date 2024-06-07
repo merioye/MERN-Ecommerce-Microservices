@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "React.js Node",
-  "extends": "@repo/tsconfig/react.node.json",
+  "extends": "@repo/config-typescript/react.node.json",
   "include": ["vite.config.ts"]
 }

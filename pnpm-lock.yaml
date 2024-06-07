@@ -42,9 +42,9 @@ importers:
       '@nestjs/testing':
         specifier: ^10.0.0
         version: 10.3.9(@nestjs/common@10.3.9(reflect-metadata@0.1.14)(rxjs@7.8.1))(@nestjs/core@10.3.9(@nestjs/common@10.3.9(reflect-metadata@0.1.14)(rxjs@7.8.1))(@nestjs/platform-express@10.3.9)(reflect-metadata@0.1.14)(rxjs@7.8.1))(@nestjs/platform-express@10.3.9(@nestjs/common@10.3.9(reflect-metadata@0.1.14)(rxjs@7.8.1))(@nestjs/core@10.3.9))
-      '@repo/tsconfig':
+      '@repo/config-typescript':
         specifier: workspace:*
-        version: link:../../../libraries/tsconfig
+        version: link:../../../libraries/config-typescript
       '@types/express':
         specifier: ^4.17.17
         version: 4.17.21
@@ -103,12 +103,12 @@ importers:
         specifier: ^5.0.7
         version: 5.0.7
     devDependencies:
-      '@repo/config':
+      '@repo/config-prettier':
         specifier: workspace:*
-        version: link:../../../libraries/config
-      '@repo/tsconfig':
+        version: link:../../../libraries/config-prettier
+      '@repo/config-typescript':
         specifier: workspace:*
-        version: link:../../../libraries/tsconfig
+        version: link:../../../libraries/config-typescript
       '@types/node':
         specifier: ^20.11.24
         version: 20.11.24
@@ -134,9 +134,9 @@ importers:
         specifier: ^5.0.7
         version: 5.0.7
     devDependencies:
-      '@repo/tsconfig':
+      '@repo/config-typescript':
         specifier: workspace:*
-        version: link:../../../libraries/tsconfig
+        version: link:../../../libraries/config-typescript
       '@types/react':
         specifier: ^18.2.66
         version: 18.3.3
@@ -189,15 +189,15 @@ importers:
         specifier: ^5.0.7
         version: 5.0.7
     devDependencies:
-      '@repo/config':
+      '@repo/config-prettier':
         specifier: workspace:*
-        version: link:../../../libraries/config
+        version: link:../../../libraries/config-prettier
+      '@repo/config-typescript':
+        specifier: workspace:*
+        version: link:../../../libraries/config-typescript
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../../../packages/eslint-config
-      '@repo/tsconfig':
-        specifier: workspace:*
-        version: link:../../../libraries/tsconfig
       '@types/node':
         specifier: ^20.11.24
         version: 20.11.24
@@ -220,13 +220,13 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5
 
-  libraries/config:
+  libraries/config-prettier:
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ^4.2.1
         version: 4.2.1(prettier@3.3.0)
 
-  libraries/tsconfig: {}
+  libraries/config-typescript: {}
 
   packages/eslint-config:
     devDependencies:
@@ -5175,7 +5175,7 @@ snapshots:
       '@babel/traverse': 7.24.6
       '@babel/types': 7.24.6
       prettier: 3.3.0
-      semver: 7.5.4
+      semver: 7.6.2
     transitivePeerDependencies:
       - supports-color
 
@@ -7204,7 +7204,7 @@ snapshots:
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0(eslint@8.57.0))(eslint@8.57.0)
-      eslint-plugin-import: 2.29.0(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
+      eslint-plugin-import: 2.29.0(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
       eslint-plugin-react: 7.33.2(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@8.57.0)
@@ -7262,7 +7262,7 @@ snapshots:
       enhanced-resolve: 5.15.0
       eslint: 8.57.0
       eslint-module-utils: 2.8.0(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
-      eslint-plugin-import: 2.29.0(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
+      eslint-plugin-import: 2.29.0(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
       fast-glob: 3.3.1
       get-tsconfig: 4.7.2
       is-core-module: 2.13.1
@@ -7338,7 +7338,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-plugin-import@2.29.0(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0):
+  eslint-plugin-import@2.29.0(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0):
     dependencies:
       array-includes: 3.1.7
       array.prototype.findlastindex: 1.2.3

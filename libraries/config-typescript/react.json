@@ -8,6 +8,7 @@
     "noEmit": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "allowImportingTsExtensions": true
   }
 }

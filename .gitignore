@@ -88,14 +88,8 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variable files
-.env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
-.env.development
-.env.production
-.env.test
+.env*
+!.env*.example
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -104,6 +98,8 @@ web_modules/
 # Next.js build output
 .next
 out
+.swc/
+.vercel
 
 # Nuxt.js build / generate output
 .nuxt
@@ -152,7 +148,6 @@ build
 .pnp
 
 # Editor directories and files
-!.vscode/extensions.json
 .idea
 .DS_Store
 *.suo
@@ -160,9 +155,15 @@ build
 *.njsproj
 *.sln
 *.sw?
+.fleet/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
 # cypress
-cypress/screenshots
-cypress/videos
+**/cypress/screenshots/
+**/cypress/videos/
 
 certs

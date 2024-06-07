@@ -11,7 +11,8 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "format:check": "prettier . --check",
-    "format:fix": "prettier . --write"
+    "format:fix": "prettier . --write",
+    "clean": "node scripts/clean.js"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -21,8 +22,8 @@
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
-    "@repo/tsconfig": "workspace:*",
-    "@repo/config": "workspace:*",
+    "@repo/config-typescript": "workspace:*",
+    "@repo/config-prettier": "workspace:*",
     "typescript": "^5.4.5",
     "@types/node": "^20.11.24",
     "@types/react": "^18.2.0",
