@@ -9,9 +9,12 @@
     "react.config.js"
   ],
   "scripts": {
+    "format:check": "prettier . --check",
+    "format:fix": "prettier . --write",
     "clean": "node scripts/clean.js"
   },
   "devDependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "^4.2.1"
+    "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
+    "prettier": "^3.3.0"
   }
 }

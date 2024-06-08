@@ -1,0 +1,8 @@
+node_modules
+cache
+.cache
+.turbo
+public
+package-lock.json
+yarn.lock
+pnpm-lock.yaml

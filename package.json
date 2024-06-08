@@ -6,10 +6,9 @@
     "build": "turbo build --concurrency=20",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "typecheck": "turbo typecheck",
-    "format:check": "turbo format:check",
-    "format:fix": "turbo format:fix",
+    "format:check": "turbo format:check && prettier . --check",
+    "format:fix": "turbo format:fix && prettier . --write",
     "clean": "turbo clean",
     "list:packages": "syncpack list",
     "list:mismatches": "syncpack list-mismatches",
@@ -17,7 +16,9 @@
     "lint:packages:semver": "syncpack lint-semver-ranges"
   },
   "devDependencies": {
+    "@repo/config-prettier": "workspace:*",
     "syncpack": "^12.3.2",
+    "prettier": "^3.3.0",
     "turbo": "latest"
   },
   "packageManager": "pnpm@9.1.4",

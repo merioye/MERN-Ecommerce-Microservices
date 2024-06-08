@@ -5,5 +5,14 @@
   "license": "MIT",
   "publishConfig": {
     "access": "public"
+  },
+  "scripts": {
+    "format:check": "prettier . --check",
+    "format:fix": "prettier . --write",
+    "clean": "node scripts/clean.js"
+  },
+  "devDependencies": {
+    "@repo/config-prettier": "workspace:*",
+    "prettier": "^3.3.0"
   }
 }
