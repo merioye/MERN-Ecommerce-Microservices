@@ -10,9 +10,14 @@
     "typecheck": "turbo typecheck",
     "format:check": "turbo format:check",
     "format:fix": "turbo format:fix",
-    "clean": "turbo clean"
+    "clean": "turbo clean",
+    "list:packages": "syncpack list",
+    "list:mismatches": "syncpack list-mismatches",
+    "fix:mismatches": "syncpack fix-mismatches && pnpm install",
+    "lint:packages:semver": "syncpack lint-semver-ranges"
   },
   "devDependencies": {
+    "syncpack": "^12.3.2",
     "turbo": "latest"
   },
   "packageManager": "pnpm@9.1.4",
