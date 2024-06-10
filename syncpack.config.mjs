@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   dependencyTypes: ['dev', 'peer', 'prod'],
   semverGroups: [{ range: '^' }],
   source: [

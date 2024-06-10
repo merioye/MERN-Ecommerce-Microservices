@@ -6,12 +6,13 @@
     "prebuild": "rimraf dist",
     "dev": "vite",
     "build": "tsc -p tsconfig.build.json && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "format:check": "prettier . --check",
     "format:fix": "prettier . --write",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "clean": "node scripts/clean.js"
+    "clean": "node scripts/clean.mjs"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -19,16 +20,13 @@
     "rimraf": "^5.0.7"
   },
   "devDependencies": {
+    "@repo/config-eslint": "workspace:*",
     "@repo/config-typescript": "workspace:*",
     "@repo/config-prettier": "workspace:*",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
-    "@typescript-eslint/eslint-plugin": "^7.2.0",
-    "@typescript-eslint/parser": "^7.2.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
-    "eslint": "^8.57.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.6",
+    "eslint": "^8.56.0",
     "typescript": "^5.4.5",
     "vite": "^5.2.0",
     "vite-plugin-dts": "^3.9.1",

@@ -19,7 +19,12 @@
       "outputs": ["node_modules/.cache/tsbuildinfo.json"]
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": ["^lint"],
+      "outputs": []
+    },
+    "lint:fix": {
+      "dependsOn": ["^lint"],
+      "outputs": []
     },
     "format:check": {},
     "format:fix": {},

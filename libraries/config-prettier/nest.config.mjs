@@ -1,5 +1,14 @@
-module.exports = {
-  ...require('./base.config.js'),
+import baseConfig from './base.config.mjs';
+
+/*
+ * This is a custom Prettier configuration for use with
+ * internal (bundled by their consumer) libraries
+ * that utilize Nestjs
+ */
+
+/** @type {import("prettier").Config} */
+export default {
+  ...baseConfig,
   importOrder: [
     '^@nestjs/(.*)$',
     '^express',

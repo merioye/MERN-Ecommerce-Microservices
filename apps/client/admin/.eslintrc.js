@@ -1,7 +1,7 @@
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
   root: true,
-  extends: [require.resolve('@repo/config-eslint/node.config.js')],
+  extends: [require.resolve('@repo/config-eslint/react.config.js')],
   parserOptions: {
     project: true,
   },

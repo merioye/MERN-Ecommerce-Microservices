@@ -9,7 +9,7 @@
   "scripts": {
     "format:check": "prettier . --check",
     "format:fix": "prettier . --write",
-    "clean": "node scripts/clean.js"
+    "clean": "node scripts/clean.mjs"
   },
   "devDependencies": {
     "@repo/config-prettier": "workspace:*",
