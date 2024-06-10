@@ -34,6 +34,53 @@
     },
     "clean": {
       "cache": false
+    },
+    "test": {
+      "dotEnv": [".env.test.local", ".env.test", ".env"],
+      "outputs": ["coverage/**"],
+      "dependsOn": ["^test", "^build"]
+    },
+    "test:watch": {
+      "cache": false,
+      "dependsOn": ["^test", "^build"]
+    },
+    "test:band": {
+      "dotEnv": [".env.test.local", ".env.test", ".env"],
+      "outputs": ["coverage/**"],
+      "dependsOn": ["^test", "^build"]
+    },
+    "test:watchBand": {
+      "cache": false,
+      "dependsOn": ["^test", "^build"]
+    },
+    "test:ci": {
+      "outputs": ["coverage/**"],
+      "dependsOn": ["^test", "^build"]
+    },
+    "test:e2e": {
+      "dotEnv": [".env.test.local", ".env.test", ".env"],
+      "outputs": ["coverage/**"],
+      "dependsOn": ["^test", "^build"]
+    },
+    "test:e2e:watch": {
+      "cache": false,
+      "dependsOn": ["^test", "^build"]
+    },
+    "test:e2e:band": {
+      "dotEnv": [".env.test.local", ".env.test", ".env"],
+      "outputs": ["coverage/**"],
+      "dependsOn": ["^test", "^build"]
+    },
+    "test:e2e:watchBand": {
+      "cache": false,
+      "dependsOn": ["^test", "^build"]
+    },
+    "test:e2e:ci": {
+      "outputs": ["coverage/**"],
+      "dependsOn": ["^test", "^build"]
+    },
+    "test:cov": {
+      "cache": false
     }
   }
 }

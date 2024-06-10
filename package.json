@@ -14,7 +14,18 @@
     "list:packages": "syncpack list",
     "list:mismatches": "syncpack list-mismatches",
     "fix:mismatches": "syncpack fix-mismatches && pnpm install",
-    "lint:packages:semver": "syncpack lint-semver-ranges"
+    "lint:packages:semver": "syncpack lint-semver-ranges",
+    "test": "turbo test",
+    "test:watch": "turbo test:watch",
+    "test:band": "turbo test:band",
+    "test:watchBand": "turbo test:watchBand",
+    "test:ci": "turbo test:ci",
+    "test:e2e": "turbo test:e2e",
+    "test:e2e:watch": "turbo test:e2e:watch",
+    "test:e2e:band": "turbo test:e2e:band",
+    "test:e2e:watchBand": "turbo test:e2e:watchBand",
+    "test:e2e:ci": "turbo test:e2e:ci",
+    "test:cov": "turbo test:cov"
   },
   "devDependencies": {
     "@repo/config-prettier": "workspace:*",

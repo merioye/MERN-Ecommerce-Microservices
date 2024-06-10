@@ -16,6 +16,7 @@
     "**/mocks",
     "**/tests",
     "**/testSetup",
+    "**/test-setup",
     "**/test-setup.ts",
     "**/test-setup-e2e.ts"
   ]

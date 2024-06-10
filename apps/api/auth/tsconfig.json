@@ -3,7 +3,7 @@
   "display": "Nest.js",
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "types": ["@types/node"]
+    "types": ["@types/node", "jest"]
   },
   "include": ["src"],
   "exclude": ["node_modules"]
