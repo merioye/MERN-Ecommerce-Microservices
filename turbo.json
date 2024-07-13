@@ -81,6 +81,12 @@
     },
     "test:cov": {
       "cache": false
+    },
+    "test:ui": {
+      "cache": false
+    },
+    "test:cy": {
+      "cache": false
     }
   }
 }

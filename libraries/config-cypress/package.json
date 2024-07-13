@@ -1,0 +1,19 @@
+{
+  "name": "@repo/config-cypress",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "files": [
+    "react.config.mjs"
+  ],
+  "scripts": {
+    "format:check": "prettier . --check",
+    "format:fix": "prettier . --write",
+    "clean": "node scripts/clean.mjs"
+  },
+  "devDependencies": {
+    "@repo/config-prettier": "workspace:*",
+    "prettier": "^3.3.0",
+    "cypress": "^13.11.0"
+  }
+}

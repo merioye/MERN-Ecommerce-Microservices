@@ -41,14 +41,6 @@ module.exports = {
       },
     ],
   },
-  settings: {
-    'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
-    },
-    'import/resolver': {
-      typescript: true,
-    },
-  },
   ignorePatterns: [
     // artifacts
     'node_modules/',

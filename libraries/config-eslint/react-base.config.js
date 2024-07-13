@@ -1,8 +1,3 @@
-const { resolve } = require('path');
-
-const project = resolve(process.cwd(), 'tsconfig.json');
-const cypressProject = resolve(process.cwd(), './cypress/tsconfig.json');
-
 /*
  * This is a base React ESLint configuration for use with
  * internal (bundled by their consumer) libraries
@@ -35,14 +30,6 @@ module.exports = {
     'prettier',
     'turbo',
   ],
-  parserOptions: {
-    project,
-    tsconfigRootDir: process.cwd(),
-    sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true,
-    },
-  },
   plugins: [
     'react',
     'react-hooks',
@@ -57,7 +44,6 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'jsx-a11y/tabindex-no-positive': 'off',
-    'no-console': 'off',
     'testing-library/prefer-explicit-assert': 'error',
     'testing-library/prefer-presence-queries': 'error',
     'testing-library/prefer-screen-queries': 'error',
@@ -68,15 +54,13 @@ module.exports = {
     'cypress/no-async-tests': 'error',
     'cypress/no-pause': 'error',
   },
-  overrides: [
-    {
-      files: ['cypress/**'],
-      parserOptions: {
-        project: cypressProject,
-      },
-    },
-  ],
   settings: {
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
+    'import/resolver': {
+      typescript: true,
+    },
     react: {
       version: 'detect',
     },

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "prebuild": "rimraf dist",
+    "prebuild": "node scripts/prebuild.mjs",
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
@@ -26,9 +26,7 @@
   "keywords": [],
   "author": "Umair Saleem",
   "license": "ISC",
-  "dependencies": {
-    "rimraf": "^5.0.7"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@repo/config-eslint": "workspace:*",
     "@repo/config-typescript": "workspace:*",

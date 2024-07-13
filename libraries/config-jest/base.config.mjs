@@ -20,5 +20,4 @@ export default {
   // An array of file extensions your modules use
   moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json'],
   verbose: true,
-  moduleDirectories: ['node_modules', '<rootDir>/'],
 };

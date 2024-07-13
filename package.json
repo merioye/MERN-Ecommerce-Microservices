@@ -10,7 +10,7 @@
     "lint:fix": "turbo lint:fix",
     "format:check": "turbo format:check && prettier . --check",
     "format:fix": "turbo format:fix && prettier . --write",
-    "clean": "turbo clean && node scripts/clean.mjs",
+    "clean": "turbo clean",
     "list:packages": "syncpack list",
     "list:mismatches": "syncpack list-mismatches",
     "fix:mismatches": "syncpack fix-mismatches && pnpm install",
@@ -25,7 +25,9 @@
     "test:e2e:band": "turbo test:e2e:band",
     "test:e2e:watchBand": "turbo test:e2e:watchBand",
     "test:e2e:ci": "turbo test:e2e:ci",
-    "test:cov": "turbo test:cov"
+    "test:cov": "turbo test:cov",
+    "test:ui": "turbo test:ui",
+    "test:cy": "turbo test:cy"
   },
   "devDependencies": {
     "@repo/config-prettier": "workspace:*",
@@ -35,6 +37,6 @@
   },
   "packageManager": "pnpm@9.1.4",
   "engines": {
-    "node": ">=18"
+    "node": "20.0.0"
   }
 }

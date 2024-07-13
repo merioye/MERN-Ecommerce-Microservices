@@ -4,9 +4,11 @@
   "extends": "@repo/config-typescript/node.json",
   "compilerOptions": {
     "outDir": "./dist",
+    "baseUrl": "./",
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "public/*": ["./public/*"]
     }
   }
 }

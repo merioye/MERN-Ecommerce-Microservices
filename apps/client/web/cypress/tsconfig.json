@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Next.js Cypress",
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["cypress", "node"],
+    "sourceMap": false
+  },
+  "include": ["**/*.ts", "**/*.tsx"]
+}

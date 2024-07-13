@@ -4,8 +4,7 @@
   "private": true,
   "license": "MIT",
   "files": [
-    "node.config.mjs",
-    "node.e2e.config.mjs"
+    "node.config.mjs"
   ],
   "scripts": {
     "format:check": "prettier . --check",

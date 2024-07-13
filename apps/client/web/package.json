@@ -4,7 +4,7 @@
   "private": true,
   "author": "Umair Saleem",
   "scripts": {
-    "prebuild": "rimraf .next",
+    "prebuild": "node scripts/prebuild.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -13,23 +13,40 @@
     "typecheck": "tsc --noEmit",
     "format:check": "prettier . --check",
     "format:fix": "prettier . --write",
+    "test": "vitest run --passWithNoTests",
+    "test:watch": "vitest --passWithNoTests",
+    "test:ui": "vitest --ui --passWithNoTests",
+    "test:cy": "cypress open",
+    "test:cov": "vitest run --coverage --passWithNoTests",
     "clean": "node scripts/clean.mjs"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "@next/env": "^14.2.5",
     "next": "^14.2.3",
-    "rimraf": "^5.0.7"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@repo/config-cypress": "workspace:*",
     "@repo/config-eslint": "workspace:*",
-    "@repo/config-typescript": "workspace:*",
     "@repo/config-prettier": "workspace:*",
-    "typescript": "^5.4.5",
+    "@repo/config-typescript": "workspace:*",
+    "@repo/config-vitest": "workspace:*",
+    "@testing-library/dom": "^10.1.0",
+    "@testing-library/jest-dom": "^6.4.5",
+    "@testing-library/react": "^16.0.0",
+    "@testing-library/user-event": "^14.5.2",
     "@types/node": "^20.11.24",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
+    "@vitest/coverage-v8": "^1.6.0",
+    "@vitest/ui": "^1.6.0",
+    "chai": "^5.1.0",
+    "cypress": "^13.11.0",
     "eslint": "^8.56.0",
-    "prettier": "^3.3.0"
+    "jsdom": "^24.1.0",
+    "prettier": "^3.3.0",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
   }
 }
