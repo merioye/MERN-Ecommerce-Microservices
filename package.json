@@ -1,6 +1,8 @@
 {
   "name": "@repo",
+  "author": "Umair Saleem",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "preinstall": "npx --yes only-allow pnpm",
     "build": "turbo build --concurrency=20",
