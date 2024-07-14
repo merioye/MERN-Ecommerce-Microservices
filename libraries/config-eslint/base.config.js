@@ -62,5 +62,8 @@ module.exports = {
     '*.config.js',
     '*.config.mjs',
     '*.config.mts',
+
+    // declaration files
+    '*.d.ts',
   ],
 };
