@@ -31,9 +31,14 @@
     "test:cov": "turbo test:cov",
     "test:ui": "turbo test:ui",
     "test:cy": "turbo test:cy",
+    "add-changeset": "changeset add",
+    "version-packages": "changeset version",
+    "prerelease": "pnpm run build",
+    "release": "changeset publish",
     "prepare": "husky"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.7",
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
     "@repo/config-prettier": "workspace:*",
