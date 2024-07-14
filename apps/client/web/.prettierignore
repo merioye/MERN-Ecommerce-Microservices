@@ -7,5 +7,5 @@ cache
 package-lock.json
 yarn.lock
 pnpm-lock.yaml
-next-env.d.ts
+*.d.ts
 .turbo
