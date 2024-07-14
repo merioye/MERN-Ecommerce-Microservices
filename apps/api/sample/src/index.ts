@@ -7,5 +7,5 @@ const server = http.createServer((_, res) => {
 
 server.listen(8000, () => {
   // eslint-disable-next-line no-console
-  console.log('Server running at http://localhost:3000');
+  console.log('Server running at http://localhost:8000');
 });
