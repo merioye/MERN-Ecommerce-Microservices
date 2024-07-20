@@ -31,10 +31,14 @@
     "test:cov": "turbo test:cov",
     "test:ui": "turbo test:ui",
     "test:cy": "turbo test:cy",
-    "add-changeset": "changeset add",
-    "version-packages": "changeset version",
+    "add:changeset": "changeset add",
+    "version:packages": "changeset version",
     "prerelease": "pnpm run build",
     "release": "changeset publish",
+    "docker:local:up": "docker-compose -f docker-compose.local.yaml -f docker-compose.infra.yaml up",
+    "docker:local:down": "docker-compose -f docker-compose.local.yaml -f docker-compose.infra.yaml down",
+    "docker:remote:up": "docker-compose -f docker-compose.remote.yaml -f docker-compose.infra.yaml up",
+    "docker:remote:down": "docker-compose -f docker-compose.remote.yaml -f docker-compose.infra.yaml down",
     "prepare": "husky"
   },
   "devDependencies": {
@@ -46,10 +50,10 @@
     "lint-staged": "^15.2.7",
     "prettier": "^3.3.0",
     "syncpack": "^12.3.2",
-    "turbo": "latest"
+    "turbo": "^2.0.7"
   },
-  "packageManager": "pnpm@9.1.4",
+  "packageManager": "pnpm@9.5.0",
   "engines": {
-    "node": "20.0.0"
+    "node": "20.15.0"
   }
 }

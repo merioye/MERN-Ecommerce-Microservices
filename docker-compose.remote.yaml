@@ -1,0 +1,30 @@
+version: '3.9'
+services:
+  repo-auth-api:
+    container_name: repo-auth-api-con-prod
+    image: umairsaleem1/repo-auth-api:prod
+    restart: always
+    ports:
+      - 3009:3009
+    # environment:
+  repo-sample-api:
+    container_name: repo-sample-api-con-prod
+    image: umairsaleem1/repo-sample-api:prod
+    restart: always
+    ports:
+      - 8000:8000
+    # environment:
+  repo-admin-client:
+    container_name: repo-admin-client-con-prod
+    image: umairsaleem1/repo-admin-client:prod
+    restart: always
+    ports:
+      - 4173:4173
+    # environment:
+  repo-web-client:
+    container_name: repo-web-client-con-prod
+    image: umairsaleem1/repo-web-client:prod
+    restart: always
+    ports:
+      - 3000:3000
+    # environment:

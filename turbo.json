@@ -1,15 +1,8 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env*"],
-  "globalDotEnv": [".env"],
-  "pipeline": {
+  "tasks": {
     "build": {
-      "dotEnv": [
-        ".env.production.local",
-        ".env.local",
-        ".env.production",
-        ".env"
-      ],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"],
       "dependsOn": ["^build"]
     },
@@ -40,7 +33,6 @@
       "cache": false
     },
     "test": {
-      "dotEnv": [".env.test.local", ".env.test", ".env"],
       "outputs": ["coverage/**"],
       "dependsOn": ["^test", "^build"]
     },
@@ -49,7 +41,6 @@
       "dependsOn": ["^test", "^build"]
     },
     "test:band": {
-      "dotEnv": [".env.test.local", ".env.test", ".env"],
       "outputs": ["coverage/**"],
       "dependsOn": ["^test", "^build"]
     },
@@ -62,7 +53,6 @@
       "dependsOn": ["^test", "^build"]
     },
     "test:e2e": {
-      "dotEnv": [".env.test.local", ".env.test", ".env"],
       "outputs": ["coverage/**"],
       "dependsOn": ["^test", "^build"]
     },
@@ -71,7 +61,6 @@
       "dependsOn": ["^test", "^build"]
     },
     "test:e2e:band": {
-      "dotEnv": [".env.test.local", ".env.test", ".env"],
       "outputs": ["coverage/**"],
       "dependsOn": ["^test", "^build"]
     },
