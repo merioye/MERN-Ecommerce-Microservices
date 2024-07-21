@@ -2,6 +2,9 @@
   "name": "@repo/sample",
   "version": "1.0.0",
   "private": true,
+  "license": "MIT",
+  "author": "Umair Saleem",
+  "description": "A Node.js application",
   "scripts": {
     "prebuild": "node scripts/prebuild.mjs",
     "build": "tsc -p tsconfig.build.json",
@@ -25,9 +28,6 @@
     "test:cov": "jest --coverage --passWithNoTests",
     "clean": "node scripts/clean.mjs"
   },
-  "keywords": [],
-  "author": "Umair Saleem",
-  "license": "ISC",
   "devDependencies": {
     "@repo/config-eslint": "workspace:*",
     "@repo/config-jest": "workspace:*",

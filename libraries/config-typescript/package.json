@@ -2,6 +2,8 @@
   "name": "@repo/config-typescript",
   "version": "1.0.0",
   "license": "MIT",
+  "author": "Umair Saleem",
+  "description": "Shared TypeScript configurations for monorepo internal applications/packages",
   "publishConfig": {
     "access": "public"
   },

@@ -2,6 +2,8 @@
   "name": "@repo/config-cypress",
   "version": "1.0.0",
   "license": "MIT",
+  "author": "Umair Saleem",
+  "description": "Shared Cypress configurations for monorepo internal applications/packages",
   "files": [
     "react.config.mjs"
   ],

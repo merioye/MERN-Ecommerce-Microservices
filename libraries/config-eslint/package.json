@@ -1,6 +1,9 @@
 {
   "name": "@repo/config-eslint",
   "version": "1.0.0",
+  "license": "MIT",
+  "author": "Umair Saleem",
+  "description": "Shared ESLint configurations for monorepo internal applications/packages/libraries",
   "files": [
     "base.config.js",
     "node.config.js",

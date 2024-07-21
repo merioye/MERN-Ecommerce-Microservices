@@ -2,6 +2,9 @@
   "name": "@repo/admin",
   "private": true,
   "version": "0.0.0",
+  "license": "MIT",
+  "author": "Umair Saleem",
+  "description": "A React.js application",
   "scripts": {
     "prebuild": "node scripts/prebuild.mjs",
     "dev": "vite",

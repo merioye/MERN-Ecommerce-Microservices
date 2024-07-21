@@ -2,6 +2,8 @@
   "name": "@repo/config-jest",
   "version": "1.0.0",
   "license": "MIT",
+  "author": "Umair Saleem",
+  "description": "Shared Jest configurations for monorepo internal applications/packages",
   "files": [
     "node.config.mjs"
   ],

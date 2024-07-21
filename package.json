@@ -3,6 +3,7 @@
   "author": "Umair Saleem",
   "private": true,
   "license": "MIT",
+  "description": "A comprehensive monorepo template featuring Next.js, React, NestJS, and Node.js apps with pnpm workspaces and Turborepo for efficient development and build orchestration.",
   "scripts": {
     "preinstall": "npx --yes only-allow pnpm",
     "build": "turbo build --concurrency=20",

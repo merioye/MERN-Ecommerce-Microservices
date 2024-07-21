@@ -2,7 +2,9 @@
   "name": "@repo/web",
   "version": "1.0.0",
   "private": true,
+  "license": "MIT",
   "author": "Umair Saleem",
+  "description": "A Next.js application",
   "scripts": {
     "prebuild": "node scripts/prebuild.mjs",
     "dev": "next dev",
