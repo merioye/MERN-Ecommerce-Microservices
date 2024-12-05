@@ -1,4 +1,3 @@
-version: '3.9'
 services:
   repo-auth-api:
     container_name: repo-auth-api-con-prod

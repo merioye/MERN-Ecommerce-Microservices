@@ -1,5 +1,5 @@
-import { defineConfig } from 'cypress';
 import reactConfig from '@repo/config-cypress/react.config.mjs';
+import { defineConfig } from 'cypress';
 
 /** @type {Cypress.Config} */
 export default defineConfig({

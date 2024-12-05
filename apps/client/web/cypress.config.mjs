@@ -1,6 +1,6 @@
-import { defineConfig } from 'cypress';
 import env from '@next/env';
 import reactConfig from '@repo/config-cypress/react.config.mjs';
+import { defineConfig } from 'cypress';
 
 const { loadEnvConfig } = env;
 const { combinedEnv } = loadEnvConfig(process.cwd());

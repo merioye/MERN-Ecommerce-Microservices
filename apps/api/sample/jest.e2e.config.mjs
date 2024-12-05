@@ -7,7 +7,7 @@ export default {
   setupFilesAfterEnv: ['<rootDir>/src/test-setup/setup-e2e.ts'],
   testMatch: ['**/*.e2e-spec.{js,ts,jsx,tsx}', '**/*.e2e-test.{js,ts,jsx,tsx}'],
   moduleNameMapper: {
-    '@/(.*)': '<rootDir>/src/$1',
-    'public/(.*)': '<rootDir>/public/$1',
+    '^@/(.*)$': '<rootDir>/src/$1',
+    '^public/(.*)$': '<rootDir>/public/$1',
   },
 };

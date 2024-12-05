@@ -4,7 +4,7 @@
   "tasks": {
     "build": {
       "outputs": [".next/**", "!.next/cache/**", "dist/**"],
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build", "^typecheck"]
     },
     "typecheck": {
       "dependsOn": ["^typecheck"],
@@ -16,11 +16,17 @@
       "outputs": []
     },
     "lint:fix": {
-      "dependsOn": ["^lint"],
+      "dependsOn": ["^lint", "^format:fix"],
       "outputs": []
     },
-    "format:check": {},
-    "format:fix": {},
+    "format:check": {
+      "outputs": [],
+      "inputs": ["**/*.{json,ts,js,mjs,mts,jsx,tsx,html,css,scss}"]
+    },
+    "format:fix": {
+      "outputs": [],
+      "inputs": ["**/*.{json,ts,js,mjs,mts,jsx,tsx,html,css,scss}"]
+    },
     "dev": {
       "cache": false,
       "persistent": true
@@ -34,43 +40,167 @@
     },
     "test": {
       "outputs": ["coverage/**"],
-      "dependsOn": ["^test", "^build"]
+      "dependsOn": ["^test", "^build"],
+      "inputs": [
+        "src/**/*.{js,jsx,ts,tsx}",
+        "**/mocks/**/*.{js,jsx,ts,tsx}",
+        "**/__mocks__/**/*.{js,jsx,ts,tsx}",
+        "src/test-setup/setup.ts",
+        "src/setupTests.{js,jsx,ts,tsx}",
+        "**/*.test.{js,jsx,ts,tsx}",
+        "**/*.spec.{js,jsx,ts,tsx}",
+        "package.json",
+        "vitest.config.*",
+        "jest.config.*"
+      ]
     },
     "test:watch": {
       "cache": false,
-      "dependsOn": ["^test", "^build"]
+      "persistent": true,
+      "dependsOn": ["^test", "^build"],
+      "inputs": [
+        "src/**/*.{js,jsx,ts,tsx}",
+        "**/mocks/**/*.{js,jsx,ts,tsx}",
+        "**/__mocks__/**/*.{js,jsx,ts,tsx}",
+        "src/test-setup/setup.ts",
+        "src/setupTests.{js,jsx,ts,tsx}",
+        "**/*.test.{js,jsx,ts,tsx}",
+        "**/*.spec.{js,jsx,ts,tsx}",
+        "package.json",
+        "vitest.config.*",
+        "jest.config.*"
+      ]
     },
     "test:band": {
       "outputs": ["coverage/**"],
-      "dependsOn": ["^test", "^build"]
+      "dependsOn": ["^test", "^build"],
+      "inputs": [
+        "src/**/*.{js,jsx,ts,tsx}",
+        "**/mocks/**/*.{js,jsx,ts,tsx}",
+        "**/__mocks__/**/*.{js,jsx,ts,tsx}",
+        "src/test-setup/setup.ts",
+        "src/setupTests.{js,jsx,ts,tsx}",
+        "**/*.test.{js,jsx,ts,tsx}",
+        "**/*.spec.{js,jsx,ts,tsx}",
+        "package.json",
+        "vitest.config.*",
+        "jest.config.*"
+      ]
     },
     "test:watchBand": {
       "cache": false,
-      "dependsOn": ["^test", "^build"]
+      "persistent": true,
+      "dependsOn": ["^test", "^build"],
+      "inputs": [
+        "src/**/*.{js,jsx,ts,tsx}",
+        "**/mocks/**/*.{js,jsx,ts,tsx}",
+        "**/__mocks__/**/*.{js,jsx,ts,tsx}",
+        "src/test-setup/setup.ts",
+        "src/setupTests.{js,jsx,ts,tsx}",
+        "**/*.test.{js,jsx,ts,tsx}",
+        "**/*.spec.{js,jsx,ts,tsx}",
+        "package.json",
+        "vitest.config.*",
+        "jest.config.*"
+      ]
     },
     "test:ci": {
       "outputs": ["coverage/**"],
-      "dependsOn": ["^test", "^build"]
+      "dependsOn": ["^test", "^build"],
+      "inputs": [
+        "src/**/*.{js,jsx,ts,tsx}",
+        "**/mocks/**/*.{js,jsx,ts,tsx}",
+        "**/__mocks__/**/*.{js,jsx,ts,tsx}",
+        "src/test-setup/setup.ts",
+        "src/setupTests.{js,jsx,ts,tsx}",
+        "**/*.test.{js,jsx,ts,tsx}",
+        "**/*.spec.{js,jsx,ts,tsx}",
+        "package.json",
+        "vitest.config.*",
+        "jest.config.*"
+      ]
     },
     "test:e2e": {
       "outputs": ["coverage/**"],
-      "dependsOn": ["^test", "^build"]
+      "dependsOn": ["^test", "^build"],
+      "inputs": [
+        "src/**/*.{js,jsx,ts,tsx}",
+        "**/mocks/**/*.{js,jsx,ts,tsx}",
+        "**/__mocks__/**/*.{js,jsx,ts,tsx}",
+        "src/test-setup/setup-e2e.{js,jsx,ts,tsx}",
+        "**/*e2e-test.{js,jsx,ts,tsx}",
+        "**/*e2e-spec.{js,jsx,ts,tsx}",
+        "cypress/**/*.{js,jsx,ts,tsx}",
+        "package.json",
+        "jest.e2e.config.*",
+        "cypress.config.*"
+      ]
     },
     "test:e2e:watch": {
       "cache": false,
-      "dependsOn": ["^test", "^build"]
+      "persistent": true,
+      "dependsOn": ["^test", "^build"],
+      "inputs": [
+        "src/**/*.{js,jsx,ts,tsx}",
+        "**/mocks/**/*.{js,jsx,ts,tsx}",
+        "**/__mocks__/**/*.{js,jsx,ts,tsx}",
+        "src/test-setup/setup-e2e.{js,jsx,ts,tsx}",
+        "**/*e2e-test.{js,jsx,ts,tsx}",
+        "**/*e2e-spec.{js,jsx,ts,tsx}",
+        "cypress/**/*.{js,jsx,ts,tsx}",
+        "package.json",
+        "jest.e2e.config.*",
+        "cypress.config.*"
+      ]
     },
     "test:e2e:band": {
       "outputs": ["coverage/**"],
-      "dependsOn": ["^test", "^build"]
+      "dependsOn": ["^test", "^build"],
+      "inputs": [
+        "src/**/*.{js,jsx,ts,tsx}",
+        "**/mocks/**/*.{js,jsx,ts,tsx}",
+        "**/__mocks__/**/*.{js,jsx,ts,tsx}",
+        "src/test-setup/setup-e2e.{js,jsx,ts,tsx}",
+        "**/*e2e-test.{js,jsx,ts,tsx}",
+        "**/*e2e-spec.{js,jsx,ts,tsx}",
+        "cypress/**/*.{js,jsx,ts,tsx}",
+        "package.json",
+        "jest.e2e.config.*",
+        "cypress.config.*"
+      ]
     },
     "test:e2e:watchBand": {
       "cache": false,
-      "dependsOn": ["^test", "^build"]
+      "persistent": true,
+      "dependsOn": ["^test", "^build"],
+      "inputs": [
+        "src/**/*.{js,jsx,ts,tsx}",
+        "**/mocks/**/*.{js,jsx,ts,tsx}",
+        "**/__mocks__/**/*.{js,jsx,ts,tsx}",
+        "src/test-setup/setup-e2e.{js,jsx,ts,tsx}",
+        "**/*e2e-test.{js,jsx,ts,tsx}",
+        "**/*e2e-spec.{js,jsx,ts,tsx}",
+        "cypress/**/*.{js,jsx,ts,tsx}",
+        "package.json",
+        "jest.e2e.config.*",
+        "cypress.config.*"
+      ]
     },
     "test:e2e:ci": {
       "outputs": ["coverage/**"],
-      "dependsOn": ["^test", "^build"]
+      "dependsOn": ["^test", "^build"],
+      "inputs": [
+        "src/**/*.{js,jsx,ts,tsx}",
+        "**/mocks/**/*.{js,jsx,ts,tsx}",
+        "**/__mocks__/**/*.{js,jsx,ts,tsx}",
+        "src/test-setup/setup-e2e.{js,jsx,ts,tsx}",
+        "**/*e2e-test.{js,jsx,ts,tsx}",
+        "**/*e2e-spec.{js,jsx,ts,tsx}",
+        "cypress/**/*.{js,jsx,ts,tsx}",
+        "package.json",
+        "jest.e2e.config.*",
+        "cypress.config.*"
+      ]
     },
     "test:cov": {
       "cache": false

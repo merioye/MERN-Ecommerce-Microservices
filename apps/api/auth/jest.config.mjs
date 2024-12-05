@@ -7,7 +7,7 @@ export default {
   setupFilesAfterEnv: ['<rootDir>/src/test-setup/setup.ts'],
   testMatch: ['**/*.spec.{js,ts,jsx,tsx}', '**/*.test.{js,ts,jsx,tsx}'],
   moduleNameMapper: {
-    '@/(.*)': '<rootDir>/src/$1',
-    'public/(.*)': '<rootDir>/public/$1',
+    '^@/(.*)$': '<rootDir>/src/$1',
+    '^public/(.*)$': '<rootDir>/public/$1',
   },
 };

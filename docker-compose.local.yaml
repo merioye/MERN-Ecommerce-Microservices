@@ -1,53 +1,52 @@
-version: '3.9'
 services:
-  repo-auth-api:
-    build:
-      dockerfile: Dockerfile
-      context: .
-      args:
-        - APP=@repo/auth
-        - APP_DIR=api/auth
-        - PORT=3009
-    container_name: repo-auth-api-con-dev
-    image: repo-auth-api:dev
-    restart: always
-    ports:
-      - 3009:3009
-    # environment:
-  repo-sample-api:
-    build:
-      dockerfile: Dockerfile
-      context: .
-      args:
-        - APP=@repo/sample
-        - APP_DIR=api/sample
-        - PORT=8000
-    container_name: repo-sample-api-con-dev
-    image: repo-sample-api:dev
-    restart: always
-    ports:
-      - 8000:8000
-    # environment:
-  repo-admin-client:
-    build:
-      dockerfile: Dockerfile
-      context: .
-      args:
-        - APP=@repo/admin
-        - APP_DIR=client/admin
-        - PORT=4173
-    container_name: repo-admin-client-con-dev
-    image: repo-admin-client:dev
-    restart: always
-    ports:
-      - 4173:4173
-    # environment:
+  # repo-auth-api:
+  #   build:
+  #     dockerfile: Dockerfile.node
+  #     context: .
+  #     args:
+  #       - APP_NAME=@repo/auth
+  #       - APP_DIR=api/auth
+  #       - PORT=3009
+  #   container_name: repo-auth-api-con-dev
+  #   image: repo-auth-api:dev
+  #   restart: always
+  #   ports:
+  #     - 3009:3009
+  # environment:
+  # repo-sample-api:
+  #   build:
+  #     dockerfile: Dockerfile.node
+  #     context: .
+  #     args:
+  #       - APP_NAME=@repo/sample
+  #       - APP_DIR=api/sample
+  #       - PORT=8000
+  #   container_name: repo-sample-api-con-dev
+  #   image: repo-sample-api:dev
+  #   restart: always
+  #   ports:
+  #     - 8000:8000
+  #   # environment:
+  # repo-admin-client:
+  #   build:
+  #     dockerfile: Dockerfile.react
+  #     context: .
+  #     args:
+  #       - APP_NAME=@repo/admin
+  #       - APP_DIR=client/admin
+  #       - PORT=4173
+  #   container_name: repo-admin-client-con-dev
+  #   image: repo-admin-client:dev
+  #   restart: always
+  #   ports:
+  #     - 80:80
+  #   # environment:
   repo-web-client:
     build:
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.next
       context: .
       args:
-        - APP=@repo/web
+        - APP_NAME=@repo/web
         - APP_DIR=client/web
         - PORT=3000
     container_name: repo-web-client-con-dev
@@ -55,4 +54,4 @@ services:
     restart: always
     ports:
       - 3000:3000
-    # environment:
+  #   # environment:

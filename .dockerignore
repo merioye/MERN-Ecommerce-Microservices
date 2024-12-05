@@ -25,3 +25,5 @@ dist/
 /certs
 LICENSE
 .editorconfig
+*.md
+.idea
