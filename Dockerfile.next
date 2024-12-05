@@ -33,7 +33,7 @@ RUN pnpm install --frozen-lockfile
 RUN pnpm turbo run build --filter="${APP_NAME}"
 
 
-# Production dependencies stage
+# Prepare production dependencies
 FROM builder AS deployer
 
 WORKDIR /workspace
@@ -42,7 +42,7 @@ RUN pnpm --filter ${APP_NAME} deploy --prod --ignore-scripts ./out
 
 
 # Final image
-FROM node:${NODE_VERSION}-slim AS runner
+FROM base AS runner
 
 ARG APP_DIR
 ARG PORT=3000
@@ -57,13 +57,12 @@ RUN adduser --system --uid 1001 myuser
 USER myuser
 
 # Copy necessary files from deployer stage
+COPY --from=deployer --chown=myuser:mygroup /workspace/out/package.json .
+COPY --from=deployer --chown=myuser:mygroup /workspace/out/next.config.mjs .
+COPY --from=deployer --chown=myuser:mygroup /workspace/out/node_modules ./node_modules
+COPY --from=deployer --chown=myuser:mygroup /workspace/out/.next ./.next
 COPY --from=deployer --chown=myuser:mygroup /workspace/out/public ./public
-COPY --from=deployer --chown=myuser:mygroup /workspace/out/.next/standalone/apps/${APP_DIR} ./
-COPY --from=deployer --chown=myuser:mygroup /workspace/out/.next/standalone/node_modules ./node_modules
-COPY --from=deployer --chown=myuser:mygroup /workspace/out/.next/static ./.next/static
 
 EXPOSE ${PORT}
 
-# Command to run the Next.js application
-CMD node server.js
-# CMD ["tail", "-f", "/dev/null"]
+CMD ["npm", "run", "start"]
