@@ -1,44 +1,86 @@
-# 🚀 Monorepo Template
+# 🌐 EcoHatch - Multivendor Ecommerce Application
 
-Welcome to the cutting-edge monorepo template! This powerhouse setup combines the efficiency of pnpm workspaces with the blazing-fast build orchestration of Turborepo. Designed for scalability and developer productivity, this template includes a Next.js application, a React.js application, a NestJS application, and a simple Node.js application, all working in harmony.
+EcoHatch is a feature-rich, scalable, and modern multivendor ecommerce application built with a microservices architecture. Designed to support multiple client platforms, including web and mobile, EcoHatch offers robust features like user management, catalog management, order processing, payment integrations (Stripe and PayPal), real-time notifications, and more.
 
-## 📑 Table of Contents
+With the power of pnpm workspaces and Turborepo, EcoHatch ensures modularity, high performance, and developer efficiency.
 
-1. [Overview](#-overview)
-2. [Project Structure](#-project-structure)
-3. [Prerequisites](#-prerequisites)
-4. [Getting Started](#-getting-started)
-5. [Available Scripts](#-available-scripts)
-6. [Workspace Management](#-workspace-management)
-7. [Development Workflow](#-development-workflow)
-8. [Testing](#-testing)
-9. [Docker](#-docker)
-10. [Contributing](#-contributing)
-11. [License](#-license)
+---
 
-## 🌟 Overview
+## 📋 Table of Contents
 
-This monorepo template is your gateway to a world of streamlined development. It's not just a collection of projects; it's a carefully crafted ecosystem where your applications can thrive together. With pnpm workspaces managing your dependencies and Turborepo optimizing your builds, you'll experience a level of development efficiency you've never known before.
+1. [Overview](#overview)
+2. [Project Structure](#project-structure)
+3. [Prerequisites](#prerequisites)
+4. [Getting Started](#getting-started)
+5. [Available Scripts](#available-scripts)
+6. [Microservices Overview](#microservices-overview)
+7. [Microservices List](#microservices-list)
+8. [Workspace Management](#workspace-management)
+9. [Development Workflow](#development-workflow)
+10. [Testing](#testing)
+11. [Docker Support](#docker-support)
+12. [Contributing](#contributing)
+13. [License](#license)
+
+---
+
+## 🖥 Overview
+
+EcoHatch leverages the following technologies:
+
+- **Frontend**: Next.js, React.js, React Native, Material UI, Tanstack Query, Zustand
+- **Backend**: NestJS, Node.js, TypeScript, Kafka, Redis
+- **Database**: PostgreSQL, MongoDB
+- **Payments**: Stripe, PayPal
+- **Containerization**: Docker, Kubernetes
+- **CI/CD**: GitHub Actions, Jenkins
+- **GenAI**: Langchain, Gemini
+- **Storage**: AWS S3
+- **Build System**: Turborepo
+- **Package Management**: pnpm
 
 Key features:
 
-- 🔗 Seamless integration between projects
-- 🚄 Lightning-fast builds with Turborepo
-- 📦 Efficient package management using pnpm
-- 🛠 Pre-configured development tools and scripts
-- 🐳 Docker support for consistent development and deployment environments
+- 🌐 Multivendor support
+- 🚀 Scalable and modular microservices architecture
+- 🔐 Secure and optimized for performance
+- 📱 Cross-platform client applications (web & mobile)
+- 🛠 Efficient developer tools
+- 📦 Modular and reusable package
+- 🚀 Continuous integration and deployments
+- 💰 Payment integration (Stripe & PayPal)
+- 📊 Real-time notifications
+- 💬 Real-time chat
+- 🤖 GenAI integration
+- 🫙 Containerization and Kubernetes support
+- 🌐 Internalization support
+- 🛠 Code quality checks (SonarQube, ESLint, Prettier, TypeScript)
+- 🧪 Testing with Jest and Cypress
+
+---
 
 ## 🏗 Project Structure
 
     ├── apps
     │   ├── api
-    │   │   └── auth        # Nestjs application
-    |   |   └── sample      # Nodejs application
+    │   │   └── iam-service
+    |   |   └── vendor-service
+    │   │   └── customer-service
+    │   │   └── catalog-service
+    │   │   └── order-service
+    │   │   └── payment-service
+    │   │   └── notification-service
+    │   │   └── chat-service
+    │   │   └── chatbot-service
+    │   │   └── upload-service
+    │   │   └── websocket-service
+    │   │   └── store-configuration-service
     │   ├── client
-    │   │   ├── admin       # Reactjs application
-    │   │   └── web         # Nextjs application
+    │   │   ├── admin-ui
+    │   │   ├── mobile-app
+    │   │   └── web-ui
     ├── packages
-    │   └── *               # Reusable packages
+    │   └── types-shared
     ├── libraries
     │   └── config-*        # Shared configurations
     ├── package.json        # Root package.json for project-wide scripts and dependencies
@@ -47,25 +89,25 @@ Key features:
 
 This structure is designed to keep your codebase organized and maintainable as it grows. Each application, package, and library has its own space, promoting modularity and reusability.
 
-## 🛠 Prerequisites
+---
 
-Before you embark on your development journey, make sure you have the following tools installed:
+## ✅ Prerequisites
 
-- 🟢 Node.js (version 20.15.0 or later)
-- 📦 pnpm (version 9.5.0 or later)
-- 🐳 Docker
+Ensure you have the following installed:
 
-These versions ensure compatibility with all the features and optimizations in this template.
+- **Node.js**: v20.15.0 or later
+- **pnpm**: v9.5.0 or later
+- **Docker**
 
-## 🚦 Getting Started
+---
 
-Let's get your development environment up and running in no time:
+## 🚀 Getting Started
 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/merioye/Turborepo-Template.git
-   cd Turborepo-Template
+   git clone https://github.com/merioye/MERN-Ecommerce-Microservices.git
+   cd MERN-Ecommerce-Microservices
 
    ```
 
@@ -115,6 +157,50 @@ Your swiss army knife of development commands:
 
 Explore the `scripts` section in the root `package.json` for even more powerful commands!
 
+## 🏗 Microservices Overview
+
+Each microservice in EcoHatch is designed with the single responsibility principle, ensuring high cohesion and low coupling. Microservices communicate through Kafka for event-driven architecture and maintain their own databases for maximum scalability.
+
+### Microservices List
+
+- **IAM Service**:
+  Handles user authentication, authorization, and secure access control.
+
+- **Vendor Management**:
+  Manages vendor profiles, products, and inventory.
+
+- **Customer Management**:
+  Manages customer profiles, addresses, and order history.
+
+- **Catalog Management**:
+  Manages products, categories, and inventory.
+
+- **Order Management**:
+  Tracks orders, processes order statuses, and ensures order lifecycle consistency.
+
+- **Payment Management**:
+  Integrates with Stripe and PayPal for secure and seamless payment processing.
+
+- **Notification Management**:
+  Sends real-time notifications via email, SMS, and push notifications.
+
+- **Chat Management**:
+  Enables communication between users and vendors through a real-time chat interface.
+
+- **WebSocket Management**:
+  Handles live updates and real-time interactions using WebSocket connections.
+
+- **Store Configuration Management**:
+  Manages application-wide configurations and vendor-specific settings.
+
+- **Upload Management**:
+  Handles file uploads, image processing, and media management.
+
+- **Chatbot Management**:
+  Enables GenAI capabilities for chatbot responses.
+
+Each microservice is built for scalability, high availability, and independent deployment, ensuring robust performance for the application.
+
 ## 🧩 Workspace Management
 
 Harness the power of pnpm workspaces to manage your monorepo packages effortlessly. The `pnpm-workspace.yaml` file is your control center for workspace configuration.
@@ -146,7 +232,7 @@ Ensure your code is rock-solid with our comprehensive testing setup:
 
 Remember, well-tested code is happy code!
 
-## 🐳 Docker
+## 🐳 Docker Support
 
 Containerize your development and deployment with the Docker configurations:
 
@@ -177,4 +263,4 @@ This project is licensed under the MIT License. See the `LICENSE` file for the f
 
 ---
 
-We hope this monorepo template supercharges your development process! If you have any questions or suggestions, please open an issue or contribute to the project. Happy coding! 🎉
+Enjoy building with EcoHatch! 🚀

@@ -1,0 +1,8 @@
+src/
+scripts/
+tsconfig.json
+prettier.config.mjs
+.prettierignore
+.turbo
+LICENSE
+node_modules/

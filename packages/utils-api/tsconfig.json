@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Nest.js",
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["@types/node", "jest", "Multer"]
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}

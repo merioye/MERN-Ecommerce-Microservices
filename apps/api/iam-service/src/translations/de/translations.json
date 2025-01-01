@@ -1,0 +1,29 @@
+{
+  "common": {
+    "success": {
+      "ok": "OK",
+      "Success": "Erfolg"
+    },
+    "error": {
+      "Bad_Request": "Ungültige Anforderungsausnahme",
+      "Conflict": "Konflikt-Ausnahme",
+      "Action_Forbidden": "Aktion verboten",
+      "Internal_Server": "Interne Server-Ausnahme",
+      "Not_Authorized": "Nicht autorisiert",
+      "Not_Found": "Nicht gefunden",
+      "Validation_Failed": "Validierungsfehler-Ausnahme",
+      "Database": "Datenbankausnahme",
+      "Invalid_value": "Ungültiger Wert",
+      "invalid_boolean": "{field} ist kein gültiger Boolean",
+      "invalid_int": "{field} ist keine gültige Ganzzahl",
+      "invalid_uuid": "{field} ist keine gültige UUID",
+      "invalid_enum": "{field} ist kein gueltiger Enum-Wert. Erlaubte Werte: {allowedValues}",
+      "invalid_array": "{field} ist kein gueltiger Array"
+    }
+  },
+  "health": {
+    "success": {
+      "Server_is_up_and_running": "Der Server ist betriebsbereit..."
+    }
+  }
+}

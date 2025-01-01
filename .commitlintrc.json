@@ -15,7 +15,16 @@
         "revert",
         "style",
         "assets",
-        "test"
+        "test",
+        "build",
+        "deps",
+        "config",
+        "env",
+        "infra",
+        "lint",
+        "data",
+        "ui",
+        "util"
       ]
     ]
   }

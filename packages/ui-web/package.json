@@ -1,0 +1,11 @@
+{
+  "name": "@ecohatch/ui-web",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Umair Saleem",
+  "description": "Web ui components for monorepo internal applications/packages",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

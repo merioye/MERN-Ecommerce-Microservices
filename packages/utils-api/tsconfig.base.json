@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Nest.js Base",
+  "extends": "@ecohatch/config-typescript/node.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}

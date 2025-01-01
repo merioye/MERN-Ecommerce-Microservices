@@ -1,5 +1,5 @@
 {
-  "name": "@repo/config-typescript",
+  "name": "@ecohatch/config-typescript",
   "version": "1.0.0",
   "license": "MIT",
   "author": "Umair Saleem",
@@ -13,7 +13,7 @@
     "clean": "node scripts/clean.mjs"
   },
   "devDependencies": {
-    "@repo/config-prettier": "workspace:*",
+    "@ecohatch/config-prettier": "workspace:*",
     "prettier": "^3.3.0"
   }
 }

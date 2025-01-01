@@ -1,0 +1,6 @@
+scripts/
+.prettierignore
+prettier.config.mjs
+LICENSE
+.turbo
+node_modules/
