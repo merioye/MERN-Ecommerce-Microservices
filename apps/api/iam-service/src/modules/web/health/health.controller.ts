@@ -33,7 +33,7 @@ export class HealthController {
    * @returns The health information.
    */
   @Get(EndPoint.Health.Get.HealthCheck)
-  public checkHealth(): Health {
+  public checkHealth(): Promise<Health> {
     this._logger.info('Request for checking server health');
     return this._healthService.health();
   }

@@ -4,6 +4,8 @@ import {
   TranslatorServiceToken,
 } from '@ecohatch/utils-api';
 
+import { PrismaService } from '@/database';
+
 import { IHealthService } from '../interfaces';
 import { Health } from '../types';
 
@@ -20,10 +22,12 @@ export class HealthService implements IHealthService {
    *
    * @constructor
    * @param translatorService - The translator service
+   * @param prismaService - The Prisma service
    */
   public constructor(
     @Inject(TranslatorServiceToken)
-    private readonly _translatorService: ITranslatorService
+    private readonly _translatorService: ITranslatorService,
+    private readonly _prismaService: PrismaService
   ) {}
 
   /**
@@ -31,10 +35,21 @@ export class HealthService implements IHealthService {
    *
    * @returns The health information about the application.
    */
-  public health(): Health {
+  public async health(): Promise<Health> {
+    const isDatabaseHealthy = await this._prismaService.ping();
     return {
       message: 'health.success.Server_is_up_and_running',
       status: this._translatorService.t('common.success.ok'),
+      database: {
+        message: isDatabaseHealthy
+          ? this._translatorService.t('health.success.Database_is_connected')
+          : this._translatorService.t(
+              'health.error.Database_connection_failed'
+            ),
+        status: isDatabaseHealthy
+          ? this._translatorService.t('common.success.ok')
+          : this._translatorService.t('common.error.Unavailable'),
+      },
     };
   }
 }

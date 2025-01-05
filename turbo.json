@@ -210,6 +210,45 @@
     },
     "test:cy": {
       "cache": false
+    },
+    "db:client:generate:dev": {
+      "cache": false
+    },
+    "db:client:generate:prod": {
+      "cache": false
+    },
+    "db:migrate:generate": {
+      "cache": false
+    },
+    "db:migrate:run:dev": {
+      "cache": false
+    },
+    "db:migrate:run:prod": {
+      "cache": false
+    },
+    "db:migrate:revert:dev": {
+      "cache": false
+    },
+    "db:migrate:revert:prod": {
+      "cache": false
+    },
+    "db:reset:dev": {
+      "cache": false
+    },
+    "db:reset:test": {
+      "cache": false
+    },
+    "db:check:dev": {
+      "cache": false
+    },
+    "db:check:prod": {
+      "cache": false
+    },
+    "db:seed:dev": {
+      "cache": false
+    },
+    "db:seed:prod": {
+      "cache": false
     }
   }
 }

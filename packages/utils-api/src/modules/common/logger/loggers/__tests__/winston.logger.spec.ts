@@ -61,6 +61,7 @@ describe('WinstonLogger', () => {
     environment: Environment.DEV,
     logsDirPath: '/test/logs',
     debugMode: true,
+    appName: 'test-service',
   };
 
   beforeEach(() => {

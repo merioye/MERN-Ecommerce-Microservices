@@ -28,6 +28,11 @@ const configOptions: ConfigModuleOptions = {
     GRACEFUL_SHUTDOWN_TIMEOUT: Joi.number().default(30000),
     LOCALIZATION_KEY: Joi.string().required(),
     LOCALIZATION_FALLBACK_LANGUAGE: Joi.string().required(),
+    DATABASE_URL: Joi.string().required(),
+    DATABASE_MAX_RETRIES: Joi.number().default(5),
+    DATABASE_RETRY_DELAY: Joi.number().default(1000),
+    DATABASE_MAX_RETRY_DELAY: Joi.number().default(60000),
+    PRISMA_SCHEMA_PATH: Joi.string().required(),
   }),
   validationOptions: {
     abortEarly: true,

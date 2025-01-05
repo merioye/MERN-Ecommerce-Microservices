@@ -8,8 +8,10 @@ const __dirname = dirname(__filename); // get the name of the directory
 const root = resolve(__dirname, '..');
 const dist = resolve(root, 'dist');
 const nodeModules = resolve(root, 'node_modules');
+const tsBuildInfo = resolve(root, 'node_modules/.cache/tsbuildinfo.json');
+const turbo = resolve(root, '.turbo');
 
-[dist, nodeModules].forEach((dir) => {
+[dist, nodeModules, tsBuildInfo, turbo].forEach((dir) => {
   if (existsSync(dir)) {
     rmSync(dir, { recursive: true, force: true });
   }

@@ -10,6 +10,8 @@ import {
   AllExceptionsFilter,
   CommonAppModule,
   ExceptionHandlingStrategyFactory,
+  ILogger,
+  LoggerToken,
   TranslateMessageInterceptor,
   validationPipeOptions,
 } from '@ecohatch/utils-api';
@@ -21,6 +23,7 @@ import {
   loggerModuleOptions,
   translatorModuleOptions,
 } from './config';
+import { PrismaModule, PrismaService } from './database';
 import { Config } from './enums';
 import { WebAppModule } from './modules/web';
 
@@ -38,21 +41,28 @@ import { WebAppModule } from './modules/web';
 @Module({
   imports: [
     ConfigModule.forRoot(configOptions),
-    GracefulShutdownModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        gracefulShutdownTimeout: configService.get<number>(
-          Config.GRACEFUL_SHUTDOWN_TIMEOUT
-        ),
-        cleanup(): void {
-          // Add any cleanup logic here
-        },
-      }),
-    }),
+    PrismaModule,
     CommonAppModule.forRoot({
       logger: loggerModuleOptions,
       translator: translatorModuleOptions,
+    }),
+    GracefulShutdownModule.forRootAsync({
+      inject: [ConfigService, PrismaService, LoggerToken],
+      useFactory: (
+        configService: ConfigService,
+        prismaService: PrismaService,
+        logger: ILogger
+      ) => ({
+        gracefulShutdownTimeout: configService.get<number>(
+          Config.GRACEFUL_SHUTDOWN_TIMEOUT
+        ),
+        async cleanup(): Promise<void> {
+          // Add any cleanup logic here
+          logger.info('Closing Prisma connection...');
+          await prismaService.$disconnect();
+          logger.info('Prisma connection closed.');
+        },
+      }),
     }),
     WebAppModule,
   ],

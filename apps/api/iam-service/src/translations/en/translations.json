@@ -5,6 +5,7 @@
       "Success": "Success"
     },
     "error": {
+      "Unavailable": "Unavailable",
       "Bad_Request": "Bad Request Exception",
       "Conflict": "Conflict Exception",
       "Action_Forbidden": "Action Forbidden",
@@ -23,7 +24,11 @@
   },
   "health": {
     "success": {
-      "Server_is_up_and_running": "Server is up and running..."
+      "Server_is_up_and_running": "Server is up and running...",
+      "Database_is_connected": "Database is connected"
+    },
+    "error": {
+      "Database_connection_failed": "Database connection failed"
     }
   }
 }

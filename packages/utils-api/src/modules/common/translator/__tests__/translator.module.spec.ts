@@ -16,6 +16,7 @@ const loggerModuleOptions: LoggerModuleOptions = {
   environment: Environment.TEST,
   logsDirPath: '/test/logs',
   debugMode: false,
+  appName: 'test-service',
 };
 
 /**
