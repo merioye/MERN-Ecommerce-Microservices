@@ -13,6 +13,10 @@ describe('HealthController', () => {
   const mockHealth: Health = {
     status: 'ok',
     message: 'Server is up and running',
+    database: {
+      status: 'ok',
+      message: 'Database is connected',
+    },
   };
 
   beforeEach(async () => {
@@ -54,9 +58,9 @@ describe('HealthController', () => {
   });
 
   describe('checkHealth', () => {
-    it('should log info message when health check is requested', () => {
+    it('should log info message when health check is requested', async () => {
       // Act
-      controller.checkHealth();
+      await controller.checkHealth();
 
       // Assert
       expect(mockLogger.info).toHaveBeenCalledTimes(1);
@@ -65,18 +69,18 @@ describe('HealthController', () => {
       );
     });
 
-    it('should return health information from health service', () => {
+    it('should return health information from health service', async () => {
       // Act
-      const result = controller.checkHealth();
+      const result = await controller.checkHealth();
 
       // Assert
       expect(mockHealthService.health).toHaveBeenCalledTimes(1);
       expect(result).toBe(mockHealth);
     });
 
-    it('should call health service method and logger in correct order', () => {
+    it('should call health service method and logger in correct order', async () => {
       // Act
-      controller.checkHealth();
+      await controller.checkHealth();
 
       // Assert
       const calls: string[] = [];
