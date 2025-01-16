@@ -17,17 +17,6 @@ async function checkDatabaseConnection() {
     // Get database version
     const version = (await prisma.$queryRaw`SELECT version()`) as any;
     console.log(`Database version: ${version[0]?.version}`);
-
-    // Check connection pool status
-    const poolStatus = (await prisma.$queryRaw`SELECT
-      sum(numbackends) as active_connections,
-      max_conn as max_connections
-    FROM pg_stat_database, pg_settings
-    WHERE name = 'max_connections'
-    GROUP BY max_conn`) as any;
-
-    console.log(`Active connections: ${poolStatus[0]?.active_connections}`);
-    console.log(`Maximum connections: ${poolStatus[0]?.max_connections}`);
   } catch (error) {
     console.error('❌ Database connection failed');
     console.error('Error details:');
