@@ -8,18 +8,18 @@ datasource db {
 }
 
 model AdminGroup {
-  id          BigInt    @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   name        String    @unique
   slug        String    @unique
   description String?   @default("")
-  is_active   Boolean   @default(true)
-  is_deleted  Boolean   @default(false)
-  created_at  DateTime  @default(now())
-  updated_at  DateTime  @updatedAt()
-  deleted_at  DateTime?
-  created_by  BigInt?
-  updated_by  BigInt?
-  deleted_by  BigInt?
+  isActive    Boolean   @default(true) @map("is_active")
+  isDeleted   Boolean   @default(false) @map("is_deleted")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt() @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+  createdBy   Int?      @map("created_by")
+  updatedBy   Int?      @map("updated_by")
+  deletedBy   Int?      @map("deleted_by")
 
   @@map("tbl_admin_groups")
 }

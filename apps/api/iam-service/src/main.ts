@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { SwaggerModule } from '@nestjs/swagger';
+import expressBasicAuth from 'express-basic-auth';
 import { WinstonLogger } from '@ecohatch/utils-api';
 import { setupGracefulShutdown } from 'nestjs-graceful-shutdown';
 
@@ -20,20 +21,31 @@ async function bootstrap(): Promise<void> {
 
   const configService = app.get(ConfigService);
   const PORT = configService.get<number>(Config.PORT);
-  const API_PREFIX = configService.get<string>(Config.API_PREFIX);
   const API_DEFAULT_VERSION = configService.get<string>(
     Config.API_DEFAULT_VERSION
   );
+  const SWAGGER_USERNAME = configService.get<string>(Config.SWAGGER_USERNAME);
+  const SWAGGER_PASSWORD = configService.get<string>(Config.SWAGGER_PASSWORD);
 
   app.enableVersioning({
     type: VersioningType.URI,
     defaultVersion: API_DEFAULT_VERSION,
   });
-  app.setGlobalPrefix(API_PREFIX!);
   app.useStaticAssets(join(__dirname, '..', 'public'));
 
+  // Add basic auth middleware
+  app.use(
+    ['/docs', '/docs-json'], // Protect both Swagger UI and Swagger JSON endpoints
+    expressBasicAuth({
+      challenge: true,
+      users: {
+        [SWAGGER_USERNAME!]: SWAGGER_PASSWORD!,
+      },
+    })
+  );
+
   const document = SwaggerModule.createDocument(app, buildSwaggerConfig(PORT!));
-  SwaggerModule.setup(`/${API_PREFIX}/docs`, app, document);
+  SwaggerModule.setup('/docs', app, document);
 
   setupGracefulShutdown({ app });
 

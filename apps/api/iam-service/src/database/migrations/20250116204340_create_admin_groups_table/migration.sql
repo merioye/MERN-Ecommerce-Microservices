@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "tbl_admin_groups" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "slug" TEXT NOT NULL,
     "description" TEXT DEFAULT '',
@@ -9,9 +9,9 @@ CREATE TABLE "tbl_admin_groups" (
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
     "deleted_at" TIMESTAMP(3),
-    "created_by" BIGINT,
-    "updated_by" BIGINT,
-    "deleted_by" BIGINT,
+    "created_by" INTEGER,
+    "updated_by" INTEGER,
+    "deleted_by" INTEGER,
 
     CONSTRAINT "tbl_admin_groups_pkey" PRIMARY KEY ("id")
 );

@@ -4,4 +4,10 @@ export const EndPoint = {
       HealthCheck: '/healthcheck',
     },
   },
+  AdminGroup: {
+    Base: '/admin-groups',
+    Post: {
+      CreateAdminGroup: '/',
+    },
+  },
 } as const;

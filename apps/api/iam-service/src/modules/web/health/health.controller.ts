@@ -1,4 +1,5 @@
 import { Controller, Get, Inject } from '@nestjs/common';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { ILogger, LoggerToken } from '@ecohatch/utils-api';
 
 import { EndPoint } from '@/constants';
@@ -13,6 +14,7 @@ import { Health } from './types';
  * @class HealthController
  */
 @Controller()
+@ApiTags('Health')
 export class HealthController {
   /**
    * Creates a new HealthController instance.
@@ -33,8 +35,9 @@ export class HealthController {
    * @returns The health information.
    */
   @Get(EndPoint.Health.Get.HealthCheck)
-  public checkHealth(): Promise<Health> {
+  @ApiOkResponse({ description: 'Server health information.' })
+  public async checkHealth(): Promise<Health> {
     this._logger.info('Request for checking server health');
-    return this._healthService.health();
+    return await this._healthService.health();
   }
 }

@@ -1,5 +1,7 @@
 import { DocumentBuilder, OpenAPIObject } from '@nestjs/swagger';
 
+import { Config } from '@/enums';
+
 /**
  * Creates swagger configuration
  *
@@ -10,11 +12,9 @@ export const buildSwaggerConfig = (
   PORT: number
 ): Omit<OpenAPIObject, 'paths'> => {
   const config = new DocumentBuilder()
-    .setTitle('Nest + Typescript starter')
-    .setDescription(
-      'This is Nest + Typescript starter application made with Nest and documented with Swagger'
-    )
-    .setVersion('1.0')
+    .setTitle('IAM Service')
+    .setDescription(process.env[Config.NPM_PACKAGE_DESCRIPTION]!)
+    .setVersion(process.env[Config.NPM_PACKAGE_VERSION]!)
     .addServer(`http://localhost:${PORT}`, 'Local Server')
     .build();
 

@@ -6,10 +6,15 @@ import {
   TranslationKeySeparator,
   TranslatorModuleOptions,
 } from '@ecohatch/utils-api';
+import * as dotenv from 'dotenv';
 import Joi from 'joi';
 
 import { Config } from '@/enums';
 import { APP_NAME } from '@/constants';
+
+dotenv.config({
+  path: join(__dirname, `../../.env.${process.env[Config.NODE_ENV]}`),
+});
 
 const { DEV, TEST, PROD } = Environment;
 
@@ -22,7 +27,6 @@ const configOptions: ConfigModuleOptions = {
   validationSchema: Joi.object({
     PORT: Joi.number().default(5000),
     NODE_ENV: Joi.string().valid(DEV, TEST, PROD).required(),
-    API_PREFIX: Joi.string().required(),
     API_DEFAULT_VERSION: Joi.string().required(),
     DEBUG_MODE: Joi.boolean().default(false),
     GRACEFUL_SHUTDOWN_TIMEOUT: Joi.number().default(30000),
@@ -33,6 +37,8 @@ const configOptions: ConfigModuleOptions = {
     DATABASE_RETRY_DELAY: Joi.number().default(1000),
     DATABASE_MAX_RETRY_DELAY: Joi.number().default(60000),
     PRISMA_SCHEMA_PATH: Joi.string().required(),
+    SWAGGER_USERNAME: Joi.string().required(),
+    SWAGGER_PASSWORD: Joi.string().required(),
   }),
   validationOptions: {
     abortEarly: true,
