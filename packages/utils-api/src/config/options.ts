@@ -8,6 +8,8 @@ import { ErrorFormat } from '@/types';
  */
 const validationPipeOptions: ValidationPipeOptions = {
   whitelist: true,
+  transform: true,
+  validateCustomDecorators: true,
   exceptionFactory: (errors) => {
     const formatedErrors = errors?.map((error): ErrorFormat => {
       const message = Object.values(error.constraints || {})[0];

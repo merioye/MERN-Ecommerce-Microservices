@@ -9,5 +9,8 @@ export const EndPoint = {
     Post: {
       CreateAdminGroup: '/',
     },
+    Patch: {
+      UpdateAdminGroup: '/:id',
+    },
   },
 } as const;

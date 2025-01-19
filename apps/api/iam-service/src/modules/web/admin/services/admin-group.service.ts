@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { BadRequestError } from '@ecohatch/utils-api';
+import { BadRequestError, NotFoundError } from '@ecohatch/utils-api';
 import { AdminGroup } from '@prisma/client';
 
 import { PrismaService } from '@/database';
 
-import { CreateAdminGroupDto } from '../dtos';
+import { CreateAdminGroupDto, UpdateAdminGroupDto } from '../dtos';
 import { IAdminGroupService } from '../interfaces';
 
 /**
@@ -32,6 +32,40 @@ export class AdminGroupService implements IAdminGroupService {
     }
 
     return this._prismaService.adminGroup.create({
+      data,
+    });
+  }
+
+  /**
+   * Updates an admin group.
+   * @param {UpdateAdminGroupDto} data - The data containing the details of the admin group to update.
+   * @param {number} id - The ID of the admin group to update.
+   * @returns {Promise<AdminGroup>} - The updated admin group.
+   */
+  public async updateOne(
+    id: number,
+    data: UpdateAdminGroupDto
+  ): Promise<AdminGroup> {
+    const isExistingGroup = await this._prismaService.adminGroup.findUnique({
+      where: { id },
+    });
+    if (!isExistingGroup) {
+      throw new NotFoundError('adminGroup.error.AdminGroup_not_found');
+    }
+
+    if (data.slug && data.slug !== isExistingGroup.slug) {
+      const isExistingGroup = await this._prismaService.adminGroup.findFirst({
+        where: { slug: data.slug },
+      });
+      if (isExistingGroup) {
+        throw new BadRequestError(
+          'adminGroup.error.AdminGroup_slug_already_exists'
+        );
+      }
+    }
+
+    return this._prismaService.adminGroup.update({
+      where: { id },
       data,
     });
   }

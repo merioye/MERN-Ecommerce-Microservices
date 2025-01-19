@@ -23,9 +23,18 @@ export class WinstonLogger implements ILogger {
   // Winston logger
   private readonly _logger: Logger;
   private readonly _customFormat = {
-    console: format.printf(({ timestamp, level, stack, message }: any) => {
-      return `${timestamp} [${level}]: ${stack || message}`;
-    }),
+    console: format.printf(
+      ({ timestamp, level, stack, message, metadata }: any) => {
+        let logMessage = `${timestamp} [${level}]: ${stack || message}`;
+
+        // Handle metadata if present
+        if (metadata) {
+          logMessage += ` ${JSON.stringify(metadata)}`;
+        }
+
+        return logMessage;
+      }
+    ),
   };
 
   /**
@@ -109,65 +118,83 @@ export class WinstonLogger implements ILogger {
    * Logs a message
    *
    * @param message - Message to log
-   * @param optionalParams - Optional parameters
+   * @param metadata - Optional extra metadata
    * @returns {void}
    */
-  public log(message: any, ...optionalParams: any[]): void {
-    this._logger.log('info', this.stringify(message), optionalParams);
+  public log(message: any, metadata: any = null): void {
+    this._logger.log('info', this.stringify(message), {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      metadata: metadata,
+    });
   }
 
   /**
    * Logs an informational message
    *
    * @param message - Message to log
-   * @param optionalParams - Optional parameters
+   * @param metadata - Optional extra metadata
    * @returns {void}
    */
-  public info(message: any, ...optionalParams: any[]): void {
-    this._logger.info(this.stringify(message), optionalParams);
+  public info(message: any, metadata: any = null): void {
+    this._logger.info(this.stringify(message), {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      metadata: metadata,
+    });
   }
 
   /**
    * Logs a debug message
    *
    * @param message - Message to log
-   * @param optionalParams - Optional parameters
+   * @param metadata - Optional extra metadata
    * @returns {void}
    */
-  public debug(message: any, ...optionalParams: any[]): void {
-    this._logger.debug(this.stringify(message), optionalParams);
+  public debug(message: any, metadata: any = null): void {
+    this._logger.debug(this.stringify(message), {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      metadata: metadata,
+    });
   }
 
   /**
    * Logs a message at verbose level
    *
    * @param - Message message to log
-   * @param optionalParams - Optional parameters
+   * @param metadata - Optional extra metadata
    * @returns {void}
    */
-  public verbose(message: any, ...optionalParams: any[]): void {
-    this._logger.verbose(this.stringify(message), optionalParams);
+  public verbose(message: any, metadata: any = null): void {
+    this._logger.verbose(this.stringify(message), {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      metadata: metadata,
+    });
   }
 
   /**
    * Logs an error message
    *
    * @param message - Message to log
-   * @param optionalParams - Optional parameters
+   * @param metadata - Optional extra metadata
    * @returns {void}
    */
-  public error(message: any, ...optionalParams: any[]): void {
-    this._logger.error(this.stringify(message), optionalParams);
+  public error(message: any, metadata: any = null): void {
+    this._logger.error(this.stringify(message), {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      metadata: metadata,
+    });
   }
 
   /**
    * Logs a warning message
    *
    * @param message - Message to log
-   * @param optionalParams - Optional parameters
+   * @param metadata - Optional extra metadata
    * @returns {void}
    */
-  public warn(message: any, ...optionalParams: any[]): void {
-    this._logger.warn(this.stringify(message), optionalParams);
+  public warn(message: any, metadata: any = null): void {
+    this._logger.warn(this.stringify(message), {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      metadata: metadata,
+    });
   }
 }

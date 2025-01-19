@@ -12,10 +12,10 @@
  * @method warn - An Optional method that logs a warning message
  */
 export interface ILogger {
-  log(message: any, ...optionalParams: any[]): void;
-  info(message: any, ...optionalParams: any[]): void;
-  debug(message: any, ...optionalParams: any[]): void;
-  error(message: any, ...optionalParams: any[]): void;
-  verbose(message: any, ...optionalParams: any[]): void;
-  warn(message: any, ...optionalParams: any[]): void;
+  log(message: any, metadata?: any): void;
+  info(message: any, metadata?: any): void;
+  debug(message: any, metadata?: any): void;
+  error(message: any, metadata?: any): void;
+  verbose(message: any, metadata?: any): void;
+  warn(message: any, metadata?: any): void;
 }

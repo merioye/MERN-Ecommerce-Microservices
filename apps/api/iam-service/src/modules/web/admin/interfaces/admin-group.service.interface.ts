@@ -1,7 +1,8 @@
 import { AdminGroup } from '@prisma/client';
 
-import { CreateAdminGroupDto } from '../dtos';
+import { CreateAdminGroupDto, UpdateAdminGroupDto } from '../dtos';
 
 export interface IAdminGroupService {
   create(data: CreateAdminGroupDto): Promise<AdminGroup>;
+  updateOne(id: number, data: UpdateAdminGroupDto): Promise<AdminGroup>;
 }
