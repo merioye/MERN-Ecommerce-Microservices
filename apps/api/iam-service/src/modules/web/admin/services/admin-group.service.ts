@@ -69,4 +69,26 @@ export class AdminGroupService implements IAdminGroupService {
       data,
     });
   }
+
+  /**
+   * Soft deletes an admin group.
+   * @param {number} id - The ID of the admin group to delete.
+   * @returns {Promise<AdminGroup>} - The deleted admin group.
+   */
+  public async softDeleteOne(id: number): Promise<AdminGroup> {
+    const adminGroup = await this._prismaService.adminGroup.findUnique({
+      where: { id },
+    });
+    if (!adminGroup) {
+      throw new NotFoundError('adminGroup.error.AdminGroup_not_found');
+    }
+
+    return this._prismaService.adminGroup.update({
+      where: { id },
+      data: {
+        isDeleted: true,
+        deletedAt: new Date(),
+      },
+    });
+  }
 }

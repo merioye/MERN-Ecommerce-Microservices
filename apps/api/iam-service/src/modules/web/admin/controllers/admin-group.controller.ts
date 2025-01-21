@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   HttpStatus,
   Inject,
   Param,
@@ -110,6 +111,40 @@ export class AdminGroupController {
     return new ApiResponse({
       message: 'adminGroup.success.AdminGroup_updated_successfully',
       result: adminGroup,
+      statusCode: HttpStatus.OK,
+    });
+  }
+
+  /**
+   * Soft Deletes an admin group.
+   * @param {number} id - The ID of the admin group to delete.
+   * @returns {Promise<ApiResponse<null>>}
+   */
+  @Delete(EndPoint.AdminGroup.Delete.SoftDeleteAdminGroup)
+  @ApiOkResponse({
+    description: 'Admin group deleted successfully',
+  })
+  @ApiNotFoundResponse({
+    description: 'Admin group not found',
+  })
+  @ApiBadRequestResponse({
+    description: 'id is not a valid integer',
+  })
+  public async softDeleteAdminGroup(
+    @Param('id', CustomParseIntPipe) id: number
+  ): Promise<ApiResponse<null>> {
+    this._logger.debug('Soft deleting admin group:', id);
+
+    const adminGroup = await this._adminGroupService.softDeleteOne(id);
+
+    this._logger.info('Soft deleted admin group:', {
+      id,
+      adminGroup,
+    });
+
+    return new ApiResponse({
+      message: 'adminGroup.success.AdminGroup_deleted_successfully',
+      result: null,
       statusCode: HttpStatus.OK,
     });
   }

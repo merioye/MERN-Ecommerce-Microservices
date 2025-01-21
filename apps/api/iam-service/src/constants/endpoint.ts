@@ -12,5 +12,8 @@ export const EndPoint = {
     Patch: {
       UpdateAdminGroup: '/:id',
     },
+    Delete: {
+      SoftDeleteAdminGroup: '/:id',
+    },
   },
 } as const;
