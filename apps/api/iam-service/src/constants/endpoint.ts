@@ -14,6 +14,7 @@ export const EndPoint = {
     },
     Delete: {
       SoftDeleteAdminGroup: '/:id',
+      HardDeleteAdminGroup: '/:id/hard-delete',
     },
   },
 } as const;

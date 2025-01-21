@@ -137,13 +137,41 @@ export class AdminGroupController {
 
     const adminGroup = await this._adminGroupService.softDeleteOne(id);
 
-    this._logger.info('Soft deleted admin group:', {
-      id,
-      adminGroup,
-    });
+    this._logger.info('Soft deleted admin group:', adminGroup);
 
     return new ApiResponse({
       message: 'adminGroup.success.AdminGroup_deleted_successfully',
+      result: null,
+      statusCode: HttpStatus.OK,
+    });
+  }
+
+  /**
+   * Hard Deletes an admin group.
+   * @param {number} id - The ID of the admin group to delete.
+   * @returns {Promise<ApiResponse<null>>}
+   */
+  @Delete(EndPoint.AdminGroup.Delete.HardDeleteAdminGroup)
+  @ApiOkResponse({
+    description: 'Admin group hard deleted successfully',
+  })
+  @ApiNotFoundResponse({
+    description: 'Admin group not found',
+  })
+  @ApiBadRequestResponse({
+    description: 'id is not a valid integer',
+  })
+  public async hardDeleteAdminGroup(
+    @Param('id', CustomParseIntPipe) id: number
+  ): Promise<ApiResponse<null>> {
+    this._logger.debug('Hard deleting admin group:', id);
+
+    const adminGroup = await this._adminGroupService.hardDeleteOne(id);
+
+    this._logger.info('Hard deleted admin group:', adminGroup);
+
+    return new ApiResponse({
+      message: 'adminGroup.success.AdminGroup_hard_deleted_successfully',
       result: null,
       statusCode: HttpStatus.OK,
     });
