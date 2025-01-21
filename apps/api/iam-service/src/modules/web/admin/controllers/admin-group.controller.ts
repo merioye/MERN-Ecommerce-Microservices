@@ -176,4 +176,35 @@ export class AdminGroupController {
       statusCode: HttpStatus.OK,
     });
   }
+
+  /**
+   * Restores an admin group.
+   * @param {number} id - The ID of the admin group to restore.
+   * @returns {Promise<ApiResponse<null>>}
+   */
+  @Patch(EndPoint.AdminGroup.Patch.RestoreAdminGroup)
+  @ApiOkResponse({
+    description: 'Admin group restored successfully',
+  })
+  @ApiNotFoundResponse({
+    description: 'Admin group not found',
+  })
+  @ApiBadRequestResponse({
+    description: 'id is not a valid integer',
+  })
+  public async restoreAdminGroup(
+    @Param('id', CustomParseIntPipe) id: number
+  ): Promise<ApiResponse<null>> {
+    this._logger.debug('Restoring admin group:', id);
+
+    const adminGroup = await this._adminGroupService.restoreOne(id);
+
+    this._logger.info('Restored admin group:', adminGroup);
+
+    return new ApiResponse({
+      message: 'adminGroup.success.AdminGroup_restored_successfully',
+      result: null,
+      statusCode: HttpStatus.OK,
+    });
+  }
 }

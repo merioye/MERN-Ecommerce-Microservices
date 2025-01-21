@@ -77,7 +77,7 @@ export class AdminGroupService implements IAdminGroupService {
    */
   public async softDeleteOne(id: number): Promise<AdminGroup> {
     const adminGroup = await this._prismaService.adminGroup.findUnique({
-      where: { id },
+      where: { id, isDeleted: false },
     });
     if (!adminGroup) {
       throw new NotFoundError('adminGroup.error.AdminGroup_not_found');
@@ -107,6 +107,28 @@ export class AdminGroupService implements IAdminGroupService {
 
     return this._prismaService.adminGroup.delete({
       where: { id },
+    });
+  }
+
+  /**
+   * Restores an admin group.
+   * @param {number} id - The ID of the admin group to restore.
+   * @returns {Promise<AdminGroup>} - The restored admin group.
+   */
+  public async restoreOne(id: number): Promise<AdminGroup> {
+    const adminGroup = await this._prismaService.adminGroup.findUnique({
+      where: { id, isDeleted: true },
+    });
+    if (!adminGroup) {
+      throw new NotFoundError('adminGroup.error.AdminGroup_not_found');
+    }
+
+    return this._prismaService.adminGroup.update({
+      where: { id },
+      data: {
+        isDeleted: false,
+        deletedAt: null,
+      },
     });
   }
 }
