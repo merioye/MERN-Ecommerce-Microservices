@@ -66,7 +66,7 @@ export class AdminGroupController {
       slug: data.slug,
     });
 
-    const adminGroup = await this._adminGroupService.create(data);
+    const adminGroup = await this._adminGroupService.createOne(data);
 
     this._logger.info('Created admin group:', {
       id: adminGroup.id,
@@ -194,7 +194,7 @@ export class AdminGroupController {
   })
   public async restoreAdminGroup(
     @Param('id', CustomParseIntPipe) id: number
-  ): Promise<ApiResponse<null>> {
+  ): Promise<ApiResponse<AdminGroup>> {
     this._logger.debug('Restoring admin group:', id);
 
     const adminGroup = await this._adminGroupService.restoreOne(id);
@@ -203,7 +203,7 @@ export class AdminGroupController {
 
     return new ApiResponse({
       message: 'adminGroup.success.AdminGroup_restored_successfully',
-      result: null,
+      result: adminGroup,
       statusCode: HttpStatus.OK,
     });
   }
