@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { TrimString, ValidateIfPresent } from '@ecohatch/utils-api';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateAdminGroupDto {
   @ApiProperty({
@@ -8,8 +9,9 @@ export class CreateAdminGroupDto {
     type: String,
     required: true,
   })
-  @IsNotEmpty({ message: 'common.error.Name_is_required' })
+  @TrimString()
   @IsString({ message: 'common.error.Name_must_be_a_string' })
+  @IsNotEmpty({ message: 'common.error.Name_is_required' })
   name!: string;
 
   @ApiProperty({
@@ -18,8 +20,9 @@ export class CreateAdminGroupDto {
     type: String,
     required: true,
   })
-  @IsNotEmpty({ message: 'common.error.Slug_is_required' })
+  @TrimString()
   @IsString({ message: 'common.error.Slug_must_be_a_string' })
+  @IsNotEmpty({ message: 'common.error.Slug_is_required' })
   slug!: string;
 
   @ApiProperty({
@@ -29,7 +32,9 @@ export class CreateAdminGroupDto {
     required: false,
     default: '',
   })
+  @ValidateIfPresent()
+  @TrimString()
   @IsString({ message: 'common.error.Description_must_be_a_string' })
-  @IsOptional()
-  description?: string = '';
+  @IsNotEmpty({ message: 'common.error.Description_is_required' })
+  description?: string;
 }

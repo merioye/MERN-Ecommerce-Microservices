@@ -16,8 +16,8 @@ export class UpdateAdminGroupDto {
   })
   @ValidateIfPresent()
   @TrimString()
-  @IsNotEmpty({ message: 'common.error.Name_is_required' })
   @IsString({ message: 'common.error.Name_must_be_a_string' })
+  @IsNotEmpty({ message: 'common.error.Name_is_required' })
   name?: string;
 
   @ApiProperty({
@@ -28,8 +28,8 @@ export class UpdateAdminGroupDto {
   })
   @ValidateIfPresent()
   @TrimString()
-  @IsNotEmpty({ message: 'common.error.Slug_is_required' })
   @IsString({ message: 'common.error.Slug_must_be_a_string' })
+  @IsNotEmpty({ message: 'common.error.Slug_is_required' })
   slug?: string;
 
   @ApiProperty({
