@@ -1,10 +1,15 @@
 import { Injectable } from '@nestjs/common';
+import { OffsetPaginatedResult } from '@ecohatch/types-shared';
 import { BadRequestError, NotFoundError } from '@ecohatch/utils-api';
-import { AdminGroup } from '@prisma/client';
+import { AdminGroup, Prisma } from '@prisma/client';
 
 import { BaseAdminGroupService, PrismaService } from '@/database';
 
-import { CreateAdminGroupDto, UpdateAdminGroupDto } from '../dtos';
+import {
+  CreateAdminGroupDto,
+  GetAdminGroupListDto,
+  UpdateAdminGroupDto,
+} from '../dtos';
 import { IAdminGroupService } from '../interfaces';
 
 /**
@@ -111,5 +116,40 @@ export class AdminGroupService
     }
 
     return this.restore({ id });
+  }
+
+  /**
+   * Retrieves a list of admin groups.
+   * @param {GetAdminGroupListDto} query - The query parameters to use when retrieving the list of admin groups.
+   * @returns {Promise<AdminGroup[]> | Promise<OffsetPaginatedResult<AdminGroup>>} - The list of admin groups.
+   */
+  public async findAll(
+    query: GetAdminGroupListDto
+  ): Promise<AdminGroup[] | OffsetPaginatedResult<AdminGroup>> {
+    const { limit, page, isActive, search, withoutPagination, sortBy } = query;
+    const where: Prisma.AdminGroupWhereInput = {
+      isActive: isActive !== undefined ? isActive : undefined,
+      OR: search
+        ? [
+            { name: { contains: search, mode: 'insensitive' } },
+            { description: { contains: search, mode: 'insensitive' } },
+          ]
+        : undefined,
+    };
+
+    if (withoutPagination) {
+      return this.findMany({ where, orderBy: sortBy });
+    }
+
+    return this.offsetPaginate({
+      pagination: {
+        limit,
+        page,
+        withoutPagination,
+        sortBy,
+      },
+      where,
+      orderBy: sortBy,
+    });
   }
 }

@@ -2,11 +2,13 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   HttpStatus,
   Inject,
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -16,6 +18,7 @@ import {
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { OffsetPaginatedResult } from '@ecohatch/types-shared';
 import {
   ApiResponse,
   CustomParseIntPipe,
@@ -27,7 +30,11 @@ import { AdminGroup } from '@prisma/client';
 import { EndPoint } from '@/constants';
 
 import { AdminGroupServiceToken } from '../constants';
-import { CreateAdminGroupDto, UpdateAdminGroupDto } from '../dtos';
+import {
+  CreateAdminGroupDto,
+  GetAdminGroupListDto,
+  UpdateAdminGroupDto,
+} from '../dtos';
 import { IAdminGroupService } from '../interfaces';
 
 /**
@@ -204,6 +211,32 @@ export class AdminGroupController {
     return new ApiResponse({
       message: 'adminGroup.success.AdminGroup_restored_successfully',
       result: adminGroup,
+      statusCode: HttpStatus.OK,
+    });
+  }
+
+  /**
+   * Gets a list of all admin groups.
+   * @param {GetAdminGroupListDto} query - The query parameters for the request.
+   * @returns {Promise<ApiResponse<AdminGroup[] | OffsetPaginatedResult<AdminGroup>>>} - The list of admin groups.
+   */
+  @Get(EndPoint.AdminGroup.Get.GetAdminGroupList)
+  @ApiOkResponse({
+    description: 'Data fetched successfully',
+  })
+  @ApiBadRequestResponse({
+    description: 'Request query Validation failed',
+  })
+  public async getAdminGroupList(
+    @Query() query: GetAdminGroupListDto
+  ): Promise<ApiResponse<AdminGroup[] | OffsetPaginatedResult<AdminGroup>>> {
+    this._logger.debug('Getting admin group list:', query);
+
+    const adminGroupList = await this._adminGroupService.findAll(query);
+
+    return new ApiResponse({
+      message: 'common.success.Data_fetched_successfully',
+      result: adminGroupList,
       statusCode: HttpStatus.OK,
     });
   }

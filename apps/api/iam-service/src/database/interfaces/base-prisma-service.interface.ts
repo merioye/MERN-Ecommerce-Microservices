@@ -1,3 +1,8 @@
+import {
+  CursorPaginatedResult,
+  OffsetPaginatedResult,
+} from '@ecohatch/types-shared';
+import { CursorPaginationDto, OffsetPaginationDto } from '@ecohatch/utils-api';
 import { PrismaClient } from '@prisma/client';
 
 import { AuditField, BaseEntity, SoftDeleteField } from '@/types';
@@ -16,13 +21,13 @@ import { AuditField, BaseEntity, SoftDeleteField } from '@/types';
  */
 export interface IBasePrismaService<
   T extends BaseEntity,
-  CreateInput,
-  UpdateInput,
-  WhereInput,
-  Select,
-  Include,
-  OrderBy,
-  ScalarField,
+  CreateInput = never,
+  UpdateInput = never,
+  WhereInput = never,
+  Select = never,
+  Include = never,
+  OrderBy = never,
+  ScalarField = never,
 > {
   /**
    * Execute operations within a transaction
@@ -298,4 +303,34 @@ export interface IBasePrismaService<
     },
     userAccountId?: number
   ): Promise<void>;
+
+  /**
+   * Paginate entities using offset-based pagination
+   * @param params - Pagination and query parameters
+   * @returns Paginated response
+   */
+  offsetPaginate(params: {
+    pagination: OffsetPaginationDto;
+    where?: Omit<WhereInput, SoftDeleteField>;
+    select?: Select;
+    include?: Include;
+    orderBy?: OrderBy;
+    distinct?: ScalarField[];
+    withDeleted?: boolean;
+  }): Promise<OffsetPaginatedResult<T>>;
+
+  /**
+   * Paginate entities using cursor-based pagination
+   * @param params - Pagination and query parameters
+   * @returns Paginated response
+   */
+  cursorPaginate(params: {
+    pagination: CursorPaginationDto;
+    where?: Omit<WhereInput, SoftDeleteField>;
+    select?: Select;
+    include?: Include;
+    orderBy?: OrderBy;
+    distinct?: ScalarField[];
+    withDeleted?: boolean;
+  }): Promise<CursorPaginatedResult<T>>;
 }

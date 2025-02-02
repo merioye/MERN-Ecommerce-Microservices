@@ -4,6 +4,7 @@ export * from './constants';
 export * from './config';
 export * from './common/errors';
 export * from './common/utils';
+export * from './common/pagination';
 export * from './core/filters';
 export * from './core/pipes';
 export * from './core/decorators';

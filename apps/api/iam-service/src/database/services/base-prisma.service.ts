@@ -3,7 +3,15 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { IBasePrismaService } from '@/database/interfaces';
-import { ConflictError } from '@ecohatch/utils-api';
+import {
+  CursorPaginatedResult,
+  OffsetPaginatedResult,
+} from '@ecohatch/types-shared';
+import {
+  ConflictError,
+  CursorPaginationDto,
+  OffsetPaginationDto,
+} from '@ecohatch/utils-api';
 import { Prisma, PrismaClient } from '@prisma/client';
 
 import { PrismaService } from '@/database';
@@ -142,7 +150,7 @@ export abstract class BasePrismaService<
     return this.model;
   }
 
-  async transaction<R>(
+  public async transaction<R>(
     fn: (
       tx: Parameters<Parameters<PrismaClient['$transaction']>[0]>[0]
     ) => Promise<R>
@@ -152,7 +160,7 @@ export abstract class BasePrismaService<
     });
   }
 
-  async create(
+  public async create(
     data: Omit<CreateInput, AuditField>,
     userAccountId: number | null = null,
     options: {
@@ -170,7 +178,7 @@ export abstract class BasePrismaService<
     }) as Promise<T>;
   }
 
-  async createMany(
+  public async createMany(
     data: Omit<CreateInput, AuditField>[],
     userAccountId: number | null = null,
     options: {
@@ -190,7 +198,7 @@ export abstract class BasePrismaService<
     }) as Promise<T[]>;
   }
 
-  async findById(
+  public async findById(
     id: number,
     options: {
       select?: Select;
@@ -207,7 +215,7 @@ export abstract class BasePrismaService<
     }) as Promise<T | null>;
   }
 
-  async findOne(params: {
+  public async findOne(params: {
     where: Omit<WhereInput, SoftDeleteField>;
     select?: Select;
     include?: Include;
@@ -223,7 +231,7 @@ export abstract class BasePrismaService<
     }) as Promise<T | null>;
   }
 
-  async findOrCreate(
+  public async findOrCreate(
     where: Omit<WhereInput, SoftDeleteField>,
     data: Omit<CreateInput, AuditField>,
     userAccountId: number | null = null,
@@ -246,7 +254,7 @@ export abstract class BasePrismaService<
     return this.create(data, userAccountId, options);
   }
 
-  async findMany(
+  public async findMany(
     params: {
       where?: Omit<WhereInput, SoftDeleteField>;
       select?: Select;
@@ -267,7 +275,7 @@ export abstract class BasePrismaService<
     }) as Promise<T[]>;
   }
 
-  async count(
+  public async count(
     params: {
       where?: Omit<WhereInput, SoftDeleteField>;
       select?: Select;
@@ -284,7 +292,7 @@ export abstract class BasePrismaService<
     }) as Promise<number>;
   }
 
-  async findManyComplex(params: {
+  public async findManyComplex(params: {
     where: Omit<WhereInput, SoftDeleteField>;
     select?: Select;
     include?: Include;
@@ -305,7 +313,7 @@ export abstract class BasePrismaService<
     }) as Promise<T[]>;
   }
 
-  async update(
+  public async update(
     where: WhereInput,
     data: Omit<UpdateInput, AuditField>,
     userAccountId: number | null = null,
@@ -326,7 +334,7 @@ export abstract class BasePrismaService<
     }) as Promise<T>;
   }
 
-  async updateMany(
+  public async updateMany(
     where: WhereInput,
     data: Omit<UpdateInput, AuditField>,
     userAccountId: number | null = null
@@ -342,7 +350,7 @@ export abstract class BasePrismaService<
     }) as Promise<T[]>;
   }
 
-  async upsert(
+  public async upsert(
     where: WhereInput,
     data: {
       update: Omit<UpdateInput, AuditField>;
@@ -370,7 +378,7 @@ export abstract class BasePrismaService<
     }) as Promise<T>;
   }
 
-  async updateWithOptimisticLock(
+  public async updateWithOptimisticLock(
     id: number,
     data: Omit<UpdateInput, AuditField>,
     version: number,
@@ -402,7 +410,7 @@ export abstract class BasePrismaService<
     });
   }
 
-  async delete(
+  public async delete(
     where: WhereInput,
     options: { select?: Select; include?: Include } = {}
   ): Promise<T> {
@@ -412,7 +420,7 @@ export abstract class BasePrismaService<
     }) as Promise<T>;
   }
 
-  async softDelete(
+  public async softDelete(
     where: WhereInput,
     userAccountId: number | null = null,
     options?: { select?: Select; include?: Include }
@@ -431,7 +439,7 @@ export abstract class BasePrismaService<
     }) as Promise<T>;
   }
 
-  async softDeleteMany(
+  public async softDeleteMany(
     where: WhereInput,
     userAccountId: number | null = null
   ): Promise<T[]> {
@@ -448,7 +456,7 @@ export abstract class BasePrismaService<
     }) as Promise<T[]>;
   }
 
-  async restore(
+  public async restore(
     where: WhereInput,
     userAccountId: number | null = null,
     options?: { select?: Select; include?: Include }
@@ -468,7 +476,7 @@ export abstract class BasePrismaService<
     }) as Promise<T>;
   }
 
-  async restoreMany(
+  public async restoreMany(
     where: WhereInput,
     userAccountId: number | null = null
   ): Promise<T[]> {
@@ -486,7 +494,7 @@ export abstract class BasePrismaService<
     }) as Promise<T[]>;
   }
 
-  async bulkOperations(
+  public async bulkOperations(
     operations: {
       create?: Omit<CreateInput, AuditField>[];
       update?: { where: WhereInput; data: Omit<UpdateInput, AuditField> }[];
@@ -530,5 +538,85 @@ export abstract class BasePrismaService<
         );
       }
     });
+  }
+
+  public async offsetPaginate(params: {
+    pagination: OffsetPaginationDto;
+    where?: Omit<WhereInput, SoftDeleteField>;
+    select?: Select;
+    include?: Include;
+    orderBy?: OrderBy;
+    distinct?: ScalarField[];
+    withDeleted?: boolean;
+  }): Promise<OffsetPaginatedResult<T>> {
+    const {
+      pagination: { limit, page },
+      ...rest
+    } = params;
+
+    const skip = (page - 1) * limit;
+
+    const [items, totalItems] = await Promise.all([
+      this.findMany({
+        skip,
+        take: limit,
+        ...rest,
+      }),
+      this.count({
+        where: params.where,
+        distinct: params.distinct,
+        withDeleted: params.withDeleted,
+      }),
+    ]);
+    const totalPages = Math.ceil(totalItems / limit) || 1;
+
+    return {
+      items,
+      limit,
+      page,
+      totalPages,
+      totalItems,
+    };
+  }
+
+  public async cursorPaginate(params: {
+    pagination: CursorPaginationDto;
+    where?: Omit<WhereInput, SoftDeleteField>;
+    select?: Select;
+    include?: Include;
+    orderBy?: OrderBy;
+    distinct?: ScalarField[];
+    withDeleted?: boolean;
+  }): Promise<CursorPaginatedResult<T>> {
+    const {
+      pagination: { limit, cursor },
+      withDeleted,
+      ...rest
+    } = params;
+
+    const filter = this.buildSoftDeletionFilter(withDeleted);
+    const where = { ...params?.where, ...filter };
+
+    // Fetch one extra item to determine if there's a next page
+    const take = limit + 1;
+
+    const items = (await this._model.findMany({
+      ...rest,
+      where,
+      take,
+      orderBy: rest?.orderBy || { id: 'asc' },
+      ...(cursor ? { cursor: { id: Number(cursor) }, skip: 1 } : {}),
+    })) as T[];
+
+    const hasNextPage = items.length > limit;
+    const data = hasNextPage ? items.slice(0, -1) : items;
+    const lastItem = data[data.length - 1];
+    const nextCursor = lastItem?.id?.toString();
+
+    return {
+      items: data,
+      nextCursor: nextCursor ? nextCursor : null,
+      hasNextPage,
+    };
   }
 }
