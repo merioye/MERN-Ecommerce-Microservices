@@ -240,4 +240,27 @@ export class AdminGroupController {
       statusCode: HttpStatus.OK,
     });
   }
+
+  /**
+   * Gets an admin group by slug.
+   * @param {string} slug - The slug of the admin group to retrieve.
+   * @returns {Promise<ApiResponse<AdminGroup | null>>>} - The admin group.
+   */
+  @Get(EndPoint.AdminGroup.Get.GetAdminGroupBySlug)
+  @ApiOkResponse({
+    description: 'Data fetched successfully',
+  })
+  public async getAdminGroupBySlug(
+    @Param('slug') slug: string
+  ): Promise<ApiResponse<AdminGroup>> {
+    this._logger.debug('Getting admin group by slug:', slug);
+
+    const adminGroup = await this._adminGroupService.findBySlug(slug);
+
+    return new ApiResponse({
+      message: 'common.success.Data_fetched_successfully',
+      result: adminGroup,
+      statusCode: HttpStatus.OK,
+    });
+  }
 }

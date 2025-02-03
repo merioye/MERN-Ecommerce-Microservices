@@ -152,4 +152,15 @@ export class AdminGroupService
       orderBy: sortBy,
     });
   }
+
+  /**
+   * Retrieves an admin group by its slug.
+   * @param {string} slug - The slug of the admin group to retrieve.
+   * @returns {Promise<AdminGroup | null>} - The admin group, or null if not found.
+   */
+  public async findBySlug(slug: string): Promise<AdminGroup | null> {
+    return this.findOne({
+      where: { slug },
+    });
+  }
 }

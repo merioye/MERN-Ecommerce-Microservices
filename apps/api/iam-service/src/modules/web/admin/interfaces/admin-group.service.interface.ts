@@ -16,4 +16,5 @@ export interface IAdminGroupService {
   findAll(
     query: GetAdminGroupListDto
   ): Promise<AdminGroup[] | OffsetPaginatedResult<AdminGroup>>;
+  findBySlug(slug: string): Promise<AdminGroup | null>;
 }

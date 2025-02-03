@@ -19,6 +19,7 @@ export const EndPoint = {
     },
     Get: {
       GetAdminGroupList: '/',
+      GetAdminGroupBySlug: '/:slug',
     },
   },
 } as const;
