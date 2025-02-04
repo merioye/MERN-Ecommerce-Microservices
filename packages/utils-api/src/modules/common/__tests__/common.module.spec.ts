@@ -2,7 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CommonAppModule } from '@/modules/common';
 import { LoggerModule, LoggerToken } from '@/modules/common/logger';
 
-import { LoggerModuleOptions, TranslatorModuleOptions } from '@/types';
+import {
+  CacheModuleOptions,
+  LoggerModuleOptions,
+  TranslatorModuleOptions,
+} from '@/types';
 import { Environment } from '@/enums';
 import { TranslationKeySeparator } from '@/constants';
 
@@ -29,6 +33,13 @@ const translatorModuleOptions: TranslatorModuleOptions = {
   translationKeySeparator: TranslationKeySeparator,
 };
 
+/**
+ * CacheModule options
+ */
+const cacheModuleOptions: CacheModuleOptions = {
+  url: 'redis://localhost:6379',
+};
+
 describe('CommonAppModule', () => {
   let module: TestingModule;
 
@@ -46,6 +57,7 @@ describe('CommonAppModule', () => {
         CommonAppModule.forRoot({
           logger: loggerModuleOptions,
           translator: translatorModuleOptions,
+          cache: cacheModuleOptions,
         }),
         CommonAppModule,
       ],

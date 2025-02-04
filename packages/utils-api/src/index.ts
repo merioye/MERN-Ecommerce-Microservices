@@ -11,4 +11,6 @@ export * from './core/decorators';
 export * from './core/interceptors/response';
 export * from './modules/common/translator';
 export * from './modules/common/logger';
+export * from './modules/common/hash';
+export * from './modules/common/cache';
 export * from './modules/common';

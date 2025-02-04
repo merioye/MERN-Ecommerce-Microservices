@@ -1,6 +1,7 @@
 import { join, resolve } from 'path';
 import { ConfigModuleOptions } from '@nestjs/config';
 import {
+  CacheModuleOptions,
   Environment,
   LoggerModuleOptions,
   TranslationKeySeparator,
@@ -39,6 +40,7 @@ const configOptions: ConfigModuleOptions = {
     PRISMA_SCHEMA_PATH: Joi.string().required(),
     SWAGGER_USERNAME: Joi.string().required(),
     SWAGGER_PASSWORD: Joi.string().required(),
+    CACHE_URL: Joi.string().required(),
   }),
   validationOptions: {
     abortEarly: true,
@@ -71,4 +73,16 @@ const translatorModuleOptions: TranslatorModuleOptions = {
   translationKeySeparator: TranslationKeySeparator,
 };
 
-export { configOptions, loggerModuleOptions, translatorModuleOptions };
+/**
+ * CacheModule options
+ */
+const cacheModuleOptions: CacheModuleOptions = {
+  url: process.env[Config.CACHE_URL]!,
+};
+
+export {
+  configOptions,
+  loggerModuleOptions,
+  translatorModuleOptions,
+  cacheModuleOptions,
+};

@@ -1,5 +1,7 @@
 import { DynamicModule } from '@nestjs/common';
 
+import { CacheModule } from './cache';
+import { HashModule } from './hash';
 import { LoggerModule } from './logger';
 import { TranslatorModule } from './translator';
 import { CommonAppModuleOptions } from './types';
@@ -21,12 +23,15 @@ export class CommonAppModule {
   public static forRoot({
     logger,
     translator,
+    cache,
   }: CommonAppModuleOptions): DynamicModule {
     return {
       module: CommonAppModule,
       imports: [
+        HashModule,
         LoggerModule.forRoot(logger),
         TranslatorModule.forRoot(translator),
+        CacheModule.register(cache),
       ],
     };
   }

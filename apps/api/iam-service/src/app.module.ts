@@ -8,9 +8,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import {
   AllExceptionsFilter,
+  CACHE_SERVICE,
   CommonAppModule,
+  CustomCacheInterceptor,
   ExceptionHandlingStrategyFactory,
+  ICacheService,
   ILogger,
+  InvalidateCacheInterceptor,
   LoggerToken,
   TranslateMessageInterceptor,
   validationPipeOptions,
@@ -19,6 +23,7 @@ import helmet from 'helmet';
 import { GracefulShutdownModule } from 'nestjs-graceful-shutdown';
 
 import {
+  cacheModuleOptions,
   configOptions,
   loggerModuleOptions,
   translatorModuleOptions,
@@ -45,13 +50,15 @@ import { WebAppModule } from './modules/web';
     CommonAppModule.forRoot({
       logger: loggerModuleOptions,
       translator: translatorModuleOptions,
+      cache: cacheModuleOptions,
     }),
     GracefulShutdownModule.forRootAsync({
-      inject: [ConfigService, PrismaService, LoggerToken],
+      inject: [ConfigService, PrismaService, LoggerToken, CACHE_SERVICE],
       useFactory: (
         configService: ConfigService,
         prismaService: PrismaService,
-        logger: ILogger
+        logger: ILogger,
+        cacheService: ICacheService
       ) => ({
         gracefulShutdownTimeout: configService.get<number>(
           Config.GRACEFUL_SHUTDOWN_TIMEOUT
@@ -61,6 +68,9 @@ import { WebAppModule } from './modules/web';
           logger.info('Closing Prisma connection...');
           await prismaService.$disconnect();
           logger.info('Prisma connection closed.');
+          logger.info('Closing Cache connection...');
+          await cacheService.disconnect();
+          logger.info('Cache connection closed.');
         },
       }),
     }),
@@ -68,6 +78,8 @@ import { WebAppModule } from './modules/web';
   ],
   providers: [
     { provide: APP_INTERCEPTOR, useClass: TranslateMessageInterceptor },
+    { provide: APP_INTERCEPTOR, useClass: CustomCacheInterceptor },
+    { provide: APP_INTERCEPTOR, useClass: InvalidateCacheInterceptor },
     { provide: APP_FILTER, useClass: AllExceptionsFilter },
     {
       provide: APP_PIPE,

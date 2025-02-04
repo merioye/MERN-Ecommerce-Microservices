@@ -5,7 +5,11 @@ import {
   TranslatorServiceToken,
 } from '@ecohatch/utils-api';
 
-import { loggerModuleOptions, translatorModuleOptions } from '@/config';
+import {
+  cacheModuleOptions,
+  loggerModuleOptions,
+  translatorModuleOptions,
+} from '@/config';
 
 import { HealthServiceToken } from '../constants';
 import { HealthController } from '../health.controller';
@@ -29,6 +33,7 @@ describe('HealthModule', () => {
         CommonAppModule.forRoot({
           logger: loggerModuleOptions,
           translator: translatorModuleOptions,
+          cache: cacheModuleOptions,
         }),
         HealthModule,
       ],

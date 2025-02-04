@@ -18,6 +18,7 @@ enum Config {
   SWAGGER_PASSWORD = 'SWAGGER_PASSWORD',
   NPM_PACKAGE_VERSION = 'npm_package_version',
   NPM_PACKAGE_DESCRIPTION = 'npm_package_description',
+  CACHE_URL = 'CACHE_URL',
 }
 
 export { Config };

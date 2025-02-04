@@ -103,4 +103,17 @@ export type TranslatorModuleOptions = {
   translationKeySeparator: string;
 };
 
+/**
+ * Type representing the CacheModuleOptions.
+ *
+ * @typedef CacheModuleOptions
+ *
+ * @property {string} url - The URL of the cache server.
+ * @property {number} [ttl] - The time-to-live (TTL) of the cache entry in seconds. If not specified, the cache entry will be stored indefinitely.
+ */
+export type CacheModuleOptions = {
+  url: string;
+  ttl?: number;
+};
+
 export * from './api-response.types';

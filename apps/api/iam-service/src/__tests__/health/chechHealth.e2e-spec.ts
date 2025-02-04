@@ -4,7 +4,11 @@ import { HealthModule } from '@/modules/web/health';
 import { CommonAppModule, TranslatorServiceToken } from '@ecohatch/utils-api';
 import request from 'supertest';
 
-import { loggerModuleOptions, translatorModuleOptions } from '@/config';
+import {
+  cacheModuleOptions,
+  loggerModuleOptions,
+  translatorModuleOptions,
+} from '@/config';
 import { EndPoint } from '@/constants';
 
 describe(`GET ${EndPoint.Health.Get.HealthCheck}`, () => {
@@ -20,6 +24,7 @@ describe(`GET ${EndPoint.Health.Get.HealthCheck}`, () => {
         CommonAppModule.forRoot({
           logger: loggerModuleOptions,
           translator: translatorModuleOptions,
+          cache: cacheModuleOptions,
         }),
         HealthModule,
       ],

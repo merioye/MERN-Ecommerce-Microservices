@@ -116,7 +116,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
   private async connectWithRetry(attempt: number = 1): Promise<void> {
     try {
       await this.$connect();
-      this._logger.info('Successfully connected to database');
+      this._logger.info('Successfully connected to database 🚀');
     } catch (error) {
       if (attempt >= this._maxRetries) {
         this._logger.error(
