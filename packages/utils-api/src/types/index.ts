@@ -93,14 +93,12 @@ export type LoggerModuleOptions = {
  * @property {string} translationsDirPath - The path to the directory containing the translation files.
  * @property {string} translationsFileName - The name of the file that contains the translations.
  * @property {string} langExtractionKey - The key used to extract the language from the incoming request.
- * @property {string} translationKeySeparator - The separator used to separate the translation key from the arguments.
  */
 export type TranslatorModuleOptions = {
   fallbackLanguage: string;
   translationsDirPath: string;
   translationsFileName: string;
   langExtractionKey: string;
-  translationKeySeparator: string;
 };
 
 /**

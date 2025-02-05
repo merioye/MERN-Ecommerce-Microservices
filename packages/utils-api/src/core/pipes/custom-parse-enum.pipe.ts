@@ -6,9 +6,9 @@ import {
   PipeTransform,
 } from '@nestjs/common';
 import { RequestValidationError } from '@/common/errors';
+import { TRANSLATION_KEY_SEPARATOR } from '@/modules/common/translator';
 
 import { ErrorFormat } from '@/types';
-import { TranslationKeySeparator } from '@/constants';
 
 /**
  * Custom Parse Enum Pipe
@@ -51,7 +51,7 @@ export class CustomParseEnumPipe
       const allowedValues = Object.values(this.enumType);
       const errors: ErrorFormat[] = [
         {
-          message: `common.error.invalid_enum${TranslationKeySeparator}${JSON.stringify(
+          message: `common.error.invalid_enum${TRANSLATION_KEY_SEPARATOR}${JSON.stringify(
             {
               field: data,
               allowedValues: allowedValues.join(', '),

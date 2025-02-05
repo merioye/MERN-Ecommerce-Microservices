@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import {
   CommonAppModule,
-  LoggerToken,
-  TranslatorServiceToken,
+  LOGGER,
+  TRANSLATOR_SERVICE,
 } from '@ecohatch/utils-api';
 
 import {
@@ -11,7 +11,7 @@ import {
   translatorModuleOptions,
 } from '@/config';
 
-import { HealthServiceToken } from '../constants';
+import { HEALTH_SERVICE } from '../constants';
 import { HealthController } from '../health.controller';
 import { HealthModule } from '../health.module';
 import { HealthService } from '../services';
@@ -38,9 +38,9 @@ describe('HealthModule', () => {
         HealthModule,
       ],
     })
-      .overrideProvider(TranslatorServiceToken)
+      .overrideProvider(TRANSLATOR_SERVICE)
       .useValue(mockTranslatorService)
-      .overrideProvider(LoggerToken)
+      .overrideProvider(LOGGER)
       .useValue(mockLogger)
       .compile();
   });
@@ -55,6 +55,6 @@ describe('HealthModule', () => {
 
   it('should have HealthModule components', () => {
     expect(module.get(HealthController)).toBeInstanceOf(HealthController);
-    expect(module.get(HealthServiceToken)).toBeInstanceOf(HealthService);
+    expect(module.get(HEALTH_SERVICE)).toBeInstanceOf(HealthService);
   });
 });

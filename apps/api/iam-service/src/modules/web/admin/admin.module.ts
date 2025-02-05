@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AdminGroupServiceToken } from './constants';
+import { ADMIN_GROUP_SERVICE } from './constants';
 import { AdminGroupController } from './controllers';
 import { AdminGroupService } from './services';
 
@@ -15,7 +15,7 @@ import { AdminGroupService } from './services';
   controllers: [AdminGroupController],
   providers: [
     {
-      provide: AdminGroupServiceToken,
+      provide: ADMIN_GROUP_SERVICE,
       useClass: AdminGroupService,
     },
   ],

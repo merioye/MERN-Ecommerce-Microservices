@@ -10,10 +10,9 @@ import {
 import { TranslatorModuleOptions } from '@/types';
 
 import {
-  TranslationKeyFormatterServiceToken,
-  TranslationKeySeparatorToken,
-  TranslationsFileNameToken,
-  TranslatorServiceToken,
+  TRANSLATION_KEY_FORMATTER_SERVICE,
+  TRANSLATIONS_FILENAME,
+  TRANSLATOR_SERVICE,
 } from './constants';
 import {
   NestI18nTranslatorService,
@@ -40,7 +39,6 @@ export class TranslatorModule {
     translationsDirPath,
     translationsFileName,
     langExtractionKey,
-    translationKeySeparator,
   }: TranslatorModuleOptions): DynamicModule {
     return {
       global: true,
@@ -62,23 +60,19 @@ export class TranslatorModule {
       ],
       providers: [
         {
-          provide: TranslationsFileNameToken,
+          provide: TRANSLATIONS_FILENAME,
           useValue: translationsFileName,
         },
         {
-          provide: TranslationKeySeparatorToken,
-          useValue: translationKeySeparator,
-        },
-        {
-          provide: TranslationKeyFormatterServiceToken,
+          provide: TRANSLATION_KEY_FORMATTER_SERVICE,
           useClass: TranslationKeyFormatterService,
         },
         {
-          provide: TranslatorServiceToken,
+          provide: TRANSLATOR_SERVICE,
           useClass: NestI18nTranslatorService,
         },
       ],
-      exports: [TranslatorServiceToken],
+      exports: [TRANSLATOR_SERVICE],
     };
   }
 }

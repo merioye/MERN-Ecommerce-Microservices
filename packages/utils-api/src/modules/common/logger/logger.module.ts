@@ -2,7 +2,7 @@ import { DynamicModule } from '@nestjs/common';
 
 import { LoggerModuleOptions } from '@/types';
 
-import { LoggerToken } from './constants';
+import { LOGGER } from './constants';
 import { WinstonLogger } from './loggers';
 
 /**
@@ -25,9 +25,9 @@ export class LoggerModule {
       global: true,
       module: LoggerModule,
       providers: [
-        { provide: LoggerToken, useValue: WinstonLogger.getInstance(options) },
+        { provide: LOGGER, useValue: WinstonLogger.getInstance(options) },
       ],
-      exports: [LoggerToken],
+      exports: [LOGGER],
     };
   }
 }

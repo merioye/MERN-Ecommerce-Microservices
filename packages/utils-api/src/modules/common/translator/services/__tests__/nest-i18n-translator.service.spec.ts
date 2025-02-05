@@ -3,8 +3,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { I18nContext, I18nService } from 'nestjs-i18n';
 
 import {
-  TranslationKeyFormatterServiceToken,
-  TranslationsFileNameToken,
+  TRANSLATION_KEY_FORMATTER_SERVICE,
+  TRANSLATIONS_FILENAME,
 } from '../../constants';
 import { ITranslationKeyFormatterService } from '../../interfaces';
 import { NestI18nTranslatorService } from '../nest-i18n-translator.service';
@@ -36,11 +36,11 @@ describe('NestI18nTranslatorService', () => {
           useValue: i18nService,
         },
         {
-          provide: TranslationKeyFormatterServiceToken,
+          provide: TRANSLATION_KEY_FORMATTER_SERVICE,
           useValue: formatterService,
         },
         {
-          provide: TranslationsFileNameToken,
+          provide: TRANSLATIONS_FILENAME,
           useValue: translationsFileName,
         },
       ],
@@ -70,11 +70,11 @@ describe('NestI18nTranslatorService', () => {
           providers: [
             NestI18nTranslatorService,
             {
-              provide: TranslationKeyFormatterServiceToken,
+              provide: TRANSLATION_KEY_FORMATTER_SERVICE,
               useValue: formatterService,
             },
             {
-              provide: TranslationsFileNameToken,
+              provide: TRANSLATIONS_FILENAME,
               useValue: translationsFileName,
             },
           ],
@@ -92,7 +92,7 @@ describe('NestI18nTranslatorService', () => {
               useValue: i18nService,
             },
             {
-              provide: TranslationsFileNameToken,
+              provide: TRANSLATIONS_FILENAME,
               useValue: translationsFileName,
             },
           ],
@@ -174,11 +174,11 @@ describe('NestI18nTranslatorService', () => {
             useValue: i18nService,
           },
           {
-            provide: TranslationKeyFormatterServiceToken,
+            provide: TRANSLATION_KEY_FORMATTER_SERVICE,
             useValue: formatterService,
           },
           {
-            provide: TranslationsFileNameToken,
+            provide: TRANSLATIONS_FILENAME,
             useValue: '',
           },
         ],

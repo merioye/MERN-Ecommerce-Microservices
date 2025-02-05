@@ -1,8 +1,7 @@
 /* eslint-disable jest/no-jasmine-globals */
 import { ArgumentMetadata, Optional, Paramtype } from '@nestjs/common';
 import { RequestValidationError } from '@/common/errors';
-
-import { TranslationKeySeparator } from '@/constants';
+import { TRANSLATION_KEY_SEPARATOR } from '@/modules/common/translator';
 
 import { CustomParseIntPipe } from '../custom-parse-int.pipe';
 
@@ -101,7 +100,7 @@ describe('CustomParseIntPipe', () => {
         expect(error).toBeInstanceOf(RequestValidationError);
         expect((error as RequestValidationError).errors).toEqual([
           {
-            message: `common.error.invalid_int${TranslationKeySeparator}${JSON.stringify(
+            message: `common.error.invalid_int${TRANSLATION_KEY_SEPARATOR}${JSON.stringify(
               {
                 field: 'price',
               }

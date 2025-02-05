@@ -1,4 +1,4 @@
 // Dependency Injection Tokens
-const LoggerToken = Symbol('LoggerToken');
+const LOGGER = Symbol('LOGGER');
 
-export { LoggerToken };
+export { LOGGER };

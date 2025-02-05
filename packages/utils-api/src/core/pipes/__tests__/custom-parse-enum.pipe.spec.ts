@@ -1,8 +1,7 @@
 /* eslint-disable jest/no-jasmine-globals */
 import { ArgumentMetadata, Optional, Paramtype } from '@nestjs/common';
 import { RequestValidationError } from '@/common/errors';
-
-import { TranslationKeySeparator } from '@/constants';
+import { TRANSLATION_KEY_SEPARATOR } from '@/modules/common/translator';
 
 import { CustomParseEnumPipe } from '../custom-parse-enum.pipe';
 
@@ -78,7 +77,7 @@ describe('CustomParseEnumPipe', () => {
         expect(error).toBeInstanceOf(RequestValidationError);
         expect((error as RequestValidationError).errors).toEqual([
           {
-            message: `common.error.invalid_enum${TranslationKeySeparator}${JSON.stringify(
+            message: `common.error.invalid_enum${TRANSLATION_KEY_SEPARATOR}${JSON.stringify(
               {
                 field: 'status',
                 allowedValues: 'one, two, three',

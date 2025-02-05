@@ -5,10 +5,10 @@ import { HttpAdapterHost } from '@nestjs/core';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Request, Response } from 'express';
 import { CustomError, RequestValidationError } from '@/common/errors';
-import { ILogger, LoggerToken } from '@/modules/common/logger';
+import { ILogger, LOGGER } from '@/modules/common/logger';
 import {
   ITranslatorService,
-  TranslatorServiceToken,
+  TRANSLATOR_SERVICE,
 } from '@/modules/common/translator';
 
 import { ExceptionResponseBody } from '@/types';
@@ -90,7 +90,7 @@ describe('AllExceptionsFilter', () => {
       providers: [
         AllExceptionsFilter,
         {
-          provide: LoggerToken,
+          provide: LOGGER,
           useValue: mockLogger,
         },
         {
@@ -102,7 +102,7 @@ describe('AllExceptionsFilter', () => {
           useValue: mockConfigService,
         },
         {
-          provide: TranslatorServiceToken,
+          provide: TRANSLATOR_SERVICE,
           useValue: mockTranslatorService,
         },
         {

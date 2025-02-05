@@ -1,8 +1,7 @@
 /* eslint-disable jest/no-jasmine-globals */
 import { ArgumentMetadata, Optional, Paramtype } from '@nestjs/common';
 import { RequestValidationError } from '@/common/errors';
-
-import { TranslationKeySeparator } from '@/constants';
+import { TRANSLATION_KEY_SEPARATOR } from '@/modules/common/translator';
 
 import { CustomParseUUIDPipe } from '../custom-parse-uuid.pipe';
 
@@ -91,7 +90,7 @@ describe('CustomParseUUIDPipe', () => {
         expect(error).toBeInstanceOf(RequestValidationError);
         expect((error as RequestValidationError).errors).toEqual([
           {
-            message: `common.error.invalid_uuid${TranslationKeySeparator}${JSON.stringify(
+            message: `common.error.invalid_uuid${TRANSLATION_KEY_SEPARATOR}${JSON.stringify(
               {
                 field: 'id',
               }

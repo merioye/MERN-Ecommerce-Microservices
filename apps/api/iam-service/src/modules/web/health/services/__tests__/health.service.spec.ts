@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TranslatorServiceToken } from '@ecohatch/utils-api';
+import { TRANSLATOR_SERVICE } from '@ecohatch/utils-api';
 
 import { Health } from '../../types';
 import { HealthService } from '../health.service';
@@ -27,7 +27,7 @@ describe('HealthService', () => {
       providers: [
         HealthService,
         {
-          provide: TranslatorServiceToken,
+          provide: TRANSLATOR_SERVICE,
           useValue: mockTranslatorService,
         },
       ],
@@ -149,7 +149,7 @@ describe('HealthService', () => {
         providers: [
           HealthService,
           {
-            provide: TranslatorServiceToken,
+            provide: TRANSLATOR_SERVICE,
             useValue: mockTranslatorService,
           },
         ],

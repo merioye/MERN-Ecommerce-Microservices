@@ -1,8 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import {
-  ITranslatorService,
-  TranslatorServiceToken,
-} from '@ecohatch/utils-api';
+import { ITranslatorService, TRANSLATOR_SERVICE } from '@ecohatch/utils-api';
 
 import { PrismaService } from '@/database';
 
@@ -25,7 +22,7 @@ export class HealthService implements IHealthService {
    * @param prismaService - The Prisma service
    */
   public constructor(
-    @Inject(TranslatorServiceToken)
+    @Inject(TRANSLATOR_SERVICE)
     private readonly _translatorService: ITranslatorService,
     private readonly _prismaService: PrismaService
   ) {}

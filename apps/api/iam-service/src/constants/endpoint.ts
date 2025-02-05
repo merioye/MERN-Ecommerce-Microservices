@@ -1,4 +1,4 @@
-export const EndPoint = {
+export const ENDPOINT = {
   Health: {
     Get: {
       HealthCheck: '/healthcheck',

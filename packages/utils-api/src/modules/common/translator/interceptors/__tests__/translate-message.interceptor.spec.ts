@@ -3,7 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ApiResponse } from '@/common/utils';
 import {
   ITranslatorService,
-  TranslatorServiceToken,
+  TRANSLATOR_SERVICE,
 } from '@/modules/common/translator';
 import { of } from 'rxjs';
 
@@ -18,7 +18,7 @@ describe('TranslateMessageInterceptor', () => {
       providers: [
         TranslateMessageInterceptor,
         {
-          provide: TranslatorServiceToken,
+          provide: TRANSLATOR_SERVICE,
           useValue: {
             t: jest.fn((message: string) => `Translated: ${message}`),
           },
@@ -29,7 +29,7 @@ describe('TranslateMessageInterceptor', () => {
     interceptor = module.get<TranslateMessageInterceptor>(
       TranslateMessageInterceptor
     );
-    translatorService = module.get<ITranslatorService>(TranslatorServiceToken);
+    translatorService = module.get<ITranslatorService>(TRANSLATOR_SERVICE);
   });
 
   it('should be defined', () => {

@@ -1,7 +1,7 @@
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test, TestingModule } from '@nestjs/testing';
 import { HealthModule } from '@/modules/web/health';
-import { CommonAppModule, TranslatorServiceToken } from '@ecohatch/utils-api';
+import { CommonAppModule, TRANSLATOR_SERVICE } from '@ecohatch/utils-api';
 import request from 'supertest';
 
 import {
@@ -9,9 +9,9 @@ import {
   loggerModuleOptions,
   translatorModuleOptions,
 } from '@/config';
-import { EndPoint } from '@/constants';
+import { ENDPOINT } from '@/constants';
 
-describe(`GET ${EndPoint.Health.Get.HealthCheck}`, () => {
+describe(`GET ${ENDPOINT.Health.Get.HealthCheck}`, () => {
   let app: NestExpressApplication;
 
   beforeAll(async () => {
@@ -29,7 +29,7 @@ describe(`GET ${EndPoint.Health.Get.HealthCheck}`, () => {
         HealthModule,
       ],
     })
-      .overrideProvider(TranslatorServiceToken)
+      .overrideProvider(TRANSLATOR_SERVICE)
       .useValue(mockTranslatorService)
       .compile();
 
@@ -44,7 +44,7 @@ describe(`GET ${EndPoint.Health.Get.HealthCheck}`, () => {
   it('should return 200 and health status', async () => {
     const a = app.getHttpServer();
     const response = await request(a)
-      .get(EndPoint.Health.Get.HealthCheck)
+      .get(ENDPOINT.Health.Get.HealthCheck)
       .expect(200);
 
     expect(response.body).toEqual({

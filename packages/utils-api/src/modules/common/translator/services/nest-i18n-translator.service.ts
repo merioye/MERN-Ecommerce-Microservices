@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common';
 import { I18nContext, I18nService } from 'nestjs-i18n';
 
 import {
-  TranslationKeyFormatterServiceToken,
-  TranslationsFileNameToken,
+  TRANSLATION_KEY_FORMATTER_SERVICE,
+  TRANSLATIONS_FILENAME,
 } from '../constants';
 import {
   ITranslationKeyFormatterService,
@@ -25,15 +25,19 @@ export class NestI18nTranslatorService implements ITranslatorService {
    * @param _translationKeyFormatterService - The translation key formatter service
    */
   public constructor(
-    @Inject(TranslationKeyFormatterServiceToken)
+    @Inject(TRANSLATION_KEY_FORMATTER_SERVICE)
     private readonly _translationKeyFormatterService: ITranslationKeyFormatterService,
     private readonly _i18n: I18nService,
-    @Inject(TranslationsFileNameToken)
+    @Inject(TRANSLATIONS_FILENAME)
     private readonly _translationsFileName: string
   ) {}
 
   /**
-   * @inheritdoc
+   * Translates the given key using the provided language.
+   *
+   * @param key - The key of the translation to retrieve.
+   * @param lang - Optional. The language to use for the translation.
+   * @returns The translation of the provided key.
    */
   public t(key: string, lang?: string): string {
     const [fileName] = this._translationsFileName.split('.');

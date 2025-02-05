@@ -35,7 +35,7 @@ async function bootstrap(): Promise<void> {
 
   // Add basic auth middleware
   app.use(
-    ['/docs', '/docs-json'], // Protect both Swagger UI and Swagger JSON endpoints
+    ['/docs', '/docs-json'], // Protect both Swagger UI and Swagger JSON ENDPOINTs
     expressBasicAuth({
       challenge: true,
       users: {

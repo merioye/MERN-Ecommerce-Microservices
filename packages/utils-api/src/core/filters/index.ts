@@ -1,2 +1,2 @@
 export * from './all-exceptions.filter';
-export * from './factories';
+export { ExceptionHandlingStrategyFactory } from './factories';

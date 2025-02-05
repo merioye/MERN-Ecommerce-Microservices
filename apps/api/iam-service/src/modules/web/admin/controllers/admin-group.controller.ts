@@ -23,13 +23,13 @@ import {
   ApiResponse,
   CustomParseIntPipe,
   ILogger,
-  LoggerToken,
+  LOGGER,
 } from '@ecohatch/utils-api';
 import { AdminGroup } from '@prisma/client';
 
-import { EndPoint } from '@/constants';
+import { ENDPOINT } from '@/constants';
 
-import { AdminGroupServiceToken } from '../constants';
+import { ADMIN_GROUP_SERVICE } from '../constants';
 import {
   CreateAdminGroupDto,
   GetAdminGroupListDto,
@@ -39,17 +39,17 @@ import { IAdminGroupService } from '../interfaces';
 
 /**
  * Controller for managing admin groups.
- * Provides endpoints for creating, retrieving, updating, and deleting admin groups.
+ * Provides ENDPOINTs for creating, retrieving, updating, and deleting admin groups.
  *
  * @class AdminGroupController
  */
-@Controller(EndPoint.AdminGroup.Base)
+@Controller(ENDPOINT.AdminGroup.Base)
 @ApiTags('Admin Groups')
 export class AdminGroupController {
   public constructor(
-    @Inject(AdminGroupServiceToken)
+    @Inject(ADMIN_GROUP_SERVICE)
     private readonly _adminGroupService: IAdminGroupService,
-    @Inject(LoggerToken) private readonly _logger: ILogger
+    @Inject(LOGGER) private readonly _logger: ILogger
   ) {}
 
   /**
@@ -57,7 +57,7 @@ export class AdminGroupController {
    * @param {CreateAdminGroupDto} data - The data containing the details of the admin group to create.
    * @returns {Promise<ApiResponse<AdminGroup>>} - The created admin group.
    */
-  @Post(EndPoint.AdminGroup.Post.CreateAdminGroup)
+  @Post(ENDPOINT.AdminGroup.Post.CreateAdminGroup)
   @ApiBody({ type: CreateAdminGroupDto })
   @ApiCreatedResponse({
     description: 'Admin group created successfully',
@@ -94,7 +94,7 @@ export class AdminGroupController {
    * @param {number} id - The ID of the admin group to update.
    * @returns {Promise<ApiResponse<AdminGroup>>} - The updated admin group.
    */
-  @Patch(EndPoint.AdminGroup.Patch.UpdateAdminGroup)
+  @Patch(ENDPOINT.AdminGroup.Patch.UpdateAdminGroup)
   @ApiBody({ type: UpdateAdminGroupDto })
   @ApiOkResponse({
     description: 'Admin group updated successfully',
@@ -127,7 +127,7 @@ export class AdminGroupController {
    * @param {number} id - The ID of the admin group to delete.
    * @returns {Promise<ApiResponse<null>>}
    */
-  @Delete(EndPoint.AdminGroup.Delete.SoftDeleteAdminGroup)
+  @Delete(ENDPOINT.AdminGroup.Delete.SoftDeleteAdminGroup)
   @ApiOkResponse({
     description: 'Admin group deleted successfully',
   })
@@ -158,7 +158,7 @@ export class AdminGroupController {
    * @param {number} id - The ID of the admin group to delete.
    * @returns {Promise<ApiResponse<null>>}
    */
-  @Delete(EndPoint.AdminGroup.Delete.HardDeleteAdminGroup)
+  @Delete(ENDPOINT.AdminGroup.Delete.HardDeleteAdminGroup)
   @ApiOkResponse({
     description: 'Admin group hard deleted successfully',
   })
@@ -189,7 +189,7 @@ export class AdminGroupController {
    * @param {number} id - The ID of the admin group to restore.
    * @returns {Promise<ApiResponse<null>>}
    */
-  @Patch(EndPoint.AdminGroup.Patch.RestoreAdminGroup)
+  @Patch(ENDPOINT.AdminGroup.Patch.RestoreAdminGroup)
   @ApiOkResponse({
     description: 'Admin group restored successfully',
   })
@@ -220,7 +220,7 @@ export class AdminGroupController {
    * @param {GetAdminGroupListDto} query - The query parameters for the request.
    * @returns {Promise<ApiResponse<AdminGroup[] | OffsetPaginatedResult<AdminGroup>>>} - The list of admin groups.
    */
-  @Get(EndPoint.AdminGroup.Get.GetAdminGroupList)
+  @Get(ENDPOINT.AdminGroup.Get.GetAdminGroupList)
   @ApiOkResponse({
     description: 'Data fetched successfully',
   })
@@ -246,7 +246,7 @@ export class AdminGroupController {
    * @param {string} slug - The slug of the admin group to retrieve.
    * @returns {Promise<ApiResponse<AdminGroup | null>>>} - The admin group.
    */
-  @Get(EndPoint.AdminGroup.Get.GetAdminGroupBySlug)
+  @Get(ENDPOINT.AdminGroup.Get.GetAdminGroupBySlug)
   @ApiOkResponse({
     description: 'Data fetched successfully',
   })

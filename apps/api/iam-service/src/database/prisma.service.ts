@@ -1,6 +1,6 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Environment, ILogger, LoggerToken } from '@ecohatch/utils-api';
+import { Environment, ILogger, LOGGER } from '@ecohatch/utils-api';
 import { PrismaClient } from '@prisma/client';
 
 import { Config } from '@/enums';
@@ -18,7 +18,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
 
   public constructor(
     private readonly _configService: ConfigService,
-    @Inject(LoggerToken) private readonly _logger: ILogger
+    @Inject(LOGGER) private readonly _logger: ILogger
   ) {
     const isDevelopment =
       _configService.get(Config.NODE_ENV) === Environment.DEV;

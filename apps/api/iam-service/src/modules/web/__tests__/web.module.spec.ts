@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import {
   CommonAppModule,
-  LoggerToken,
-  TranslatorServiceToken,
+  LOGGER,
+  TRANSLATOR_SERVICE,
 } from '@ecohatch/utils-api';
 
 import {
@@ -36,9 +36,9 @@ describe('WebAppModule', () => {
         WebAppModule,
       ],
     })
-      .overrideProvider(TranslatorServiceToken)
+      .overrideProvider(TRANSLATOR_SERVICE)
       .useValue(mockTranslatorService)
-      .overrideProvider(LoggerToken)
+      .overrideProvider(LOGGER)
       .useValue(mockLogger)
       .compile();
   });

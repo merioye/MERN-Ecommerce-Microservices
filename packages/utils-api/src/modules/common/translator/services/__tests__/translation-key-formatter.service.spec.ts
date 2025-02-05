@@ -1,12 +1,12 @@
+import { TRANSLATION_KEY_SEPARATOR } from '../../constants';
 import { ITranslationKeyFormatterService } from '../../interfaces';
 import { TranslationKeyFormatterService } from '../translation-key-formatter.service';
 
 describe('TranslationKeyFormatterService', () => {
   let service: ITranslationKeyFormatterService;
-  const separator = '::';
 
   beforeEach(() => {
-    service = new TranslationKeyFormatterService(separator);
+    service = new TranslationKeyFormatterService();
   });
 
   describe('format', () => {
@@ -31,7 +31,7 @@ describe('TranslationKeyFormatterService', () => {
     });
 
     it('should parse key and args when separator is present', () => {
-      const key = 'test.key::{"name":"John","age":"25"}';
+      const key = `test.key${TRANSLATION_KEY_SEPARATOR}{"name":"John","age":"25"}`;
       const result = service.format(key);
 
       expect(result).toEqual({
@@ -44,7 +44,7 @@ describe('TranslationKeyFormatterService', () => {
     });
 
     it('should handle empty args object', () => {
-      const key = 'test.key::{}';
+      const key = `test.key${TRANSLATION_KEY_SEPARATOR}{}`;
       const result = service.format(key);
 
       expect(result).toEqual({
@@ -54,13 +54,13 @@ describe('TranslationKeyFormatterService', () => {
     });
 
     it('should throw error when args JSON is invalid', () => {
-      const key = 'test.key::{invalid_json}';
+      const key = `test.key${TRANSLATION_KEY_SEPARATOR}{invalid_json}`;
 
       expect(() => service.format(key)).toThrow(SyntaxError);
     });
 
     it('should handle key with multiple separators', () => {
-      const key = 'test.key::{"data":"value"}::extra';
+      const key = `test.key${TRANSLATION_KEY_SEPARATOR}{"data":"value"}${TRANSLATION_KEY_SEPARATOR}extra`;
       const result = service.format(key);
 
       expect(result).toEqual({
@@ -72,7 +72,7 @@ describe('TranslationKeyFormatterService', () => {
     });
 
     it('should handle key with special characters in args', () => {
-      const key = 'test.key::{"special":"!@#$%^&*()"}';
+      const key = `test.key${TRANSLATION_KEY_SEPARATOR}{"special":"!@#$%^&*()"}`;
       const result = service.format(key);
 
       expect(result).toEqual({
@@ -84,7 +84,7 @@ describe('TranslationKeyFormatterService', () => {
     });
 
     it('should handle key with nested objects in args', () => {
-      const key = 'test.key::{"user":{"name":"John","age":"25"}}';
+      const key = `test.key${TRANSLATION_KEY_SEPARATOR}{"user":{"name":"John","age":"25"}}`;
       const result = service.format(key);
 
       expect(result).toEqual({
@@ -96,14 +96,6 @@ describe('TranslationKeyFormatterService', () => {
           },
         },
       });
-    });
-  });
-
-  describe('dependency injection', () => {
-    it('should be defined with injected separator', () => {
-      const service = new TranslationKeyFormatterService(separator);
-      expect(service).toBeDefined();
-      expect(service['_translationKeySeparator']).toBe(separator);
     });
   });
 });

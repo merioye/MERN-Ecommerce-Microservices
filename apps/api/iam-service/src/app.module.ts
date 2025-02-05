@@ -15,7 +15,7 @@ import {
   ICacheService,
   ILogger,
   InvalidateCacheInterceptor,
-  LoggerToken,
+  LOGGER,
   TranslateMessageInterceptor,
   validationPipeOptions,
 } from '@ecohatch/utils-api';
@@ -53,7 +53,7 @@ import { WebAppModule } from './modules/web';
       cache: cacheModuleOptions,
     }),
     GracefulShutdownModule.forRootAsync({
-      inject: [ConfigService, PrismaService, LoggerToken, CACHE_SERVICE],
+      inject: [ConfigService, PrismaService, LOGGER, CACHE_SERVICE],
       useFactory: (
         configService: ConfigService,
         prismaService: PrismaService,

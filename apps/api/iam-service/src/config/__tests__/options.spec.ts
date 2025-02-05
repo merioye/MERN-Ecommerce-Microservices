@@ -1,5 +1,5 @@
 import { join, resolve } from 'path';
-import { Environment, TranslationKeySeparator } from '@ecohatch/utils-api';
+import { Environment } from '@ecohatch/utils-api';
 
 import { Config } from '@/enums';
 
@@ -61,9 +61,6 @@ describe('Configuration Options', () => {
     it('should have correct configuration', () => {
       expect(translatorModuleOptions.fallbackLanguage).toBe(
         process.env[Config.LOCALIZATION_FALLBACK_LANGUAGE]
-      );
-      expect(translatorModuleOptions.translationKeySeparator).toBe(
-        TranslationKeySeparator
       );
       expect(translatorModuleOptions.langExtractionKey).toBe(
         process.env[Config.LOCALIZATION_KEY]

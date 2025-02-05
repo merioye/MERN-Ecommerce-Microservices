@@ -1,14 +1,14 @@
 // Dependency Injection Tokens
-const TranslatorServiceToken = Symbol('TranslatorServiceToken');
-const TranslationsFileNameToken = Symbol('TranslationsFileNameToken');
-const TranslationKeySeparatorToken = Symbol('TranslationKeySeparatorToken');
-const TranslationKeyFormatterServiceToken = Symbol(
-  'TranslationKeyFormatterServiceToken'
+const TRANSLATOR_SERVICE = Symbol('TRANSLATOR_SERVICE');
+const TRANSLATIONS_FILENAME = Symbol('TRANSLATIONS_FILENAME');
+const TRANSLATION_KEY_FORMATTER_SERVICE = Symbol(
+  'TRANSLATION_KEY_FORMATTER_SERVICE'
 );
+const TRANSLATION_KEY_SEPARATOR = '__?args=';
 
 export {
-  TranslatorServiceToken,
-  TranslationsFileNameToken,
-  TranslationKeySeparatorToken,
-  TranslationKeyFormatterServiceToken,
+  TRANSLATOR_SERVICE,
+  TRANSLATIONS_FILENAME,
+  TRANSLATION_KEY_SEPARATOR,
+  TRANSLATION_KEY_FORMATTER_SERVICE,
 };

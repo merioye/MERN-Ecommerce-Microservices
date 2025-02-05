@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CommonAppModule } from '@/modules/common';
-import { LoggerToken } from '@/modules/common/logger';
+import { LOGGER } from '@/modules/common/logger';
 
 import {
   CacheModuleOptions,
@@ -8,9 +8,8 @@ import {
   TranslatorModuleOptions,
 } from '@/types';
 import { Environment } from '@/enums';
-import { TranslationKeySeparator } from '@/constants';
 
-import { TranslatorServiceToken } from '../../translator';
+import { TRANSLATOR_SERVICE } from '../../translator';
 
 /**
  * LoggerModule options
@@ -30,7 +29,6 @@ const translatorModuleOptions: TranslatorModuleOptions = {
   translationsDirPath: '/test/translations',
   translationsFileName: 'translations.json',
   langExtractionKey: 'localizationKey',
-  translationKeySeparator: TranslationKeySeparator,
 };
 
 /**
@@ -62,9 +60,9 @@ describe('LoggerModule', () => {
         CommonAppModule,
       ],
     })
-      .overrideProvider(TranslatorServiceToken)
+      .overrideProvider(TRANSLATOR_SERVICE)
       .useValue(mockTranslatorService)
-      .overrideProvider(LoggerToken)
+      .overrideProvider(LOGGER)
       .useValue(mockLogger)
       .compile();
   });
@@ -78,6 +76,6 @@ describe('LoggerModule', () => {
   });
 
   it('should have the expected components', () => {
-    expect(module.get(LoggerToken)).toBeInstanceOf(Object);
+    expect(module.get(LOGGER)).toBeInstanceOf(Object);
   });
 });

@@ -8,7 +8,7 @@ import {
 import { ApiResponse } from '@/common/utils';
 import {
   ITranslatorService,
-  TranslatorServiceToken,
+  TRANSLATOR_SERVICE,
 } from '@/modules/common/translator';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -29,7 +29,7 @@ export class TranslateMessageInterceptor implements NestInterceptor {
    * @param translatorService - The translator service to use for translation.
    */
   public constructor(
-    @Inject(TranslatorServiceToken)
+    @Inject(TRANSLATOR_SERVICE)
     private readonly _translatorService: ITranslatorService
   ) {}
 

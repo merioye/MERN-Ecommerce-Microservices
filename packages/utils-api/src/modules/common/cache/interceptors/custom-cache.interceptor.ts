@@ -10,7 +10,7 @@ import { Observable, of, tap } from 'rxjs';
 
 import { CacheModuleOptions } from '@/types';
 
-import { ILogger, LoggerToken } from '../../logger';
+import { ILogger, LOGGER } from '../../logger';
 import {
   CACHE_CONFIG,
   CACHE_KEY_SUFFIX_DECORATOR_KEY,
@@ -33,7 +33,7 @@ export class CustomCacheInterceptor implements NestInterceptor {
   public constructor(
     @Inject(CACHE_CONFIG) private readonly _cacheConfig: CacheModuleOptions,
     @Inject(CACHE_SERVICE) private readonly _cacheService: ICacheService,
-    @Inject(LoggerToken) private readonly _logger: ILogger,
+    @Inject(LOGGER) private readonly _logger: ILogger,
     private readonly _reflector: Reflector
   ) {}
 

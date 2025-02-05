@@ -5,9 +5,9 @@ import {
   PipeTransform,
 } from '@nestjs/common';
 import { RequestValidationError } from '@/common/errors';
+import { TRANSLATION_KEY_SEPARATOR } from '@/modules/common/translator';
 
 import { ErrorFormat } from '@/types';
-import { TranslationKeySeparator } from '@/constants';
 
 /**
  * Custom Parse Array Pipe
@@ -43,7 +43,7 @@ export class CustomParseArrayPipe
       const { data, type } = metadata;
       const errors: ErrorFormat[] = [
         {
-          message: `common.error.invalid_array${TranslationKeySeparator}${JSON.stringify(
+          message: `common.error.invalid_array${TRANSLATION_KEY_SEPARATOR}${JSON.stringify(
             {
               field: data,
             }

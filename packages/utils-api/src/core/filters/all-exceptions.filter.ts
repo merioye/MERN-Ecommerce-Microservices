@@ -3,10 +3,10 @@ import { ConfigService } from '@nestjs/config';
 import { HttpAdapterHost } from '@nestjs/core';
 import { Request } from 'express';
 import { RequestValidationError } from '@/common/errors';
-import { ILogger, LoggerToken } from '@/modules/common/logger';
+import { ILogger, LOGGER } from '@/modules/common/logger';
 import {
   ITranslatorService,
-  TranslatorServiceToken,
+  TRANSLATOR_SERVICE,
 } from '@/modules/common/translator';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -31,10 +31,10 @@ export class AllExceptionsFilter implements ExceptionFilter {
    * @param exceptionHandlingStrategyFactory - Factory for creating exception handling strategies.
    */
   public constructor(
-    @Inject(LoggerToken) private readonly _logger: ILogger,
+    @Inject(LOGGER) private readonly _logger: ILogger,
     private readonly _httpAdapterHost: HttpAdapterHost,
     private readonly _configService: ConfigService,
-    @Inject(TranslatorServiceToken)
+    @Inject(TRANSLATOR_SERVICE)
     private readonly _translatorService: ITranslatorService,
     private readonly _exceptionHandlingStrategyFactory: ExceptionHandlingStrategyFactory
   ) {}

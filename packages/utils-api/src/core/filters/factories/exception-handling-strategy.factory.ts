@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { CustomError, RequestValidationError } from '@/common/errors';
 import {
   ITranslatorService,
-  TranslatorServiceToken,
+  TRANSLATOR_SERVICE,
 } from '@/modules/common/translator';
 
 import { IExceptionHandlingStrategy } from '../interfaces';
@@ -24,7 +24,7 @@ export class ExceptionHandlingStrategyFactory {
    * @param translatorService - Service for translating error messages.
    */
   public constructor(
-    @Inject(TranslatorServiceToken)
+    @Inject(TRANSLATOR_SERVICE)
     private readonly _translatorService: ITranslatorService
   ) {}
 

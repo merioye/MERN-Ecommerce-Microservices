@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { LoggerToken } from '@ecohatch/utils-api';
+import { LOGGER } from '@ecohatch/utils-api';
 
-import { HealthServiceToken } from '../constants';
+import { HEALTH_SERVICE } from '../constants';
 import { HealthController } from '../health.controller';
 import { Health } from '../types';
 
@@ -34,11 +34,11 @@ describe('HealthController', () => {
       controllers: [HealthController],
       providers: [
         {
-          provide: LoggerToken,
+          provide: LOGGER,
           useValue: mockLogger,
         },
         {
-          provide: HealthServiceToken,
+          provide: HEALTH_SERVICE,
           useValue: mockHealthService,
         },
       ],

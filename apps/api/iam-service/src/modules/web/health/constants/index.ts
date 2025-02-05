@@ -1,4 +1,4 @@
 // Dependency Injection Tokens
-const HealthServiceToken = Symbol('HealthServiceToken');
+const HEALTH_SERVICE = Symbol('HEALTH_SERVICE');
 
-export { HealthServiceToken };
+export { HEALTH_SERVICE };

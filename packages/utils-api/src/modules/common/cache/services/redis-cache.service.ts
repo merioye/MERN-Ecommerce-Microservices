@@ -10,7 +10,7 @@ import { createClient } from 'redis';
 import { CacheModuleOptions } from '@/types';
 
 import { HASH_SERVICE, HashAlgorithm, IHashService } from '../../hash';
-import { ILogger, LoggerToken } from '../../logger';
+import { ILogger, LOGGER } from '../../logger';
 import { CACHE_CONFIG } from '../constants';
 import { ICacheService } from '../interfaces';
 
@@ -28,7 +28,7 @@ export class RedisCacheService
   public constructor(
     @Inject(CACHE_CONFIG) cacheConfig: CacheModuleOptions,
     @Inject(HASH_SERVICE) private readonly _hashService: IHashService,
-    @Inject(LoggerToken) private readonly _logger: ILogger
+    @Inject(LOGGER) private readonly _logger: ILogger
   ) {
     this._client = createClient({
       url: cacheConfig.url,

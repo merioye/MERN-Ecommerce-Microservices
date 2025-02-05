@@ -1,1 +1,1 @@
-export const AdminGroupServiceToken = Symbol('AdminGroupServiceToken');
+export const ADMIN_GROUP_SERVICE = Symbol('ADMIN_GROUP_SERVICE');

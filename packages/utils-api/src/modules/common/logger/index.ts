@@ -1,4 +1,4 @@
 export * from './logger.module';
-export * from './loggers';
-export { LoggerToken } from './constants';
+export { WinstonLogger } from './loggers';
+export { LOGGER } from './constants';
 export type { ILogger } from './interfaces';

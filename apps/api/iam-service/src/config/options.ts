@@ -4,7 +4,6 @@ import {
   CacheModuleOptions,
   Environment,
   LoggerModuleOptions,
-  TranslationKeySeparator,
   TranslatorModuleOptions,
 } from '@ecohatch/utils-api';
 import * as dotenv from 'dotenv';
@@ -70,7 +69,6 @@ const translatorModuleOptions: TranslatorModuleOptions = {
   ),
   translationsFileName: 'translations.json',
   langExtractionKey: process.env[Config.LOCALIZATION_KEY]!,
-  translationKeySeparator: TranslationKeySeparator,
 };
 
 /**

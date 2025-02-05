@@ -1,15 +1,15 @@
 import { Controller, Get, Inject } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { ILogger, LoggerToken } from '@ecohatch/utils-api';
+import { ILogger, LOGGER } from '@ecohatch/utils-api';
 
-import { EndPoint } from '@/constants';
+import { ENDPOINT } from '@/constants';
 
-import { HealthServiceToken } from './constants';
+import { HEALTH_SERVICE } from './constants';
 import { IHealthService } from './interfaces';
 import { Health } from './types';
 
 /**
- * The controller responsible for handling the server health check endpoint.
+ * The controller responsible for handling the server health check ENDPOINT.
  *
  * @class HealthController
  */
@@ -25,16 +25,16 @@ export class HealthController {
    *   providing the health information.
    */
   public constructor(
-    @Inject(LoggerToken) private readonly _logger: ILogger,
-    @Inject(HealthServiceToken) private readonly _healthService: IHealthService
+    @Inject(LOGGER) private readonly _logger: ILogger,
+    @Inject(HEALTH_SERVICE) private readonly _healthService: IHealthService
   ) {}
 
   /**
-   * The endpoint which returns the server health information.
+   * The ENDPOINT which returns the server health information.
    *
    * @returns The health information.
    */
-  @Get(EndPoint.Health.Get.HealthCheck)
+  @Get(ENDPOINT.Health.Get.HealthCheck)
   @ApiOkResponse({ description: 'Server health information.' })
   public async checkHealth(): Promise<Health> {
     this._logger.info('Request for checking server health');
