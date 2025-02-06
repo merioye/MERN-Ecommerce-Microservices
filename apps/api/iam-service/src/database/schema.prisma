@@ -7,19 +7,80 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN      @map("admin")
+  ADMIN_USER @map("admin_user")
+  VENDOR     @map("vendor")
+  CUSTOMER   @map("customer")
+}
+
+model UserAccount {
+  id                 Int          @id @default(autoincrement())
+  firstName          String       @map("first_name")
+  lastName           String       @map("last_name")
+  email              String       @unique
+  profileUrl         String?      @map("profile_url")
+  userType           Role         @map("user_type")
+  userReferenceId    Int          @map("user_reference_id")
+  createdAt          DateTime     @default(now()) @map("created_at")
+  updatedAt          DateTime     @updatedAt() @map("updated_at")
+  createdAdmins      Admin[]      @relation("AdminCreatedBy")
+  updatedAdmins      Admin[]      @relation("AdminUpdatedBy")
+  deletedAdmins      Admin[]      @relation("AdminDeletedBy")
+  createdAdminGroups AdminGroup[] @relation("AdminGroupCreatedBy")
+  updatedAdminGroups AdminGroup[] @relation("AdminGroupUpdatedBy")
+  deletedAdminGroups AdminGroup[] @relation("AdminGroupDeletedBy")
+
+  @@unique([userType, userReferenceId])
+  @@map("tbl_user_accounts")
+}
+
 model AdminGroup {
-  id          Int       @id @default(autoincrement())
-  name        String    @unique
-  slug        String    @unique
-  description String?   @default("")
-  isActive    Boolean   @default(true) @map("is_active")
-  isDeleted   Boolean   @default(false) @map("is_deleted")
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt() @map("updated_at")
-  deletedAt   DateTime? @map("deleted_at")
-  createdBy   Int?      @map("created_by")
-  updatedBy   Int?      @map("updated_by")
-  deletedBy   Int?      @map("deleted_by")
+  id            Int          @id @default(autoincrement())
+  name          String       @unique
+  slug          String       @unique
+  description   String?      @default("")
+  admins        Admin[]
+  isActive      Boolean      @default(true) @map("is_active")
+  isDeleted     Boolean      @default(false) @map("is_deleted")
+  createdAt     DateTime     @default(now()) @map("created_at")
+  updatedAt     DateTime     @updatedAt() @map("updated_at")
+  deletedAt     DateTime?    @map("deleted_at")
+  createdBy     Int?         @map("created_by")
+  updatedBy     Int?         @map("updated_by")
+  deletedBy     Int?         @map("deleted_by")
+  createdByUser UserAccount? @relation("AdminGroupCreatedBy", fields: [createdBy], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  updatedByUser UserAccount? @relation("AdminGroupUpdatedBy", fields: [updatedBy], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  deletedByUser UserAccount? @relation("AdminGroupDeletedBy", fields: [deletedBy], references: [id], onDelete: SetNull, onUpdate: Cascade)
 
   @@map("tbl_admin_groups")
+}
+
+model Admin {
+  id            Int          @id @default(autoincrement())
+  firstName     String       @map("first_name")
+  lastName      String       @map("last_name")
+  email         String       @unique
+  password      String
+  profileUrl    String?      @map("profile_url")
+  profileId     String?      @map("profile_id")
+  phoneNumber   String?      @map("phone_number")
+  address       String?
+  mfaEnabled    Boolean      @default(false) @map("mfa_enabled")
+  isAdmin       Boolean      @default(false) @map("is_admin")
+  isActive      Boolean      @default(true) @map("is_active")
+  isDeleted     Boolean      @default(false) @map("is_deleted")
+  createdAt     DateTime     @default(now()) @map("created_at")
+  updatedAt     DateTime     @updatedAt() @map("updated_at")
+  deletedAt     DateTime?    @map("deleted_at")
+  adminGroupId  Int          @map("admin_group_id")
+  createdBy     Int?         @map("created_by")
+  updatedBy     Int?         @map("updated_by")
+  deletedBy     Int?         @map("deleted_by")
+  adminGroup    AdminGroup   @relation(fields: [adminGroupId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  createdByUser UserAccount? @relation("AdminCreatedBy", fields: [createdBy], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  updatedByUser UserAccount? @relation("AdminUpdatedBy", fields: [updatedBy], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  deletedByUser UserAccount? @relation("AdminDeletedBy", fields: [deletedBy], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  @@map("tbl_admins")
 }
