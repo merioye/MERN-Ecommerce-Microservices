@@ -1,0 +1,58 @@
+_format_version: '3.0'
+
+services:
+  - name: iam-service
+    url: http://host.docker.internal:5001
+    routes:
+      - name: iam-service-route
+        # Any request whose path starts with /api/iam will match this route.
+        paths:
+          - /api/iam
+        strip_path: true
+
+# Global plugins applied to every request across all services.
+plugins:
+  # Global CORS Plugin – controls cross-origin requests.
+  - name: cors
+    config:
+      # In production, replace "*" with your actual allowed origins.
+      # origins:
+      # - 'https://your-production-domain.com
+      # - 'https://api.your-production-domain.com'
+      origins:
+        - '*'
+      methods:
+        - GET
+        - POST
+        - PATCH
+        - DELETE
+        - OPTIONS
+      headers:
+        - Accept
+        - Authorization
+        - Content-Type
+        - X-Requested-With
+      exposed_headers:
+        - Content-Length
+        - Content-Type
+      # If credentials are allowed, browsers will expose the response to the frontend.
+      credentials: true
+      # How long (in seconds) the results of a preflight request can be cached.
+      max_age: 3600
+
+  # Global Rate Limiting Plugin – limits the number of requests to help protect your service.
+  - name: rate-limiting
+    config:
+      # Example thresholds – adjust these limits based on your expected load.
+      second: 10
+      minute: 1000
+      # The 'local' policy is appropriate for a single-node deployment.
+      # For a clustered environment, consider using a centralized datastore (e.g., Redis).
+      policy: local
+
+  # Global Request Size Limiting Plugin – limits the size of incoming requests.
+  - name: request-size-limiting
+    config:
+      # Set the maximum allowed request payload size to 5MB.
+      allowed_payload_size: 5
+      size_unit: megabytes

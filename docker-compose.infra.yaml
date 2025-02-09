@@ -1,1 +1,39 @@
 services:
+  api-gateway:
+    image: kong:alpine
+    container_name: api-gateway
+    restart: unless-stopped
+    environment:
+      # Run in DB‑less mode.
+      KONG_DATABASE: 'off'
+      # Set Path to your kong declarative configuration file inside docker container.
+      KONG_DECLARATIVE_CONFIG: /usr/local/kong/declarative/kong.yml
+      # Listen for proxy traffic on both HTTP and HTTPS.
+      KONG_PROXY_LISTEN: '0.0.0.0:8000, 0.0.0.0:8443 ssl'
+      # Bind Admin API only to localhost (inside the container) for security.
+      KONG_ADMIN_LISTEN: '127.0.0.1:8001'
+      # Log configuration – direct logs to stdout/stderr.
+      KONG_PROXY_ACCESS_LOG: '/dev/stdout'
+      KONG_ADMIN_ACCESS_LOG: '/dev/stdout'
+      KONG_PROXY_ERROR_LOG: '/dev/stderr'
+      KONG_ADMIN_ERROR_LOG: '/dev/stderr'
+    ports:
+      # Expose the proxy ports for external access.
+      - '8000:8000' # Proxy listener
+      - '8443:8443' # Proxy listener (SSL)
+      # The Admin API is not mapped externally for production.
+      # Uncomment the line below only if you need to expose the Admin API
+      # (not recommended for production use).
+      # - "8001:8001" # Admin API listener
+    # Mount the local directory containing your Kong declarative config file.
+    volumes:
+      - ./apps/api/api-gateway/kong.yml:/usr/local/kong/declarative/kong.yml:ro
+    # Enable access to host machine services using host.docker.internal.
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    # Healthcheck to ensure Kong’s Admin API is responsive.
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://127.0.0.1:8001/status']
+      interval: 30s
+      timeout: 10s
+      retries: 3

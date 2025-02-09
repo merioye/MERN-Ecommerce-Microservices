@@ -67,6 +67,8 @@
     "version:packages": "changeset version",
     "prerelease": "pnpm run build",
     "release": "changeset publish",
+    "docker:infra:up": "docker-compose -f docker-compose.infra.yaml up",
+    "docker:infra:down": "docker-compose -f docker-compose.infra.yaml down",
     "docker:local:up": "docker-compose -f docker-compose.local.yaml -f docker-compose.infra.yaml up",
     "docker:local:down": "docker-compose -f docker-compose.local.yaml -f docker-compose.infra.yaml down",
     "docker:remote:up": "docker-compose -f docker-compose.remote.yaml -f docker-compose.infra.yaml up",
