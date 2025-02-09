@@ -37,3 +37,24 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    restart: unless-stopped
+    ports:
+      - '9000:9000' # API endpoint
+      - '9001:9001' # Console (web UI)
+    volumes:
+      # Map the Windows "ecommerce-images" folder on your Desktop to /data in the container.
+      - ${USERPROFILE}/Desktop/ecommerce-images:/data
+    environment:
+      # Set your access keys
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+      MINIO_REGION: us-east-1
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:9000/minio/health/live']
+      interval: 30s
+      timeout: 20s
+      retries: 3
