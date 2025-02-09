@@ -1,0 +1,1 @@
+export const USER_ACCOUNT_SERVICE = Symbol('USER_ACCOUNT_SERVICE');

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 
 import { HASH_SERVICE } from './constants';
 import { CryptoHashService } from './services';
@@ -7,6 +7,7 @@ import { CryptoHashService } from './services';
  * Hash Module for NestJS providing centralized hashing functionality
  * @module HashModule
  */
+@Global()
 @Module({
   providers: [
     {

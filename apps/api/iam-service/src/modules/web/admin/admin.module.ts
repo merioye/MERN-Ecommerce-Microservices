@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 
-import { ADMIN_GROUP_SERVICE } from './constants';
-import { AdminGroupController } from './controllers';
-import { AdminGroupService } from './services';
+import { AuthModule } from '../auth';
+import { ADMIN_GROUP_SERVICE, ADMIN_SERVICE } from './constants';
+import { AdminController, AdminGroupController } from './controllers';
+import { AdminGroupService, AdminService } from './services';
 
 /**
  * The AdminModule is responsible for managing the admin functionalities
@@ -12,11 +13,16 @@ import { AdminGroupService } from './services';
  * @module AdminModule
  */
 @Module({
-  controllers: [AdminGroupController],
+  imports: [AuthModule],
+  controllers: [AdminGroupController, AdminController],
   providers: [
     {
       provide: ADMIN_GROUP_SERVICE,
       useClass: AdminGroupService,
+    },
+    {
+      provide: ADMIN_SERVICE,
+      useClass: AdminService,
     },
   ],
 })

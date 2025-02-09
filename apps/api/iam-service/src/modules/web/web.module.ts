@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { AdminModule } from './admin';
+import { AuthModule } from './auth';
 import { HealthModule } from './health';
 
 /**
@@ -10,7 +11,7 @@ import { HealthModule } from './health';
  * @module WebAppModule
  */
 @Module({
-  imports: [HealthModule, AdminModule],
+  imports: [HealthModule, AdminModule, AuthModule],
   exports: [WebAppModule],
 })
 export class WebAppModule {}

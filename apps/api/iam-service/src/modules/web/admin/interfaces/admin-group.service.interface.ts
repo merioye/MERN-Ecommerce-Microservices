@@ -1,5 +1,7 @@
 import { OffsetPaginatedResult } from '@ecohatch/types-shared';
-import { AdminGroup } from '@prisma/client';
+import { AdminGroup, Prisma } from '@prisma/client';
+
+import { IBasePrismaService } from '@/database';
 
 import {
   CreateAdminGroupDto,
@@ -7,7 +9,17 @@ import {
   UpdateAdminGroupDto,
 } from '../dtos';
 
-export interface IAdminGroupService {
+export interface IAdminGroupService
+  extends IBasePrismaService<
+    AdminGroup,
+    Prisma.AdminGroupCreateInput,
+    Prisma.AdminGroupUpdateInput,
+    Prisma.AdminGroupWhereInput,
+    Prisma.AdminGroupSelect,
+    Prisma.AdminGroupInclude,
+    Prisma.AdminGroupOrderByWithRelationInput,
+    Prisma.AdminGroupScalarFieldEnum
+  > {
   createOne(data: CreateAdminGroupDto): Promise<AdminGroup>;
   updateOne(id: number, data: UpdateAdminGroupDto): Promise<AdminGroup>;
   softDeleteOne(id: number): Promise<AdminGroup>;

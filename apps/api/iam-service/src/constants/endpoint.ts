@@ -22,4 +22,10 @@ export const ENDPOINT = {
       GetAdminGroupBySlug: '/:slug',
     },
   },
+  Admin: {
+    Base: '/admins',
+    Post: {
+      CreateAdmin: '/',
+    },
+  },
 } as const;
