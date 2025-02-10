@@ -9,6 +9,14 @@ services:
         paths:
           - /api/iam
         strip_path: true
+  - name: storage-service
+    url: http://host.docker.internal:5002
+    routes:
+      - name: storage-service-route
+        # Any request whose path starts with /api/storage will match this route.
+        paths:
+          - /api/storage
+        strip_path: true
 
 # Global plugins applied to every request across all services.
 plugins:

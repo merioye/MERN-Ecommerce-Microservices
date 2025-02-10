@@ -1,0 +1,14 @@
+{
+  "apps": [
+    {
+      "name": "Storage-Service",
+      "script": "dist/main.js",
+      "autorestart": true,
+      "watch": false,
+      "time": true,
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  ]
+}
