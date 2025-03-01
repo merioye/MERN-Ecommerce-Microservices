@@ -8,6 +8,10 @@
 type Health = {
   message: string;
   status: string;
+  database: {
+    message: string;
+    status: string;
+  };
 };
 
 export type { Health };

@@ -8,5 +8,5 @@ import { Health } from '../types';
  * @method health - Returns the health information about the application.
  */
 export interface IHealthService {
-  health(): Health;
+  health(): Promise<Health>;
 }

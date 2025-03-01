@@ -6,8 +6,7 @@ import {
 } from '@nestjs/common';
 import { RequestValidationError } from '@/common/errors';
 import { TRANSLATION_KEY_SEPARATOR } from '@/modules/common/translator';
-
-import { ErrorFormat } from '@/types';
+import { ErrorFormat } from '@ecohatch/types-shared';
 
 /**
  * Custom Parse Int Pipe

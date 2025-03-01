@@ -20,11 +20,12 @@ import {
 } from '@nestjs/swagger';
 import { OffsetPaginatedResult } from '@ecohatch/types-shared';
 import {
-  ApiResponse,
   CustomParseIntPipe,
+  EntityPrimaryKey,
   ILogger,
   LOGGER,
 } from '@ecohatch/utils-api';
+import { ApiResponse } from '@ecohatch/utils-shared';
 import { AdminGroup } from '@prisma/client';
 
 import { ENDPOINT } from '@/constants';
@@ -91,7 +92,7 @@ export class AdminGroupController {
   /**
    * Updates an admin group.
    * @param {UpdateAdminGroupDto} data - The data containing the details of the admin group to update.
-   * @param {number} id - The ID of the admin group to update.
+   * @param {EntityPrimaryKey} id - The ID of the admin group to update.
    * @returns {Promise<ApiResponse<AdminGroup>>} - The updated admin group.
    */
   @Patch(ENDPOINT.AdminGroup.Patch.UpdateAdminGroup)
@@ -104,7 +105,7 @@ export class AdminGroupController {
   })
   public async updateAdminGroup(
     @Body() data: UpdateAdminGroupDto,
-    @Param('id', CustomParseIntPipe) id: number
+    @Param('id', CustomParseIntPipe) id: EntityPrimaryKey
   ): Promise<ApiResponse<AdminGroup>> {
     this._logger.debug('Updating admin group:', {
       id,
@@ -124,7 +125,7 @@ export class AdminGroupController {
 
   /**
    * Soft Deletes an admin group.
-   * @param {number} id - The ID of the admin group to delete.
+   * @param {EntityPrimaryKey} id - The ID of the admin group to delete.
    * @returns {Promise<ApiResponse<null>>}
    */
   @Delete(ENDPOINT.AdminGroup.Delete.SoftDeleteAdminGroup)
@@ -138,7 +139,7 @@ export class AdminGroupController {
     description: 'id is not a valid integer',
   })
   public async softDeleteAdminGroup(
-    @Param('id', CustomParseIntPipe) id: number
+    @Param('id', CustomParseIntPipe) id: EntityPrimaryKey
   ): Promise<ApiResponse<null>> {
     this._logger.debug('Soft deleting admin group:', id);
 
@@ -155,7 +156,7 @@ export class AdminGroupController {
 
   /**
    * Hard Deletes an admin group.
-   * @param {number} id - The ID of the admin group to delete.
+   * @param {EntityPrimaryKey} id - The ID of the admin group to delete.
    * @returns {Promise<ApiResponse<null>>}
    */
   @Delete(ENDPOINT.AdminGroup.Delete.HardDeleteAdminGroup)
@@ -169,7 +170,7 @@ export class AdminGroupController {
     description: 'id is not a valid integer',
   })
   public async hardDeleteAdminGroup(
-    @Param('id', CustomParseIntPipe) id: number
+    @Param('id', CustomParseIntPipe) id: EntityPrimaryKey
   ): Promise<ApiResponse<null>> {
     this._logger.debug('Hard deleting admin group:', id);
 
@@ -186,7 +187,7 @@ export class AdminGroupController {
 
   /**
    * Restores an admin group.
-   * @param {number} id - The ID of the admin group to restore.
+   * @param {EntityPrimaryKey} id - The ID of the admin group to restore.
    * @returns {Promise<ApiResponse<null>>}
    */
   @Patch(ENDPOINT.AdminGroup.Patch.RestoreAdminGroup)
@@ -200,7 +201,7 @@ export class AdminGroupController {
     description: 'id is not a valid integer',
   })
   public async restoreAdminGroup(
-    @Param('id', CustomParseIntPipe) id: number
+    @Param('id', CustomParseIntPipe) id: EntityPrimaryKey
   ): Promise<ApiResponse<AdminGroup>> {
     this._logger.debug('Restoring admin group:', id);
 
@@ -252,7 +253,7 @@ export class AdminGroupController {
   })
   public async getAdminGroupBySlug(
     @Param('slug') slug: string
-  ): Promise<ApiResponse<AdminGroup>> {
+  ): Promise<ApiResponse<AdminGroup | null>> {
     this._logger.debug('Getting admin group by slug:', slug);
 
     const adminGroup = await this._adminGroupService.findBySlug(slug);

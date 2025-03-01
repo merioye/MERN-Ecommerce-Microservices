@@ -41,25 +41,18 @@ export type ExceptionResponseBody = {
 };
 
 /**
- * Type represents the structure of API response.
+ * Type representing the response of an API ENDPOINT.
  *
- * @typedef ApiResponse
- * @template T - The type of the result of the API call.
+ * @typedef ApiResponseParams<T>
  *
- * @property {number} statusCode - The HTTP status code of the error
- * @property {string} message - The error message
- * @property {boolean} success - Whether the request was successful
- * @property {T} result - The result of the API call
- * @property {Object} errorInfo - The error information
- * @property {Array<ErrorFormat>} errors - The array of error objects
+ * @property {T} result - The result of the API ENDPOINT, or null if the response is an error
+ * @property {string} [message] - An optional descriptive information message about the operation
+ * @property {number} [statusCode] - The optional HTTP status code of the response
  */
-export type ApiResponse<T> = {
-  statusCode: number;
-  message: string;
-  success: boolean;
+export type ApiResponseParams<T> = {
   result: T;
-  errorInfo: {};
-  errors: Array<ErrorFormat>;
+  message?: string;
+  statusCode?: number;
 };
 
 /**
@@ -141,3 +134,5 @@ export type CursorPaginatedApiResponse<T> = {
   errorInfo: {};
   errors: Array<ErrorFormat>;
 };
+
+export * from './storage-service.types';

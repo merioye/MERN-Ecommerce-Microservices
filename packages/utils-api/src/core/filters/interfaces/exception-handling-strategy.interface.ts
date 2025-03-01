@@ -1,6 +1,5 @@
 import { Request } from 'express';
-
-import { ExceptionResponseBody } from '@/types';
+import { ExceptionResponseBody } from '@ecohatch/types-shared';
 
 /**
  * Defines the contract for error handling strategies.

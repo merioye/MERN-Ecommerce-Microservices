@@ -6,14 +6,18 @@ import {
 } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
+import { getConnectionToken } from '@nestjs/mongoose';
 import {
   AllExceptionsFilter,
   CommonAppModule,
   ExceptionHandlingStrategyFactory,
+  ILogger,
+  LOGGER,
   TranslateMessageInterceptor,
   validationPipeOptions,
 } from '@ecohatch/utils-api';
 import helmet from 'helmet';
+import { Connection } from 'mongoose';
 import { GracefulShutdownModule } from 'nestjs-graceful-shutdown';
 
 import {
@@ -22,6 +26,7 @@ import {
   loggerModuleOptions,
   translatorModuleOptions,
 } from './config';
+import { DatabaseModule } from './database';
 import { Config } from './enums';
 import { WebAppModule } from './modules/web';
 
@@ -39,15 +44,22 @@ import { WebAppModule } from './modules/web';
 @Module({
   imports: [
     ConfigModule.forRoot(configOptions),
+    DatabaseModule,
     GracefulShutdownModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
+      inject: [ConfigService, LOGGER, getConnectionToken()],
+      useFactory: (
+        configService: ConfigService,
+        logger: ILogger,
+        connection: Connection
+      ) => ({
         gracefulShutdownTimeout: configService.get<number>(
           Config.GRACEFUL_SHUTDOWN_TIMEOUT
         ),
-        cleanup(): void {
+        async cleanup(): Promise<void> {
           // Add any cleanup logic here
+          logger.info('Closing database connection...');
+          await connection.close();
+          logger.info('Database connection closed.');
         },
       }),
     }),

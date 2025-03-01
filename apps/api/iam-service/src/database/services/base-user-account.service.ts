@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { BasePrismaService } from '@ecohatch/utils-api';
 import { Prisma, UserAccount } from '@prisma/client';
 
 import { PrismaService } from '../prisma.service';
-import { BasePrismaService } from './base-prisma.service';
 
 /**
  * The BaseUserAccountService class provides methods for managing user accounts.
@@ -22,6 +22,7 @@ export class BaseUserAccountService extends BasePrismaService<
   Prisma.UserAccountSelect,
   Prisma.UserAccountInclude,
   Prisma.UserAccountOrderByWithRelationInput,
+  any,
   Prisma.UserAccountScalarFieldEnum
 > {
   public constructor(prismaService: PrismaService) {

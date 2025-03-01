@@ -5,11 +5,11 @@ import {
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
-import { ApiResponse } from '@/common/utils';
 import {
   ITranslatorService,
   TRANSLATOR_SERVICE,
 } from '@/modules/common/translator';
+import { ApiResponse } from '@ecohatch/utils-shared';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

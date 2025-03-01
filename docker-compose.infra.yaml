@@ -46,7 +46,7 @@ services:
       - '9001:9001' # Console (web UI)
     volumes:
       # Map the Windows "ecommerce-images" folder on your Desktop to /data in the container.
-      - ${USERPROFILE}/Desktop/ecommerce-images:/data
+      - '${USERPROFILE}\OneDrive\Desktop\ecommerce-images:/data'
     environment:
       # Set your access keys
       MINIO_ROOT_USER: minioadmin

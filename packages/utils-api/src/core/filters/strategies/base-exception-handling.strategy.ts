@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Request } from 'express';
 import { ITranslatorService } from '@/modules/common/translator';
-
-import { ExceptionResponseBody } from '@/types';
+import { ExceptionResponseBody } from '@ecohatch/types-shared';
 
 import { IExceptionHandlingStrategy } from '../interfaces';
 

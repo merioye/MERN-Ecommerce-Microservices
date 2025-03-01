@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "@ecohatch/utils-api": "workspace:*",
+    "@ecohatch/utils-shared": "workspace:*",
     "@nestjs/common": "^10.2.7",
     "@nestjs/config": "^3.1.1",
     "@nestjs/core": "^10.2.7",

@@ -1,6 +1,5 @@
 import { HttpStatus } from '@nestjs/common';
-
-import { ErrorFormat } from '@/types';
+import { ErrorFormat } from '@ecohatch/types-shared';
 
 /**
  * RequestValidationError class represents a validation failed exception.

@@ -4,8 +4,42 @@
   "license": "MIT",
   "author": "Umair Saleem",
   "description": "Shared utils for monorepo internal applications/packages",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prebuild": "node scripts/prebuild.mjs",
+    "build": "tsc -p tsconfig.build.json",
+    "format:check": "prettier . --check",
+    "format:fix": "prettier . --write",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "jest --passWithNoTests",
+    "test:watch": "jest --watch --passWithNoTests",
+    "test:band": "jest --runInBand --passWithNoTests",
+    "test:watchBand": "jest --watchAll --runInBand --passWithNoTests",
+    "test:ci": "jest --ci --passWithNoTests",
+    "test:cov": "jest --coverage --passWithNoTests",
+    "clean": "node scripts/clean.mjs"
+  },
+  "devDependencies": {
+    "@ecohatch/config-eslint": "workspace:*",
+    "@ecohatch/config-jest": "workspace:*",
+    "@ecohatch/config-prettier": "workspace:*",
+    "@ecohatch/config-typescript": "workspace:*",
+    "@ecohatch/types-shared": "workspace:*",
+    "@types/jest": "^29.5.0",
+    "@types/node": "^20.8.3",
+    "eslint": "^8.56.0",
+    "jest": "^29.5.0",
+    "ts-jest": "^29.1.0",
+    "prettier": "^3.3.0",
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

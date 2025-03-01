@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Request } from 'express';
 import { RequestValidationError } from '@/common/errors';
-
-import { ExceptionResponseBody } from '@/types';
+import { ExceptionResponseBody } from '@ecohatch/types-shared';
 
 import { BaseExceptionHandlingStrategy } from './base-exception-handling.strategy';
 

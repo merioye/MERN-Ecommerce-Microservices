@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { BasePrismaService } from '@ecohatch/utils-api';
 import { Admin, Prisma } from '@prisma/client';
 
 import { PrismaService } from '../prisma.service';
-import { BasePrismaService } from './base-prisma.service';
 
 /**
  * The BaseAdminService class provides methods for managing admins.
@@ -22,6 +22,7 @@ export class BaseAdminService extends BasePrismaService<
   Prisma.AdminSelect,
   Prisma.AdminInclude,
   Prisma.AdminOrderByWithRelationInput,
+  any,
   Prisma.AdminScalarFieldEnum
 > {
   public constructor(prismaService: PrismaService) {

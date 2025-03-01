@@ -1,6 +1,5 @@
+import { IBasePrismaService } from '@ecohatch/utils-api';
 import { Admin, Prisma } from '@prisma/client';
-
-import { IBasePrismaService } from '@/database';
 
 import { CreateAdminDto } from '../dtos';
 
@@ -13,6 +12,7 @@ export interface IAdminService
     Prisma.AdminSelect,
     Prisma.AdminInclude,
     Prisma.AdminOrderByWithRelationInput,
+    any,
     Prisma.AdminScalarFieldEnum
   > {
   createOne(data: CreateAdminDto): Promise<Omit<Admin, 'password'>>;

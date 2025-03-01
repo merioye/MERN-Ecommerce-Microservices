@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import {
   BadRequestError,
+  EntityPrimaryKey,
   HASH_SERVICE,
   IHashService,
   NotFoundError,
@@ -61,7 +62,9 @@ export class AdminService extends BaseAdminService implements IAdminService {
       throw new BadRequestError('admin.error.Admin_already_exists');
     }
 
-    const adminGroup = await this._adminGroupService.findById(adminGroupId);
+    const adminGroup = await this._adminGroupService.findById(
+      adminGroupId as unknown as EntityPrimaryKey
+    );
     if (!adminGroup) {
       throw new NotFoundError('adminGroup.error.AdminGroup_not_found');
     }

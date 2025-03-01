@@ -1,6 +1,5 @@
 import { HttpStatus } from '@nestjs/common';
-
-import { ErrorFormat } from '@/types';
+import { ErrorFormat } from '@ecohatch/types-shared';
 
 import { RequestValidationError } from '../request-validation.error';
 

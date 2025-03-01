@@ -1,6 +1,5 @@
+import { SortDirection } from '@ecohatch/utils-shared';
 import { registerDecorator, ValidationOptions } from 'class-validator';
-
-import { SortDirection } from '../enums';
 
 /**
  * Checks if the given object is a valid sort object.

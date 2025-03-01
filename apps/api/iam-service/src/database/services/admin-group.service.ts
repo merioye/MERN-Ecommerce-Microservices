@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { BasePrismaService } from '@ecohatch/utils-api';
 import { AdminGroup, Prisma } from '@prisma/client';
 
 import { PrismaService } from '../prisma.service';
-import { BasePrismaService } from './base-prisma.service';
 
 /**
  * The BaseAdminGroupService class provides methods for managing admin groups.
@@ -22,6 +22,7 @@ export class BaseAdminGroupService extends BasePrismaService<
   Prisma.AdminGroupSelect,
   Prisma.AdminGroupInclude,
   Prisma.AdminGroupOrderByWithRelationInput,
+  any,
   Prisma.AdminGroupScalarFieldEnum
 > {
   public constructor(prismaService: PrismaService) {

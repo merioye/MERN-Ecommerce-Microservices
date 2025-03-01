@@ -1,6 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { OffsetPaginatedResult } from '@ecohatch/types-shared';
-import { BadRequestError, NotFoundError } from '@ecohatch/utils-api';
+import {
+  BadRequestError,
+  EntityPrimaryKey,
+  InternalServerError,
+  NotFoundError,
+} from '@ecohatch/utils-api';
 import { AdminGroup, Prisma } from '@prisma/client';
 
 import { BaseAdminGroupService, PrismaService } from '@/database';
@@ -49,11 +54,11 @@ export class AdminGroupService
   /**
    * Updates an admin group.
    * @param {UpdateAdminGroupDto} data - The data containing the details of the admin group to update.
-   * @param {number} id - The ID of the admin group to update.
+   * @param {EntityPrimaryKey} id - The ID of the admin group to update.
    * @returns {Promise<AdminGroup>} - The updated admin group.
    */
   public async updateOne(
-    id: number,
+    id: EntityPrimaryKey,
     data: UpdateAdminGroupDto
   ): Promise<AdminGroup> {
     const isExistingGroup = await this.findById(id);
@@ -73,49 +78,54 @@ export class AdminGroupService
       }
     }
 
-    return this.update({ id }, data);
+    const updatedAdminGroup = await this.update({ id: this.parseId(id) }, data);
+    if (!updatedAdminGroup) {
+      throw new InternalServerError('adminGroup.error.AdminGroup_not_updated');
+    }
+
+    return updatedAdminGroup;
   }
 
   /**
    * Soft deletes an admin group.
-   * @param {number} id - The ID of the admin group to delete.
+   * @param {EntityPrimaryKey} id - The ID of the admin group to delete.
    * @returns {Promise<AdminGroup>} - The deleted admin group.
    */
-  public async softDeleteOne(id: number): Promise<AdminGroup> {
-    const adminGroup = await this.findById(id);
-    if (!adminGroup) {
+  public async softDeleteOne(id: EntityPrimaryKey): Promise<AdminGroup> {
+    const deletedAdminGroup = await this.softDelete({ id: this.parseId(id) });
+    if (!deletedAdminGroup) {
       throw new NotFoundError('adminGroup.error.AdminGroup_not_found');
     }
 
-    return this.softDelete({ id });
+    return deletedAdminGroup;
   }
 
   /**
    * Hard deletes an admin group.
-   * @param {number} id - The ID of the admin group to delete.
+   * @param {EntityPrimaryKey} id - The ID of the admin group to delete.
    * @returns {Promise<AdminGroup>} - The deleted admin group.
    */
-  public async hardDeleteOne(id: number): Promise<AdminGroup> {
-    const adminGroup = await this.findById(id, { withDeleted: true });
-    if (!adminGroup) {
+  public async hardDeleteOne(id: EntityPrimaryKey): Promise<AdminGroup> {
+    const deletedAdminGroup = await this.delete({ id: this.parseId(id) });
+    if (!deletedAdminGroup) {
       throw new NotFoundError('adminGroup.error.AdminGroup_not_found');
     }
 
-    return this.delete({ id });
+    return deletedAdminGroup;
   }
 
   /**
    * Restores an admin group.
-   * @param {number} id - The ID of the admin group to restore.
+   * @param {EntityPrimaryKey} id - The ID of the admin group to restore.
    * @returns {Promise<AdminGroup>} - The restored admin group.
    */
-  public async restoreOne(id: number): Promise<AdminGroup> {
-    const adminGroup = await this.findById(id, { withDeleted: true });
-    if (!adminGroup) {
+  public async restoreOne(id: EntityPrimaryKey): Promise<AdminGroup> {
+    const restoredAdminGroup = await this.restore({ id: this.parseId(id) });
+    if (!restoredAdminGroup) {
       throw new NotFoundError('adminGroup.error.AdminGroup_not_found');
     }
 
-    return this.restore({ id });
+    return restoredAdminGroup;
   }
 
   /**

@@ -4,4 +4,13 @@ export const ENDPOINT = {
       HealthCheck: '/healthcheck',
     },
   },
+  Storage: {
+    Base: '/files',
+    Get: {
+      GenerateUploadUrl: '/generate-upload-url',
+    },
+    Delete: {
+      DeleteFile: '/:file-url',
+    },
+  },
 } as const;

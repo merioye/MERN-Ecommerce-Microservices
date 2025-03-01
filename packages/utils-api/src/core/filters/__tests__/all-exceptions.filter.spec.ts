@@ -10,8 +10,8 @@ import {
   ITranslatorService,
   TRANSLATOR_SERVICE,
 } from '@/modules/common/translator';
+import { ExceptionResponseBody } from '@ecohatch/types-shared';
 
-import { ExceptionResponseBody } from '@/types';
 import { Environment } from '@/enums';
 
 import { AllExceptionsFilter } from '../all-exceptions.filter';

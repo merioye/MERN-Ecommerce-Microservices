@@ -1,7 +1,6 @@
 import { OffsetPaginatedResult } from '@ecohatch/types-shared';
+import { EntityPrimaryKey, IBasePrismaService } from '@ecohatch/utils-api';
 import { AdminGroup, Prisma } from '@prisma/client';
-
-import { IBasePrismaService } from '@/database';
 
 import {
   CreateAdminGroupDto,
@@ -18,13 +17,17 @@ export interface IAdminGroupService
     Prisma.AdminGroupSelect,
     Prisma.AdminGroupInclude,
     Prisma.AdminGroupOrderByWithRelationInput,
+    any,
     Prisma.AdminGroupScalarFieldEnum
   > {
   createOne(data: CreateAdminGroupDto): Promise<AdminGroup>;
-  updateOne(id: number, data: UpdateAdminGroupDto): Promise<AdminGroup>;
-  softDeleteOne(id: number): Promise<AdminGroup>;
-  hardDeleteOne(id: number): Promise<AdminGroup>;
-  restoreOne(id: number): Promise<AdminGroup>;
+  updateOne(
+    id: EntityPrimaryKey,
+    data: UpdateAdminGroupDto
+  ): Promise<AdminGroup>;
+  softDeleteOne(id: EntityPrimaryKey): Promise<AdminGroup>;
+  hardDeleteOne(id: EntityPrimaryKey): Promise<AdminGroup>;
+  restoreOne(id: EntityPrimaryKey): Promise<AdminGroup>;
   findAll(
     query: GetAdminGroupListDto
   ): Promise<AdminGroup[] | OffsetPaginatedResult<AdminGroup>>;

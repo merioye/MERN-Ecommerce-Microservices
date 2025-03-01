@@ -36,7 +36,7 @@ export class HealthController {
    */
   @Get(ENDPOINT.Health.Get.HealthCheck)
   @ApiOkResponse({ description: 'Server health information.' })
-  public checkHealth(): Health {
+  public checkHealth(): Promise<Health> {
     this._logger.info('Request for checking server health');
     return this._healthService.health();
   }

@@ -6,7 +6,8 @@ import {
   ApiNotFoundResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { ApiResponse, ILogger, LOGGER } from '@ecohatch/utils-api';
+import { ILogger, LOGGER } from '@ecohatch/utils-api';
+import { ApiResponse } from '@ecohatch/utils-shared';
 import { Admin } from '@prisma/client';
 
 import { ENDPOINT } from '@/constants';

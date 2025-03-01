@@ -5,11 +5,10 @@ import {
   ParseNumber,
   ValidateIfPresent,
 } from '@/core/decorators';
+import { PAGINATION, SortDirection } from '@ecohatch/utils-shared';
 import { IsBoolean, IsInt, IsPositive, IsString, Max } from 'class-validator';
 
-import { PAGINATION } from '../constants';
 import { IsSortByObject } from '../decorators';
-import { SortDirection } from '../enums';
 
 export class CursorPaginationDto {
   @ApiPropertyOptional({

@@ -27,6 +27,9 @@
     "prettier": "^3.3.0",
     "typescript": "^5.4.5"
   },
+  "peerDependencies": {
+    "@ecohatch/utils-shared": "workspace:*"
+  },
   "engines": {
     "node": ">=20"
   }
