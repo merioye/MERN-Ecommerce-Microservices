@@ -12,6 +12,7 @@ import {
   ApiBadRequestResponse,
   ApiInternalServerErrorResponse,
   ApiOkResponse,
+  ApiOperation,
   ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
@@ -55,6 +56,7 @@ export class StorageController {
    * @throws {InternalServerError} When URL generation fails
    */
   @Get(ENDPOINT.Storage.Get.GenerateUploadUrl)
+  @ApiOperation({ summary: 'Generates a URL to upload a file' })
   @ApiQuery({ type: GenerateUploadUrlDto })
   @ApiOkResponse({
     description: 'Upload URL generated successfully',
@@ -102,6 +104,9 @@ export class StorageController {
    * @throws {InternalServerError} When file deletion fails
    */
   @Delete(ENDPOINT.Storage.Delete.DeleteFile)
+  @ApiOperation({
+    summary: 'Deletes a file by URL. The URL should be encoded.',
+  })
   @ApiOkResponse({
     description: 'File deleted successfully',
   })
@@ -113,14 +118,14 @@ export class StorageController {
   ): Promise<ApiResponse<null>> {
     const decodedFileUrl = decodeURIComponent(fileUrl);
 
-    this._logger.debug('Deleting file with ID:', decodedFileUrl);
+    this._logger.debug('Deleting file with URL:', decodedFileUrl);
 
     const isDeleted = await this._storageService.deleteFile(decodedFileUrl);
     if (!isDeleted) {
       throw new InternalServerError('storage.error.Failed_to_delete_the_file');
     }
 
-    this._logger.info('Deleted file with ID:', decodedFileUrl);
+    this._logger.info('Deleted file with URL:', decodedFileUrl);
 
     return new ApiResponse({
       message: 'storage.success.File_deleted_successfully',

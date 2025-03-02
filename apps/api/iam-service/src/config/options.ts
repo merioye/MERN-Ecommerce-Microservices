@@ -2,6 +2,7 @@ import { join, resolve } from 'path';
 import { ConfigModuleOptions } from '@nestjs/config';
 import {
   CacheModuleOptions,
+  CronJobModuleOptions,
   Environment,
   LoggerModuleOptions,
   TranslatorModuleOptions,
@@ -78,9 +79,17 @@ const cacheModuleOptions: CacheModuleOptions = {
   url: process.env[Config.CACHE_URL]!,
 };
 
+/**
+ * CronJobModule options
+ */
+const cronJobModuleOptions: CronJobModuleOptions = {
+  jobs: [],
+};
+
 export {
   configOptions,
   loggerModuleOptions,
   translatorModuleOptions,
   cacheModuleOptions,
+  cronJobModuleOptions,
 };

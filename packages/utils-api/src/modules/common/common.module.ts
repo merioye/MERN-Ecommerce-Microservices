@@ -1,6 +1,7 @@
 import { DynamicModule } from '@nestjs/common';
 
 import { CacheModule } from './cache';
+import { CronJobModule } from './cron-job';
 import { HashModule } from './hash';
 import { LoggerModule } from './logger';
 import { TranslatorModule } from './translator';
@@ -24,6 +25,7 @@ export class CommonAppModule {
     logger,
     translator,
     cache,
+    cronJob,
   }: CommonAppModuleOptions): DynamicModule {
     return {
       module: CommonAppModule,
@@ -32,6 +34,7 @@ export class CommonAppModule {
         LoggerModule.forRoot(logger),
         TranslatorModule.forRoot(translator),
         CacheModule.register(cache),
+        CronJobModule.register(cronJob),
       ],
     };
   }

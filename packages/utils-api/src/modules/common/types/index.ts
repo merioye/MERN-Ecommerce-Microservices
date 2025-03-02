@@ -4,6 +4,8 @@ import {
   TranslatorModuleOptions,
 } from '@/types';
 
+import { CronJobModuleOptions } from '../cron-job';
+
 /**
  * Type representing the CommonAppModuleOptions.
  *
@@ -17,4 +19,5 @@ export type CommonAppModuleOptions = {
   logger: LoggerModuleOptions;
   translator: TranslatorModuleOptions;
   cache: CacheModuleOptions;
+  cronJob: CronJobModuleOptions;
 };

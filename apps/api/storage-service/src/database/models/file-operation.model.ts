@@ -6,24 +6,10 @@ import { Document } from 'mongoose';
   timestamps: true,
   versionKey: false,
   collection: 'tbl_file_operations',
-  toObject: {
-    transform(_, ret) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      ret.id = ret._id;
-      delete ret._id;
-    },
-  },
-  toJSON: {
-    transform(_, ret) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      ret.id = ret._id;
-      delete ret._id;
-    },
-  },
 })
 export class FileOperation extends Document {
   @Prop({ required: true, unique: true })
-  operationId!: string;
+  operationId!: string; // Unique ID from client/event
 
   @Prop({ required: true })
   fileUrl!: string;

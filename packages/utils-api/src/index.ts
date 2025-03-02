@@ -10,5 +10,6 @@ export * from './modules/common/translator';
 export * from './modules/common/logger';
 export * from './modules/common/hash';
 export * from './modules/common/cache';
+export * from './modules/common/cron-job';
 export * from './modules/common';
 export * from './database';

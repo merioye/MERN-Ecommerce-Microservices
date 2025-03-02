@@ -141,7 +141,7 @@ export class S3StorageService
       return true;
     } catch (error) {
       this._logger.error('Error deleting file from S3:', {
-        objectUrl,
+        fileUrl: objectUrl,
         error,
       });
       return false;

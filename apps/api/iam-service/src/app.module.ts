@@ -25,6 +25,7 @@ import { GracefulShutdownModule } from 'nestjs-graceful-shutdown';
 import {
   cacheModuleOptions,
   configOptions,
+  cronJobModuleOptions,
   loggerModuleOptions,
   translatorModuleOptions,
 } from './config';
@@ -51,6 +52,7 @@ import { WebAppModule } from './modules/web';
       logger: loggerModuleOptions,
       translator: translatorModuleOptions,
       cache: cacheModuleOptions,
+      cronJob: cronJobModuleOptions,
     }),
     GracefulShutdownModule.forRootAsync({
       inject: [ConfigService, PrismaService, LOGGER, CACHE_SERVICE],
