@@ -5,6 +5,7 @@ import {
   HttpStatus,
   Inject,
   Param,
+  Patch,
   Query,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -16,15 +17,16 @@ import {
   ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
+import { TGeneratedFileUploadUrl } from '@ecohatch/types-shared';
 import { ILogger, InternalServerError, LOGGER } from '@ecohatch/utils-api';
 import { ApiResponse } from '@ecohatch/utils-shared';
 
 import { Config } from '@/enums';
 import { ENDPOINT } from '@/constants';
 
-import { STORAGE_SERVICE } from './constants';
+import { STORAGE_PROVIDER } from './constants';
 import { GenerateUploadUrlDto } from './dtos';
-import { IStorageService } from './interfaces';
+import { IStorageProvider } from './interfaces';
 
 /**
  * Controller handling file storage operations.
@@ -36,8 +38,8 @@ import { IStorageService } from './interfaces';
 @ApiTags('Storage')
 export class StorageController {
   public constructor(
-    @Inject(STORAGE_SERVICE)
-    private readonly _storageService: IStorageService,
+    @Inject(STORAGE_PROVIDER)
+    private readonly _storageProvider: IStorageProvider,
     @Inject(LOGGER) private readonly _logger: ILogger,
     private readonly _configService: ConfigService
   ) {}
@@ -47,7 +49,7 @@ export class StorageController {
    * The URL will expire after a configured duration.
    *
    * @param {GenerateUploadUrlDto} config - Configuration for URL generation
-   * @returns {Promise<ApiResponse<{ url: string }>>} Response containing the generated upload URL
+   * @returns {Promise<ApiResponse<TGeneratedFileUploadUrl>>} Response containing the generated upload URL
    *
    * @example
    * GET /storage/upload-url?fileType=image/jpeg&fileName=example.jpg&entityType=USER_AVATAR
@@ -69,25 +71,21 @@ export class StorageController {
   })
   public async generateUploadUrl(
     @Query() config: GenerateUploadUrlDto
-  ): Promise<ApiResponse<{ url: string }>> {
+  ): Promise<ApiResponse<TGeneratedFileUploadUrl>> {
     this._logger.debug('Generating upload URL with config:', config);
 
-    const presignedUrl = await this._storageService.generateUploadUrl({
+    const generatedUrl = await this._storageProvider.generateUploadUrl({
       ...config,
       expiration: this._configService.get<number>(
         Config.UPLOAD_FILE_URL_EXPIRATION
       )!,
     });
 
-    this._logger.info('Generated upload URL:', {
-      url: presignedUrl,
-    });
+    this._logger.info('Generated upload URL:', generatedUrl);
 
     return new ApiResponse({
       message: 'storage.success.Upload_url_generated_successfully',
-      result: {
-        url: presignedUrl,
-      },
+      result: generatedUrl,
       statusCode: HttpStatus.OK,
     });
   }
@@ -95,17 +93,17 @@ export class StorageController {
   /**
    * Deletes a file from storage using its unique identifier.
    *
-   * @param {string} fileUrl - The encoded URL of the file to delete
+   * @param {string} filePath - The encoded unique path of the file to delete
    * @returns {Promise<ApiResponse<null>>} Response indicating successful deletion
    *
    * @example
-   * DELETE /storage/files/encoded-url
+   * DELETE /storage/files/encoded-path
    *
    * @throws {InternalServerError} When file deletion fails
    */
   @Delete(ENDPOINT.Storage.Delete.DeleteFile)
   @ApiOperation({
-    summary: 'Deletes a file by URL. The URL should be encoded.',
+    summary: 'Deletes a file by its unique path. The path should be encoded.',
   })
   @ApiOkResponse({
     description: 'File deleted successfully',
@@ -114,22 +112,59 @@ export class StorageController {
     description: 'Failed to delete the file',
   })
   public async deleteFile(
-    @Param() fileUrl: string
+    @Param('file-path') filePath: string
   ): Promise<ApiResponse<null>> {
-    const decodedFileUrl = decodeURIComponent(fileUrl);
+    const decodedFilePath = decodeURIComponent(filePath);
 
-    this._logger.debug('Deleting file with URL:', decodedFileUrl);
+    this._logger.debug('Deleting file with path:', decodedFilePath);
 
-    const isDeleted = await this._storageService.deleteFile(decodedFileUrl);
+    const isDeleted = await this._storageProvider.deleteFile(decodedFilePath);
     if (!isDeleted) {
       throw new InternalServerError('storage.error.Failed_to_delete_the_file');
     }
 
-    this._logger.info('Deleted file with URL:', decodedFileUrl);
+    this._logger.info('Deleted file with path:', decodedFilePath);
 
     return new ApiResponse({
       message: 'storage.success.File_deleted_successfully',
       result: null,
+      statusCode: HttpStatus.OK,
+    });
+  }
+
+  /**
+   * Confirms the upload of a file by its unique identifier.
+   *
+   * @param {string} filePath - The encoded unique path of the file to confirm upload
+   * @returns {Promise<ApiResponse<boolean>>} Response indicating successful confirmation
+   *
+   */
+  @Patch(ENDPOINT.Storage.Update.ConfirmUpload)
+  @ApiOperation({
+    summary: 'Confirms the upload of a file by its unique identifier.',
+  })
+  @ApiOkResponse({
+    description: 'File upload confirmed successfully',
+  })
+  public async confirmUpload(
+    @Param('file-path') filePath: string
+  ): Promise<ApiResponse<boolean>> {
+    const decodedFilePath = decodeURIComponent(filePath);
+
+    this._logger.debug('Confirming file upload with path:', decodedFilePath);
+
+    // TODO: Get userId from the authorized request
+    const userId = '123';
+    const isConfirmed = await this._storageProvider.confirmUpload(
+      userId,
+      decodedFilePath
+    );
+
+    this._logger.info('Confirmed file upload with path:', decodedFilePath);
+
+    return new ApiResponse({
+      message: 'storage.success.File_upload_confirmed_successfully',
+      result: isConfirmed ? true : false,
       statusCode: HttpStatus.OK,
     });
   }

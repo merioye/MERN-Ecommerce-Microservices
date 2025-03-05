@@ -6,3 +6,10 @@ import { UploadUrlGenerationParams } from '@ecohatch/types-shared';
 export type UploadUrlGenerationConfig = {
   expiration: number;
 } & UploadUrlGenerationParams;
+
+/**
+ * Context object for the storage cleanup task.
+ */
+export type StorageCleanupTaskContext = {
+  RETENTION_DAYS: number;
+};

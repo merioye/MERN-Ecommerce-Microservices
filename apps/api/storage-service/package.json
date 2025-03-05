@@ -28,6 +28,10 @@
     "test:e2e:ci": "jest --config jest.e2e.config.js --ci --passWithNoTests",
     "test:cov": "jest --coverage --passWithNoTests",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand --passWithNoTests",
+    "db:check:dev": "dotenv -e .env.development -- ts-node src/database/scripts/check-connection.ts",
+    "db:check:prod": "dotenv -e .env.production -- node dist/database/scripts/check-connection.js",
+    "db:seed:dev": "dotenv -e .env.development -- ts-node src/database/seeders/index.ts",
+    "db:seed:prod": "dotenv -e .env.production -- node dist/database/seeders/index.js",
     "clean": "node scripts/clean.mjs"
   },
   "dependencies": {

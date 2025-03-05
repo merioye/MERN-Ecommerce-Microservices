@@ -7,4 +7,4 @@ public
 .eslintrc.js
 jest.config.js
 jest.e2e.config.js
-scripts
+/scripts/

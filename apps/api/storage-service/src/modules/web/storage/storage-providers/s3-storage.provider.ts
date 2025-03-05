@@ -2,22 +2,26 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
   DeleteObjectCommand,
+  HeadObjectCommand,
   PutObjectCommand,
   S3Client,
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { TFile, TGeneratedFileUploadUrl } from '@ecohatch/types-shared';
 import {
   Environment,
   ILogger,
   InternalServerError,
   LOGGER,
+  NotFoundError,
 } from '@ecohatch/utils-api';
-import { StorageEntity } from '@ecohatch/utils-shared';
+import { FileStatus, StorageEntity } from '@ecohatch/utils-shared';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Config } from '@/enums';
 
-import { IStorageService } from '../interfaces';
+import { FILE_SERVICE } from '../constants';
+import { IFileService, IStorageProvider } from '../interfaces';
 import { UploadUrlGenerationConfig } from '../types';
 import { BaseStorageService } from './base-storage.service';
 
@@ -28,12 +32,12 @@ import { BaseStorageService } from './base-storage.service';
  *
  * @class S3StorageService
  * @extends {BaseStorageService}
- * @implements {IStorageService}
+ * @implements {IStorageProvider}
  */
 @Injectable()
-export class S3StorageService
+export class S3StorageProvider
   extends BaseStorageService
-  implements IStorageService
+  implements IStorageProvider
 {
   private readonly _client: S3Client;
   private readonly _bucketName: string;
@@ -46,7 +50,8 @@ export class S3StorageService
    */
   public constructor(
     private readonly _configService: ConfigService,
-    @Inject(LOGGER) private readonly _logger: ILogger
+    @Inject(LOGGER) private readonly _logger: ILogger,
+    @Inject(FILE_SERVICE) private readonly _fileService: IFileService
   ) {
     super();
     this._bucketName = this._configService.get(Config.AWS_S3_BUCKET_NAME)!;
@@ -71,12 +76,12 @@ export class S3StorageService
    * @param {number} config.expiration - URL expiration time in seconds
    * @param {StorageEntity} config.entityType - Type of entity the file belongs to
    * @param {string} [config.entityId] - Optional ID of the entity
-   * @returns {Promise<string>} Pre-signed URL for file upload
+   * @returns {Promise<TGeneratedFileUploadUrl>} Pre-signed URL for file upload
    * @throws {InternalServerError} If URL generation fails
    */
   public async generateUploadUrl(
     config: UploadUrlGenerationConfig
-  ): Promise<string> {
+  ): Promise<TGeneratedFileUploadUrl> {
     const { fileType, fileName, expiration, entityType, entityId } = config;
     // Validate
     this.validateFileType(fileType, entityType);
@@ -84,6 +89,8 @@ export class S3StorageService
       Config.NODE_ENV
     )!;
     const uniqueId = uuidv4();
+
+    const session = await this._fileService.startSession();
 
     try {
       // Generate unique filename and full object key
@@ -93,6 +100,21 @@ export class S3StorageService
         entityId,
         environment,
       });
+
+      // Create file record
+      // TODO: Get userId from the authorized request
+      const userId = '123';
+      await this._fileService.create(
+        {
+          filePath: objectKey,
+          ownerId: userId,
+          status: FileStatus.PENDING,
+          referenceCount: 0,
+          lastReferencedAt: null,
+        },
+        null,
+        { session }
+      );
 
       // Create command for PUT operation
       const putCommand = new PutObjectCommand({
@@ -113,8 +135,15 @@ export class S3StorageService
         expiresIn: expiration,
       });
 
-      return presignedUrl;
+      await this._fileService.commitSession(session);
+
+      return {
+        filePath: objectKey,
+        presignedUrl,
+      };
     } catch (err) {
+      await this._fileService.rollbackSession(session);
+
       this._logger.error('Error generating upload file URL:', err);
       throw new InternalServerError(
         'storage.error.Failed_to_generate_upload_URL'
@@ -123,14 +152,62 @@ export class S3StorageService
   }
 
   /**
+   * Confirms the upload of a file by updating the file status to ACTIVE
+   * @param userId - The ID of the user who is performing the upload
+   * @param filePath - The path of the file in the storage
+   * @returns The updated file document if the upload is confirmed, null otherwise
+   */
+  public async confirmUpload(
+    userId: string,
+    filePath: string
+  ): Promise<TFile | null> {
+    const session = await this._fileService.startSession();
+
+    try {
+      // Verify file exists in S3
+      const headCommand = new HeadObjectCommand({
+        Bucket: this._bucketName,
+        Key: filePath,
+      });
+      await this._client.send(headCommand);
+
+      // Update file status
+      const file = await this._fileService.update(
+        { filePath, ownerId: userId, status: FileStatus.PENDING },
+        { status: FileStatus.ACTIVE },
+        null,
+        { session }
+      );
+
+      if (!file) {
+        throw new NotFoundError('File not found');
+      }
+
+      await this._fileService.commitSession(session);
+      return file;
+    } catch (error) {
+      // Cleanup if S3 upload failed
+      if ((error as { code?: string })?.code === 'NotFound') {
+        await this._fileService.delete({ filePath }, { session });
+      }
+      await this._fileService.rollbackSession(session);
+
+      this._logger.error(
+        `Upload confirmation failed for file ${filePath}: ${error instanceof Error ? error.message : JSON.stringify(error)}`
+      );
+      return null;
+    }
+  }
+
+  /**
    * Deletes a file from S3 bucket.
    *
-   * @param {string} objectUrl - The full URL of the object in S3
+   * @param {string} objectPath - The full path of the object in S3
    * @returns {Promise<boolean>} True if deletion was successful, false otherwise
    */
-  public async deleteFile(objectUrl: string): Promise<boolean> {
+  public async deleteFile(objectPath: string): Promise<boolean> {
     try {
-      const objectKey = this.extractObjectKeyFromUrl(objectUrl);
+      const objectKey = this.extractObjectKeyFromPath(objectPath);
       await this._client.send(
         new DeleteObjectCommand({
           Bucket: this._bucketName,
@@ -141,7 +218,7 @@ export class S3StorageService
       return true;
     } catch (error) {
       this._logger.error('Error deleting file from S3:', {
-        fileUrl: objectUrl,
+        filePath: objectPath,
         error,
       });
       return false;
@@ -177,13 +254,13 @@ export class S3StorageService
   }
 
   /**
-   * Extracts the object key from a given S3 object URL.
+   * Extracts the object key from a given S3 object path.
    *
-   * @param {string} objectUrl - The full URL of the object in S3
+   * @param {string} objectPath - The full path of the object in S3
    * @returns {string} The extracted object key
    */
-  private extractObjectKeyFromUrl(objectUrl: string): string {
-    const urlParts = objectUrl.split('/');
+  private extractObjectKeyFromPath(objectPath: string): string {
+    const urlParts = objectPath.split('/');
     return urlParts.slice(3).join('/');
   }
 }

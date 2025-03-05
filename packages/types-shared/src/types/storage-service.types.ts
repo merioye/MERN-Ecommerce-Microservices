@@ -1,8 +1,10 @@
 import {
-  FileOperationStatus,
-  FileRegistryStatus,
+  FileEventStatus,
+  FileEventType,
+  FileStatus,
   StorageEntity,
 } from '@ecohatch/utils-shared';
+import { VERSION_COLUMN } from '../constants';
 
 /**
  * Parameters for generating a pre-signed URL for file upload.
@@ -14,40 +16,40 @@ export type UploadUrlGenerationParams = {
   entityId?: string;
 };
 
-export type FileReference = {
-  entityId: string;
-  entityType: StorageEntity;
-  serviceName: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-export type FileRegistry = {
-  id: string;
-  fileUrl: string;
+export type TFile = {
+  _id: string;
+  filePath: string;
   ownerId: string;
   referenceCount: number;
-  status: FileRegistryStatus;
-  version: number;
-  lastReferencedAt: Date;
+  status: FileStatus;
+  [VERSION_COLUMN]: number;
+  lastReferencedAt: Date | null;
   createdAt: Date;
   updatedAt: Date;
 };
 
-export type FileOperation = {
-  id: string;
-  operationId: string;
-  fileUrl: string;
-  status: FileOperationStatus;
-  version: number;
+export type TFileEvent = {
+  _id: string;
+  eventId: string;
+  filePath: string;
+  type: FileEventType;
+  status: FileEventStatus;
+  [VERSION_COLUMN]: number;
+  result: Record<string, any>;
   createdAt: Date;
   updatedAt: Date;
 };
 
-export type DistributedLock = {
-  id: string;
+export type TDistributedLock = {
+  _id: string;
   name: string;
   expiresAt: Date;
   createdAt: Date;
   updatedAt: Date;
+};
+
+// ########################################### API Response Types ###########################################
+export type TGeneratedFileUploadUrl = {
+  filePath: string;
+  presignedUrl: string;
 };

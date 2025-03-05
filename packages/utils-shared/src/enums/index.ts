@@ -32,14 +32,19 @@ export enum StorageEntity {
   MEDIA_GALLERIES = 'media-galleries',
 }
 
-export enum FileRegistryStatus {
+export enum FileStatus {
   PENDING = 'pending',
   ACTIVE = 'active',
   DELETED = 'deleted',
 }
 
-export enum FileOperationStatus {
+export enum FileEventStatus {
   PROCESSING = 'processing',
   COMPLETED = 'completed',
   FAILED = 'failed',
+}
+
+export enum FileEventType {
+  REFERENCE = 'reference',
+  DEREFERENCE = 'dereference',
 }

@@ -9,8 +9,10 @@ import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { getConnectionToken } from '@nestjs/mongoose';
 import {
   AllExceptionsFilter,
+  CACHE_SERVICE,
   CommonAppModule,
   ExceptionHandlingStrategyFactory,
+  ICacheService,
   ILogger,
   LOGGER,
   TranslateMessageInterceptor,
@@ -47,11 +49,12 @@ import { WebAppModule } from './modules/web';
     ConfigModule.forRoot(configOptions),
     DatabaseModule,
     GracefulShutdownModule.forRootAsync({
-      inject: [ConfigService, LOGGER, getConnectionToken()],
+      inject: [ConfigService, LOGGER, getConnectionToken(), CACHE_SERVICE],
       useFactory: (
         configService: ConfigService,
         logger: ILogger,
-        connection: Connection
+        connection: Connection,
+        cacheService: ICacheService
       ) => ({
         gracefulShutdownTimeout: configService.get<number>(
           Config.GRACEFUL_SHUTDOWN_TIMEOUT
@@ -61,6 +64,9 @@ import { WebAppModule } from './modules/web';
           logger.info('Closing database connection...');
           await connection.close();
           logger.info('Database connection closed.');
+          logger.info('Closing Cache connection...');
+          await cacheService.disconnect();
+          logger.info('Cache connection closed.');
         },
       }),
     }),

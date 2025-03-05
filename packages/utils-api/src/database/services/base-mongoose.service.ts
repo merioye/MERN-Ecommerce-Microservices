@@ -124,7 +124,9 @@ export abstract class BaseMongooseService<T extends BaseMongooseDocument>
    * @returns A promise that resolves with the started session.
    */
   public async startSession(): Promise<ClientSession> {
-    return this.model.db.startSession();
+    const session = await this.model.db.startSession();
+    session.startTransaction();
+    return session;
   }
 
   /**

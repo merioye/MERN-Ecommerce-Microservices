@@ -8,6 +8,16 @@ import { Config } from '@/enums';
 
 import { DatabaseService } from './database.service';
 
+/**
+ * The `DatabaseModule` is a global module that provides and exports the `MongooseModule, DatabaseService`.
+ * This module is decorated with `@Global`, making it available throughout the application
+ * without needing to import it in each module.
+ *
+ * @module DatabaseModule
+ * @global
+ * @provider {DatabaseService} Provides the DatabaseService for database interactions.
+ * @export {MongooseModule, DatabaseService} Exports the MongooseModule, DatabaseService to be used in other modules.
+ */
 @Global()
 @Module({
   imports: [
@@ -23,7 +33,6 @@ import { DatabaseService } from './database.service';
             Environment.PROD, // Setting to false in production and managing indexes manually
           retryWrites: true, // Automatically retry write operations if they fail
           retryReads: true, // Automatically retry read operations if they fail
-          keepAlive: true, // Set to true to avoid connection timeouts
           maxPoolSize: 100, // Adjust based on expected concurrent operations
           minPoolSize: 5, // Maintain a minimum pool to reduce connection delays
           socketTimeoutMS: 45000, // Close sockets after 45s of inactivity

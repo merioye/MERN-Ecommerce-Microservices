@@ -10,7 +10,10 @@ export const ENDPOINT = {
       GenerateUploadUrl: '/generate-upload-url',
     },
     Delete: {
-      DeleteFile: '/:file-url',
+      DeleteFile: '/:file-path',
+    },
+    Update: {
+      ConfirmUpload: '/:file-path/confirm-upload',
     },
   },
 } as const;

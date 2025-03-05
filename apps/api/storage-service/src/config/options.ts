@@ -2,6 +2,7 @@ import { join, resolve } from 'path';
 import { ConfigModuleOptions } from '@nestjs/config';
 import {
   CacheModuleOptions,
+  CronJobExpression,
   CronJobModuleOptions,
   Environment,
   LoggerModuleOptions,
@@ -10,7 +11,7 @@ import {
 import * as dotenv from 'dotenv';
 import Joi from 'joi';
 
-import { Config } from '@/enums';
+import { Config, CronJobTask } from '@/enums';
 import { APP_NAME } from '@/constants';
 
 dotenv.config({
@@ -45,6 +46,8 @@ const configOptions: ConfigModuleOptions = {
     DATABASE_URL: Joi.string().uri().required(),
     DATABASE_MAX_RETRIES: Joi.number().required(),
     DATABASE_RETRY_DELAY: Joi.number().required(),
+    LOCK_TTL: Joi.number().required(),
+    UNUSED_FILE_RETENTION_DAYS: Joi.number().required(),
   }),
   validationOptions: {
     abortEarly: true,
@@ -87,7 +90,16 @@ const cacheModuleOptions: CacheModuleOptions = {
  * CronJobModule options
  */
 const cronJobModuleOptions: CronJobModuleOptions = {
-  jobs: [],
+  jobs: [
+    {
+      name: CronJobTask.STORAGE_CLEANUP,
+      schedule: CronJobExpression.EVERY_DAY_MIDNIGHT,
+      context: {
+        RETENTION_DAYS: process.env[Config.UNUSED_FILE_RETENTION_DAYS],
+      },
+      description: 'Cleanup unused files',
+    },
+  ],
 };
 
 export {

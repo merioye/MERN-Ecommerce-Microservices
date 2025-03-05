@@ -2,18 +2,16 @@ import { join } from 'path';
 import * as dotenv from 'dotenv';
 import mongoose from 'mongoose';
 
-import { Config } from '@/enums';
-
 // Load environment variables
 dotenv.config({
-  path: join(__dirname, `../../.env.${process.env[Config.NODE_ENV]}`),
+  path: join(__dirname, `../../.env.${process.env.NODE_ENV}`),
 });
 
 async function checkDatabaseConnection() {
   console.log('🔍 Checking database connection...');
 
   try {
-    const mongoUri = process.env[Config.DATABASE_URL];
+    const mongoUri = process.env.DATABASE_URL;
     if (!mongoUri) {
       throw new Error('DATABASE_URL is not set');
     }
