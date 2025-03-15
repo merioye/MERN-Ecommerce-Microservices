@@ -6,6 +6,7 @@ import { CreateAdminDto } from '../dtos';
 export interface IAdminService
   extends IBasePrismaService<
     Admin,
+    'admin',
     Prisma.AdminCreateInput,
     Prisma.AdminUpdateInput,
     Prisma.AdminWhereInput,

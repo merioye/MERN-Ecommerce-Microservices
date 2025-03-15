@@ -25,5 +25,6 @@ import { AdminGroupService, AdminService } from './services';
       useClass: AdminService,
     },
   ],
+  exports: [ADMIN_GROUP_SERVICE, ADMIN_SERVICE],
 })
 export class AdminModule {}

@@ -2,7 +2,7 @@ import {
   CursorPaginatedResult,
   OffsetPaginatedResult,
 } from '@ecohatch/types-shared';
-import { ClientSession, Types } from 'mongoose';
+import { ClientSession, Model, Types } from 'mongoose';
 
 import {
   AggregatePipelineParams,
@@ -29,6 +29,7 @@ import {
  * @template T - Document type extending BaseMongooseDocument & Document (usually a Mongoose Document)
  */
 export interface IBaseMongooseService<T extends BaseMongooseDocument> {
+  model: Model<T>;
   parseObjectId(id: MongoosePrimaryKey): Types.ObjectId;
   startSession(): Promise<ClientSession>;
   commitSession(session: ClientSession): Promise<void>;

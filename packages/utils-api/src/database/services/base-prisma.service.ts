@@ -62,6 +62,7 @@ export abstract class BasePrismaService<
 > implements
     IBasePrismaService<
       T,
+      ModelName,
       CreateInput,
       UpdateInput,
       WhereInput,

@@ -28,4 +28,22 @@ export const ENDPOINT = {
       CreateAdmin: '/',
     },
   },
+  Permission: {
+    Base: '/permissions',
+    Get: {
+      GetPermissionList: '/',
+      GetPermissionGroupList: '/groups',
+      GetAdminPermissions: '/admins/:adminId',
+      GetAdminGroupPermissions: '/admin-groups/:adminGroupId',
+    },
+    Post: {
+      AssignPermissionsToAdmin: '/admins/assign',
+      AssignPermissionsToAdminGroup: '/admin-groups/assign',
+    },
+    Delete: {
+      RevokePermissionFromAdmin: '/admins/:adminId/:permissionId',
+      RevokePermissionFromAdminGroup:
+        '/admin-groups/:adminGroupId/:permissionId',
+    },
+  },
 } as const;

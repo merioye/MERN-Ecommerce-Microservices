@@ -27,6 +27,7 @@ import {
  * Generic prisma service interface defining common operations
  * @interface IBasePrismaService
  * @template T - Entity type extending BaseEntity
+ * @template ModelName - Prisma model name
  * @template CreateInput - Prisma create input type
  * @template UpdateInput - Prisma update input type
  * @template WhereInput - Prisma where input type
@@ -38,6 +39,7 @@ import {
  */
 export interface IBasePrismaService<
   T extends BaseEntity,
+  ModelName extends keyof PrismaClient,
   CreateInput extends object,
   UpdateInput extends object,
   WhereInput extends object,
@@ -47,6 +49,7 @@ export interface IBasePrismaService<
   Having extends object,
   ScalarField extends string,
 > {
+  model: PrismaClient[ModelName];
   parseId(id: EntityPrimaryKey): number;
   transaction<R>(
     fn: (

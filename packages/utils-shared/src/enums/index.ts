@@ -5,11 +5,30 @@ export enum Role {
   ADMIN_USER = 'admin_user',
   VENDOR = 'vendor',
   CUSTOMER = 'customer',
+  SYSTEM = 'system',
 }
 
 export enum SortDirection {
   ASC = 'asc',
   DESC = 'desc',
+}
+
+export enum Action {
+  CREATE = 'Create',
+  READ = 'Read',
+  UPDATE = 'Update',
+  DELETE = 'Delete',
+}
+
+export enum Resource {
+  ADMIN = 'Admin',
+  ADMIN_GROUP = 'Admin Group',
+  PERMISSION_GROUP = 'Permission Group',
+  PERMISSION = 'Permission',
+  ADMIN_GROUP_PERMISSION = 'Admin Group Permission',
+  ADMIN_PERMISSION = 'Admin Permission',
+  FILE = 'File',
+  FILE_EVENT = 'File Event',
 }
 
 // ############################################ Storage Service ############################################

@@ -1,4 +1,4 @@
-import { StorageEntity } from '../enums';
+import { Role, StorageEntity } from '../enums';
 
 const allowedImageTypes = ['image/jpg', 'image/jpeg', 'image/png'];
 const allowedDocumentTypes = [
@@ -37,4 +37,23 @@ export const PAGINATION = {
   MIN_PAGINATION_LIMIT: 1,
   MAX_PAGINATION_LIMIT: 100,
   MIN_PAGINATION_PAGE: 1,
+};
+
+export const SYSTEM_USER = {
+  firstName: 'System',
+  lastName: 'User',
+  userType: Role.SYSTEM,
+};
+
+export const ADMIN_GROUP = {
+  name: 'Default Group',
+  slug: 'default-group',
+  description: 'This is a group for default system users of the application.',
+};
+
+export const ADMIN = {
+  firstName: 'Admin',
+  lastName: 'User',
+  userType: Role.ADMIN,
+  isAdmin: true,
 };

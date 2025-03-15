@@ -1,3 +1,7 @@
 export * from './admin-group.service';
 export * from './base-admin.service';
 export * from './base-user-account.service';
+export * from './base-admin-group-permission.service';
+export * from './base-admin-permission.service';
+export * from './base-permission-group.service';
+export * from './base-permission.service';

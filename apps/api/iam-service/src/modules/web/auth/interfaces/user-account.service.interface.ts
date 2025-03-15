@@ -6,6 +6,7 @@ import { CreateUserAccountDto } from '../dtos';
 export interface IUserAccountService
   extends IBasePrismaService<
     UserAccount,
+    'userAccount',
     Prisma.UserAccountCreateInput,
     Prisma.UserAccountUpdateInput,
     Prisma.UserAccountWhereInput,

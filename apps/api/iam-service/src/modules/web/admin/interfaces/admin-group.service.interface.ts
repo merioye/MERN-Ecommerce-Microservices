@@ -11,6 +11,7 @@ import {
 export interface IAdminGroupService
   extends IBasePrismaService<
     AdminGroup,
+    'adminGroup',
     Prisma.AdminGroupCreateInput,
     Prisma.AdminGroupUpdateInput,
     Prisma.AdminGroupWhereInput,
