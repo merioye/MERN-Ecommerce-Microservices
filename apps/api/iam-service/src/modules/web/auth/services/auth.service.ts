@@ -17,8 +17,10 @@ import { Role } from '@ecohatch/utils-shared';
 import { UserAccount } from '@prisma/client';
 
 import { ADMIN_SERVICE, IAdminService } from '../../admin';
-import { ADMIN_PERMISSION_SERVICE } from '../../permission/constants';
-import { IAdminPermissionService } from '../../permission/interfaces';
+import {
+  ADMIN_PERMISSION_SERVICE,
+  IAdminPermissionService,
+} from '../../permission';
 import {
   LOGIN_ATTEMPT_SERVICE,
   REFRESH_TOKEN_SERVICE,

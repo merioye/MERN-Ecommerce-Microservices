@@ -1,6 +1,7 @@
 import { join, resolve } from 'path';
 import { ConfigModuleOptions } from '@nestjs/config';
 import {
+  BaseAuthModuleOptions,
   CacheModuleOptions,
   CronJobExpression,
   CronJobModuleOptions,
@@ -48,6 +49,10 @@ const configOptions: ConfigModuleOptions = {
     DATABASE_RETRY_DELAY: Joi.number().required(),
     LOCK_TTL: Joi.number().required(),
     UNUSED_FILE_RETENTION_DAYS: Joi.number().required(),
+    AUTH_DATABASE_URL: Joi.string().uri().required(),
+    JWKS_URL: Joi.string().uri().required(),
+    JWT_AUDIENCE: Joi.string().required(),
+    JWT_ISSUER: Joi.string().required(),
   }),
   validationOptions: {
     abortEarly: true,
@@ -102,10 +107,19 @@ const cronJobModuleOptions: CronJobModuleOptions = {
   ],
 };
 
+const baseAuthModuleOptions: BaseAuthModuleOptions = {
+  authDbUrl: process.env[Config.DATABASE_URL]!,
+  jwksUrl: process.env[Config.JWKS_URL]!,
+  jwtAudience: process.env[Config.JWT_AUDIENCE]!,
+  jwtIssuer: process.env[Config.JWT_ISSUER]!,
+  jwksRequestsPerMinute: 10,
+};
+
 export {
   configOptions,
   loggerModuleOptions,
   translatorModuleOptions,
   cacheModuleOptions,
   cronJobModuleOptions,
+  baseAuthModuleOptions,
 };

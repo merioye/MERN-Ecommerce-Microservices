@@ -44,7 +44,7 @@ export class RefreshTokenStrategy
           return refreshToken ?? null;
         },
       ]),
-      secretOrKey: refreshTokenSecret,
+      secretOrKey: refreshTokenSecret || '',
       algorithms: ['HS256'],
       ignoreExpiration: false,
       audience: jwtAudience,

@@ -65,7 +65,7 @@ export type BaseAuthModuleOptions = {
   authDbUrl: string;
   jwtAudience: string;
   jwtIssuer: string;
-  refreshTokenSecret: string;
   jwksUrl: string;
+  refreshTokenSecret?: string;
   jwksRequestsPerMinute?: number;
 };

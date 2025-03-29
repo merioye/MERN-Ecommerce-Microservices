@@ -23,6 +23,7 @@ import { Connection } from 'mongoose';
 import { GracefulShutdownModule } from 'nestjs-graceful-shutdown';
 
 import {
+  baseAuthModuleOptions,
   cacheModuleOptions,
   configOptions,
   cronJobModuleOptions,
@@ -75,6 +76,7 @@ import { WebAppModule } from './modules/web';
       translator: translatorModuleOptions,
       cache: cacheModuleOptions,
       cronJob: cronJobModuleOptions,
+      baseAuth: baseAuthModuleOptions,
     }),
     WebAppModule,
   ],
