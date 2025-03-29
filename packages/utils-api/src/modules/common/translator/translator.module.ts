@@ -7,8 +7,6 @@ import {
   QueryResolver,
 } from 'nestjs-i18n';
 
-import { TranslatorModuleOptions } from '@/types';
-
 import {
   TRANSLATION_KEY_FORMATTER_SERVICE,
   TRANSLATIONS_FILENAME,
@@ -18,6 +16,7 @@ import {
   NestI18nTranslatorService,
   TranslationKeyFormatterService,
 } from './services';
+import { TranslatorModuleOptions } from './types';
 
 /**
  * Global NestJS module for translation

@@ -1,6 +1,5 @@
 /* eslint-disable jest/no-jasmine-globals */
 import { ArgumentMetadata, Optional, Paramtype } from '@nestjs/common';
-import { RequestValidationError } from '@/common/errors';
 import { Type } from 'class-transformer';
 import {
   IsBoolean,
@@ -11,6 +10,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 
+import { RequestValidationError } from '../../../common/errors';
 import { CustomParseArrayPipe } from '../custom-parse-array.pipe';
 
 // Test classes for nested validation

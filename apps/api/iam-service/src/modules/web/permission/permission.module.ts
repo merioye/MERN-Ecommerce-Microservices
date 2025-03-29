@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 
 import { AdminModule } from '../admin';
 import {
@@ -22,7 +22,7 @@ import {
  * @module PermissionModule
  */
 @Module({
-  imports: [AdminModule],
+  imports: [forwardRef(() => AdminModule)],
   controllers: [PermissionController],
   providers: [
     {
@@ -42,5 +42,6 @@ import {
       useClass: AdminGroupPermissionService,
     },
   ],
+  exports: [ADMIN_PERMISSION_SERVICE],
 })
 export class PermissionModule {}

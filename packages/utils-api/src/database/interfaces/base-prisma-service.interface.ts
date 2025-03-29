@@ -132,6 +132,7 @@ export interface IBasePrismaService<
     where: PrismaWhereInput<WhereInput>,
     options?: PrismaDeleteOptions<Select, Include>
   ): Promise<T | null>;
+  deleteMany(where: PrismaWhereInput<WhereInput>): Promise<void>;
   softDelete(
     where: PrismaWhereInput<WhereInput>,
     userAccountId?: EntityPrimaryKey,

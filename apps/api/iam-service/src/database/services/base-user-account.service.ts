@@ -21,7 +21,7 @@ export class BaseUserAccountService extends BasePrismaService<
   Prisma.UserAccountWhereInput,
   Prisma.UserAccountSelect,
   Prisma.UserAccountInclude,
-  Prisma.UserAccountOrderByWithRelationInput,
+  Prisma.UserAccountOrderByWithRelationInput[],
   any,
   Prisma.UserAccountScalarFieldEnum
 > {

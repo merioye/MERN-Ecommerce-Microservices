@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { createLogger, format, Logger, transports } from 'winston';
 
-import { LoggerModuleOptions } from '@/types';
-import { Environment } from '@/enums';
-
+import { Environment } from '../../../../enums';
 import { ILogger } from '../interfaces';
+import { LoggerModuleOptions } from '../types';
 
 /**
  * Singleton of Logger using Winston library which implements the ILogger interface

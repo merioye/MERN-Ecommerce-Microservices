@@ -12,11 +12,14 @@ export interface IAdminPermissionService
     Prisma.AdminPermissionWhereInput,
     Prisma.AdminPermissionSelect,
     Prisma.AdminPermissionInclude,
-    Prisma.AdminPermissionOrderByWithRelationInput,
+    Prisma.AdminPermissionOrderByWithRelationInput[],
     any,
     Prisma.AdminPermissionScalarFieldEnum
   > {
-  assign(data: AssignUserPermissionDto): Promise<AdminPermission[]>;
+  assign(
+    data: AssignUserPermissionDto,
+    actionByUserAccountId: EntityPrimaryKey
+  ): Promise<AdminPermission[]>;
   findAll(adminId: EntityPrimaryKey): Promise<Permission[]>;
   revoke(
     adminId: EntityPrimaryKey,

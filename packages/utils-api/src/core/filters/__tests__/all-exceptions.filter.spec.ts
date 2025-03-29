@@ -4,16 +4,15 @@ import { ConfigService } from '@nestjs/config';
 import { HttpAdapterHost } from '@nestjs/core';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Request, Response } from 'express';
-import { CustomError, RequestValidationError } from '@/common/errors';
-import { ILogger, LOGGER } from '@/modules/common/logger';
+import { ExceptionResponseBody } from '@ecohatch/types-shared';
+
+import { CustomError, RequestValidationError } from '../../../common/errors';
+import { Environment } from '../../../enums';
+import { ILogger, LOGGER } from '../../../modules/common/logger';
 import {
   ITranslatorService,
   TRANSLATOR_SERVICE,
-} from '@/modules/common/translator';
-import { ExceptionResponseBody } from '@ecohatch/types-shared';
-
-import { Environment } from '@/enums';
-
+} from '../../../modules/common/translator';
 import { AllExceptionsFilter } from '../all-exceptions.filter';
 import { ExceptionHandlingStrategyFactory } from '../factories';
 import { IExceptionHandlingStrategy } from '../interfaces';

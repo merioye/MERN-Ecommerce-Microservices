@@ -43,11 +43,11 @@ export class PermissionService
     const include: Prisma.PermissionInclude = {
       permissionGroup: true,
     };
-    const orderBy: Prisma.PermissionOrderByWithRelationInput = {
-      permissionGroupId: SortDirection.ASC,
-      sortOrder: SortDirection.ASC,
-      ...sortBy,
-    };
+    const orderBy: Prisma.PermissionOrderByWithRelationInput[] = [
+      { permissionGroupId: SortDirection.ASC },
+      { sortOrder: SortDirection.ASC },
+      ...Object.keys(sortBy).map((key) => ({ [key]: sortBy[key] })),
+    ];
 
     if (withoutPagination) {
       return this.findMany({

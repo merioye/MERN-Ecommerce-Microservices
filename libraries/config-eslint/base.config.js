@@ -50,7 +50,6 @@ module.exports = {
     'coverage/',
     'logs/',
     '.turbo/',
-    'cache/',
     '.cache/',
 
     // misc

@@ -249,6 +249,12 @@
     },
     "db:seed:prod": {
       "cache": false
+    },
+    "rsa:keys:create": {
+      "cache": false
+    },
+    "rsa:keys:convert": {
+      "cache": false
     }
   }
 }

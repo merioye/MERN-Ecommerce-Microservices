@@ -5,9 +5,10 @@ import {
   ParseEnumPipeOptions,
   PipeTransform,
 } from '@nestjs/common';
-import { RequestValidationError } from '@/common/errors';
-import { TRANSLATION_KEY_SEPARATOR } from '@/modules/common/translator';
 import { ErrorFormat } from '@ecohatch/types-shared';
+
+import { RequestValidationError } from '../../common/errors';
+import { TRANSLATION_KEY_SEPARATOR } from '../../modules/common/translator';
 
 /**
  * Custom Parse Enum Pipe

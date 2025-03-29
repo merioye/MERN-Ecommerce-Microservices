@@ -6,7 +6,8 @@ import {
   IHashService,
   NotFoundError,
 } from '@ecohatch/utils-api';
-import { Admin, Role } from '@prisma/client';
+import { Role } from '@ecohatch/utils-shared';
+import { Admin } from '@prisma/client';
 
 import { BaseAdminService, PrismaService } from '@/database';
 
@@ -40,10 +41,12 @@ export class AdminService extends BaseAdminService implements IAdminService {
    * Creates a new admin.
    *
    * @param data - The data to create the admin with
+   * @param actionByUserAccountId - The ID of the user creating the admin
    * @returns The created admin
    */
   public async createOne(
-    data: CreateAdminDto
+    data: CreateAdminDto,
+    actionByUserAccountId: EntityPrimaryKey
   ): Promise<Omit<Admin, 'password'>> {
     const { firstName, lastName, email, adminGroupId, password } = data;
     const existingAdminQuery = this.findOne({
@@ -78,6 +81,8 @@ export class AdminService extends BaseAdminService implements IAdminService {
           data: {
             ...data,
             password: hashedPassword,
+            createdBy: this.parseId(actionByUserAccountId),
+            updatedBy: this.parseId(actionByUserAccountId),
           },
         });
 

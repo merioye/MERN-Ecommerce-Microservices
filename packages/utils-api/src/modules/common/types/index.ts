@@ -1,10 +1,8 @@
-import {
-  CacheModuleOptions,
-  LoggerModuleOptions,
-  TranslatorModuleOptions,
-} from '@/types';
-
+import { BaseAuthModuleOptions } from '../auth';
+import { CacheModuleOptions } from '../cache';
 import { CronJobModuleOptions } from '../cron-job';
+import { LoggerModuleOptions } from '../logger';
+import { TranslatorModuleOptions } from '../translator';
 
 /**
  * Type representing the CommonAppModuleOptions.
@@ -20,4 +18,5 @@ export type CommonAppModuleOptions = {
   translator: TranslatorModuleOptions;
   cache: CacheModuleOptions;
   cronJob: CronJobModuleOptions;
+  baseAuth: BaseAuthModuleOptions;
 };

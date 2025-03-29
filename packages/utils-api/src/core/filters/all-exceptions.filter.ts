@@ -2,17 +2,16 @@ import { ArgumentsHost, Catch, ExceptionFilter, Inject } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { HttpAdapterHost } from '@nestjs/core';
 import { Request } from 'express';
-import { RequestValidationError } from '@/common/errors';
-import { ILogger, LOGGER } from '@/modules/common/logger';
+import { v4 as uuidv4 } from 'uuid';
+
+import { RequestValidationError } from '../../common/errors';
+import { Config, Environment } from '../../enums';
+import { ILogger, LOGGER } from '../../modules/common/logger';
 import {
   ITranslatorService,
   TRANSLATOR_SERVICE,
-} from '@/modules/common/translator';
-import { v4 as uuidv4 } from 'uuid';
-
-import { LoggerErrorMetadata } from '@/types';
-import { Config, Environment } from '@/enums';
-
+} from '../../modules/common/translator';
+import { LoggerErrorMetadata } from '../../types';
 import { ExceptionHandlingStrategyFactory } from './factories';
 
 /**

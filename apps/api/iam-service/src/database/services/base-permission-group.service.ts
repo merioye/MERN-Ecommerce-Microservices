@@ -21,7 +21,7 @@ export class BasePermissionGroupService extends BasePrismaService<
   Prisma.PermissionGroupWhereInput,
   Prisma.PermissionGroupSelect,
   Prisma.PermissionGroupInclude,
-  Prisma.PermissionGroupOrderByWithRelationInput,
+  Prisma.PermissionGroupOrderByWithRelationInput[],
   any,
   Prisma.PermissionGroupScalarFieldEnum
 > {

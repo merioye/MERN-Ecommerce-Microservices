@@ -1,7 +1,7 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 import { CryptoHashService, HashAlgorithm } from '@ecohatch/utils-api';
-import { ADMIN, ADMIN_GROUP, SYSTEM_USER } from '@ecohatch/utils-shared';
-import { PrismaClient, Role } from '@prisma/client';
+import { ADMIN, ADMIN_GROUP, Role, SYSTEM_USER } from '@ecohatch/utils-shared';
+import { PrismaClient } from '@prisma/client';
 
 import { logger } from '.';
 

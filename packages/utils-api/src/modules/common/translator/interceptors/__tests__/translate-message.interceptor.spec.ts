@@ -1,12 +1,10 @@
 import { CallHandler, ExecutionContext } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import {
-  ITranslatorService,
-  TRANSLATOR_SERVICE,
-} from '@/modules/common/translator';
 import { ApiResponse } from '@ecohatch/utils-shared';
 import { of } from 'rxjs';
 
+import { TRANSLATOR_SERVICE } from '../../constants';
+import { ITranslatorService } from '../../interfaces';
 import { TranslateMessageInterceptor } from '../translate-message.interceptor';
 
 describe('TranslateMessageInterceptor', () => {

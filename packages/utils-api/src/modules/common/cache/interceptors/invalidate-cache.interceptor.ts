@@ -30,13 +30,15 @@ export class InvalidateCacheInterceptor implements NestInterceptor {
    * @param {CallHandler} next - Next handler in pipeline
    * @returns {Observable<any>}
    */
-  async intercept(
+  // eslint-disable-next-line @typescript-eslint/require-await
+  public async intercept(
     context: ExecutionContext,
     next: CallHandler
   ): Promise<Observable<any>> {
     const options = this.getInvalidationOptions(context);
 
     return next.handle().pipe(
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       tap(async () => {
         if (options.entities) {
           await this.invalidateEntityCaches(options.entities || []);
@@ -59,16 +61,18 @@ export class InvalidateCacheInterceptor implements NestInterceptor {
    * @param {ExecutionContext} context - Execution context
    * @returns {Object} Merged invalidation options
    */
-  private getInvalidationOptions(context: ExecutionContext): InvalidateCacheOptions {
+  private getInvalidationOptions(
+    context: ExecutionContext
+  ): InvalidateCacheOptions {
     const handler = context.getHandler();
     const controller = context.getClass();
 
     // Get options from different levels
-    const methodOptions = this._reflector.get(
+    const methodOptions = this._reflector.get<InvalidateCacheOptions>(
       INVALIDATE_CACHE_DECORATOR_KEY,
       handler
     );
-    const classOptions = this._reflector.get(
+    const classOptions = this._reflector.get<InvalidateCacheOptions>(
       INVALIDATE_CACHE_DECORATOR_KEY,
       controller
     );
@@ -89,7 +93,7 @@ export class InvalidateCacheInterceptor implements NestInterceptor {
    * @param {string[]} entities - List of entities to invalidate
    * @returns {Promise<void>}
    */
-  private async invalidateEntityCaches(entities: string[]) {
+  private async invalidateEntityCaches(entities: string[]): Promise<void> {
     const patterns = entities.map((entity) => `cache:*:${entity}:*`);
     await Promise.all(
       patterns.map((pattern) => this._cacheService.deleteByPattern(pattern))

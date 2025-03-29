@@ -17,18 +17,28 @@ export interface IAdminGroupService
     Prisma.AdminGroupWhereInput,
     Prisma.AdminGroupSelect,
     Prisma.AdminGroupInclude,
-    Prisma.AdminGroupOrderByWithRelationInput,
+    Prisma.AdminGroupOrderByWithRelationInput[],
     any,
     Prisma.AdminGroupScalarFieldEnum
   > {
-  createOne(data: CreateAdminGroupDto): Promise<AdminGroup>;
+  createOne(
+    data: CreateAdminGroupDto,
+    actionByUserAccountId: EntityPrimaryKey
+  ): Promise<AdminGroup>;
   updateOne(
     id: EntityPrimaryKey,
-    data: UpdateAdminGroupDto
+    data: UpdateAdminGroupDto,
+    actionByUserAccountId: EntityPrimaryKey
   ): Promise<AdminGroup>;
-  softDeleteOne(id: EntityPrimaryKey): Promise<AdminGroup>;
+  softDeleteOne(
+    id: EntityPrimaryKey,
+    actionByUserAccountId: EntityPrimaryKey
+  ): Promise<AdminGroup>;
   hardDeleteOne(id: EntityPrimaryKey): Promise<AdminGroup>;
-  restoreOne(id: EntityPrimaryKey): Promise<AdminGroup>;
+  restoreOne(
+    id: EntityPrimaryKey,
+    actionByUserAccountId: EntityPrimaryKey
+  ): Promise<AdminGroup>;
   findAll(
     query: GetAdminGroupListDto
   ): Promise<AdminGroup[] | OffsetPaginatedResult<AdminGroup>>;

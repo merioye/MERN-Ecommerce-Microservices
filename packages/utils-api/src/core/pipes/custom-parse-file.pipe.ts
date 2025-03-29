@@ -4,7 +4,8 @@ import {
   ParseFilePipe,
   PipeTransform,
 } from '@nestjs/common';
-import { RequestValidationError } from '@/common/errors';
+
+import { RequestValidationError } from '../../common/errors';
 
 /**
  * Custom Parse File Pipe

@@ -12,7 +12,7 @@ export interface IUserAccountService
     Prisma.UserAccountWhereInput,
     Prisma.UserAccountSelect,
     Prisma.UserAccountInclude,
-    Prisma.UserAccountOrderByWithRelationInput,
+    Prisma.UserAccountOrderByWithRelationInput[],
     any,
     Prisma.UserAccountScalarFieldEnum
   > {

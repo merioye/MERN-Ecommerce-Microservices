@@ -1,5 +1,4 @@
 node_modules
-cache
 .cache
 .turbo
 package-lock.json

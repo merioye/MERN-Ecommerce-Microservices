@@ -1,13 +1,15 @@
 import { ExecutionContext } from '@nestjs/common';
 
+import { AuthRequestUser } from '../../auth';
+
 /**
  * Cache suffix based on user property
- * @param {string} [property='id'] - Property to use for cache key
+ * @param {string} [property='userId'] - Property to use for cache key
  * @returns {MethodDecorator} Cache suffix function
  */
 export const UserBasedCacheSuffix =
-  (property = 'id') =>
-  (ctx: ExecutionContext) => {
-    const request = ctx.switchToHttp().getRequest();
-    return `user_${request.user[property]}`;
+  (property: keyof AuthRequestUser = 'userId') =>
+  (ctx: ExecutionContext): string => {
+    const request = ctx.switchToHttp().getRequest<{ user: AuthRequestUser }>();
+    return `user_${request.user[property]?.toString()}`;
   };

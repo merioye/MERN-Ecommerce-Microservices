@@ -7,21 +7,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  ADMIN      @map("admin")
-  ADMIN_USER @map("admin_user")
-  VENDOR     @map("vendor")
-  CUSTOMER   @map("customer")
-  SYSTEM     @map("system")
-}
-
 model UserAccount {
   id                           Int                    @id @default(autoincrement())
   firstName                    String                 @map("first_name")
   lastName                     String                 @map("last_name")
   email                        String                 @unique
   profileUrl                   String?                @map("profile_url")
-  userType                     Role                   @map("user_type")
+  userType                     String                 @map("user_type")
   userReferenceId              Int                    @map("user_reference_id")
   createdAt                    DateTime               @default(now()) @map("created_at")
   updatedAt                    DateTime               @updatedAt() @map("updated_at")
@@ -39,6 +31,9 @@ model UserAccount {
   updatedAdminGroupPermissions AdminGroupPermission[] @relation("AdminGroupPermissionUpdatedBy")
   createdAdminPermissions      AdminPermission[]      @relation("AdminPermissionCreatedBy")
   updatedAdminPermissions      AdminPermission[]      @relation("AdminPermissionUpdatedBy")
+  userLoggedInDevices          UserLoggedInDevice[]
+  loginAttempts                LoginAttempt[]
+  refreshTokens                RefreshToken[]
 
   @@unique([userType, userReferenceId])
   @@map("tbl_user_accounts")
@@ -145,6 +140,7 @@ model AdminGroupPermission {
   createdByUser UserAccount? @relation("AdminGroupPermissionCreatedBy", fields: [createdBy], references: [id], onDelete: SetNull, onUpdate: Cascade)
   updatedByUser UserAccount? @relation("AdminGroupPermissionUpdatedBy", fields: [updatedBy], references: [id], onDelete: SetNull, onUpdate: Cascade)
 
+  @@unique([adminGroupId, permissionId])
   @@map("tbl_admin_group_permissions")
 }
 
@@ -161,5 +157,53 @@ model AdminPermission {
   createdByUser UserAccount? @relation("AdminPermissionCreatedBy", fields: [createdBy], references: [id], onDelete: SetNull, onUpdate: Cascade)
   updatedByUser UserAccount? @relation("AdminPermissionUpdatedBy", fields: [updatedBy], references: [id], onDelete: SetNull, onUpdate: Cascade)
 
+  @@unique([adminId, permissionId])
   @@map("tbl_admin_permissions")
+}
+
+model UserLoggedInDevice {
+  id             Int            @id @default(autoincrement())
+  userAgent      String         @map("user_agent")
+  publicIp       String         @map("public_ip") @db.Inet
+  platform       String
+  userAccountId  Int            @map("user_account_id")
+  loggedOutAt    DateTime?      @map("logged_out_at")
+  lastLoggedInAt DateTime       @default(now()) @map("last_logged_in_at")
+  createdAt      DateTime       @default(now()) @map("created_at")
+  updatedAt      DateTime       @updatedAt() @map("updated_at")
+  userAccount    UserAccount    @relation(fields: [userAccountId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  refreshTokens  RefreshToken[]
+
+  @@index([userAccountId, userAgent, publicIp, platform])
+  @@map("tbl_user_logged_in_devices")
+}
+
+model LoginAttempt {
+  id            Int         @id @default(autoincrement())
+  userAccountId Int         @map("user_account_id")
+  ipAddress     String      @map("ip_address") @db.Inet
+  isDeleted     Boolean     @default(false) @map("is_deleted")
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @updatedAt() @map("updated_at")
+  deletedAt     DateTime?   @map("deleted_at")
+  userAccount   UserAccount @relation(fields: [userAccountId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([userAccountId])
+  @@map("tbl_login_attempts")
+}
+
+model RefreshToken {
+  id                   Int                @id @default(autoincrement())
+  expiresAt            DateTime           @map("expires_at")
+  userAccountId        Int                @map("user_account_id")
+  userLoggedInDeviceId Int                @map("user_logged_in_device_id")
+  isRevoked            Boolean            @default(false) @map("is_revoked")
+  createdAt            DateTime           @default(now()) @map("created_at")
+  updatedAt            DateTime           @updatedAt() @map("updated_at")
+  userAccount          UserAccount        @relation(fields: [userAccountId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userLoggedInDevice   UserLoggedInDevice @relation(fields: [userLoggedInDeviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([userAccountId])
+  @@index([userLoggedInDeviceId])
+  @@map("tbl_refresh_tokens")
 }

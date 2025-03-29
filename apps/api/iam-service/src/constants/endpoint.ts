@@ -46,4 +46,18 @@ export const ENDPOINT = {
         '/admin-groups/:adminGroupId/:permissionId',
     },
   },
+  Auth: {
+    Base: '/auth',
+    Post: {
+      LoginAdmin: '/login/admin',
+      Refresh: '/refresh',
+      Logout: '/logout',
+      LogoutAll: '/logout-all',
+      LogoutDevice: '/logout-device/:deviceId',
+    },
+    Get: {
+      Self: '/self',
+      LoggedInDevices: '/logged-in-devices',
+    },
+  },
 } as const;

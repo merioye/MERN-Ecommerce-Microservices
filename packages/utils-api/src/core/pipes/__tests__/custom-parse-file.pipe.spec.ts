@@ -1,8 +1,8 @@
 /* eslint-disable jest/no-jasmine-globals */
 import internal from 'stream';
 import { FileTypeValidator, MaxFileSizeValidator } from '@nestjs/common';
-import { RequestValidationError } from '@/common/errors';
 
+import { RequestValidationError } from '../../../common/errors';
 import { CustomParseFilePipe } from '../custom-parse-file.pipe';
 
 describe('CustomParseFilePipe', () => {

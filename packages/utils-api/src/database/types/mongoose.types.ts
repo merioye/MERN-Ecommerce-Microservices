@@ -1,4 +1,3 @@
-import { CursorPaginationDto, OffsetPaginationDto } from '@/common/pagination';
 import { SortDirection } from '@ecohatch/utils-shared';
 import {
   AggregateOptions,
@@ -12,6 +11,10 @@ import {
 } from 'mongoose';
 
 import { AuditField, SoftDeleteField } from '.';
+import {
+  CursorPaginationDto,
+  OffsetPaginationDto,
+} from '../../common/pagination';
 import { VERSION_COLUMN } from '../constants';
 
 // #################################### Mongoose Type Helpers ####################################

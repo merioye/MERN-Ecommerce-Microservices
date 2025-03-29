@@ -21,7 +21,7 @@ export class BaseAdminGroupService extends BasePrismaService<
   Prisma.AdminGroupWhereInput,
   Prisma.AdminGroupSelect,
   Prisma.AdminGroupInclude,
-  Prisma.AdminGroupOrderByWithRelationInput,
+  Prisma.AdminGroupOrderByWithRelationInput[],
   any,
   Prisma.AdminGroupScalarFieldEnum
 > {

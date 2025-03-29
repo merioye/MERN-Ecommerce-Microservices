@@ -136,3 +136,4 @@ export type CursorPaginatedApiResponse<T> = {
 };
 
 export * from './storage-service.types';
+export * from './iam-service.types';

@@ -1,6 +1,6 @@
 import { Controller, Get, Inject } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { ILogger, LOGGER } from '@ecohatch/utils-api';
+import { ILogger, LOGGER, Public } from '@ecohatch/utils-api';
 
 import { ENDPOINT } from '@/constants';
 
@@ -34,6 +34,7 @@ export class HealthController {
    *
    * @returns The health information.
    */
+  @Public()
   @Get(ENDPOINT.Health.Get.HealthCheck)
   @ApiOkResponse({ description: 'Server health information.' })
   public async checkHealth(): Promise<Health> {

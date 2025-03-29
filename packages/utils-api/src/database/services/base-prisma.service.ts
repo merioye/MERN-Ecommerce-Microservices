@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { IBasePrismaService } from '@/database/interfaces';
 import {
   CursorPaginatedResult,
   OffsetPaginatedResult,
@@ -12,6 +11,7 @@ import { Prisma, PrismaClient } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 import { SOFT_DELETION_COLUMN, VERSION_COLUMN } from '../constants';
+import { IBasePrismaService } from '../interfaces';
 import {
   AuditField,
   BaseEntity,
@@ -527,6 +527,17 @@ export abstract class BasePrismaService<
       }
       throw error;
     }
+  }
+
+  /**
+   * Deletes entities that matches the filter criteria
+   * @param where - Filter criteria
+   * @returns {Promise<void>}
+   */
+  public async deleteMany(where: PrismaWhereInput<WhereInput>): Promise<void> {
+    return this._model.deleteMany({
+      where,
+    }) as Promise<void>;
   }
 
   /**

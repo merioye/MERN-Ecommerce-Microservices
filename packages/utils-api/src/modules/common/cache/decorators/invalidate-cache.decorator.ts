@@ -4,7 +4,6 @@ import { INVALIDATE_CACHE_DECORATOR_KEY } from '../constants';
 import { InvalidateCacheInterceptor } from '../interceptors';
 import { InvalidateCacheOptions } from '../types';
 
-
 /**
  * Decorator for cache invalidation
  * @function InvalidateCache
@@ -15,7 +14,9 @@ import { InvalidateCacheOptions } from '../types';
  * @example
  * @InvalidateCache({ entities: ['Product'], keySuffix: 'product_list' })
  */
-export const InvalidateCache = (options: InvalidateCacheOptions) => {
+export const InvalidateCache = (
+  options: InvalidateCacheOptions
+): MethodDecorator => {
   return applyDecorators(
     UseInterceptors(InvalidateCacheInterceptor),
     SetMetadata(INVALIDATE_CACHE_DECORATOR_KEY, options)

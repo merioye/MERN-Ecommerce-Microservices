@@ -1,12 +1,12 @@
 import { Request } from 'express';
-import { CustomError, RequestValidationError } from '@/common/errors';
+
+import { CustomError, RequestValidationError } from '../../../../common/errors';
 import {
   CustomExceptionHandlingStrategy,
   DefaultExceptionHandlingStrategy,
   RequestValidationExceptionHandlingStrategy,
-} from '@/core/filters/strategies';
-import { ITranslatorService } from '@/modules/common/translator';
-
+} from '../../../../core/filters/strategies';
+import { ITranslatorService } from '../../../../modules/common/translator';
 import { ExceptionHandlingStrategyFactory } from '../exception-handling-strategy.factory';
 
 describe('ExceptionHandlingStrategyFactory', () => {

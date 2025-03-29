@@ -5,24 +5,28 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import {
+  AccessTokenGuard,
   AllExceptionsFilter,
   CACHE_SERVICE,
   CommonAppModule,
-  CustomCacheInterceptor,
   ExceptionHandlingStrategyFactory,
+  HttpLoggingInterceptor,
   ICacheService,
   ILogger,
-  InvalidateCacheInterceptor,
   LOGGER,
+  PermissionGuard,
+  RolesGuard,
   TranslateMessageInterceptor,
   validationPipeOptions,
 } from '@ecohatch/utils-api';
+import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import { GracefulShutdownModule } from 'nestjs-graceful-shutdown';
 
 import {
+  baseAuthModuleOptions,
   cacheModuleOptions,
   configOptions,
   cronJobModuleOptions,
@@ -53,6 +57,7 @@ import { WebAppModule } from './modules/web';
       translator: translatorModuleOptions,
       cache: cacheModuleOptions,
       cronJob: cronJobModuleOptions,
+      baseAuth: baseAuthModuleOptions,
     }),
     GracefulShutdownModule.forRootAsync({
       inject: [ConfigService, PrismaService, LOGGER, CACHE_SERVICE],
@@ -79,10 +84,14 @@ import { WebAppModule } from './modules/web';
     WebAppModule,
   ],
   providers: [
+    { provide: APP_INTERCEPTOR, useClass: HttpLoggingInterceptor },
     { provide: APP_INTERCEPTOR, useClass: TranslateMessageInterceptor },
-    { provide: APP_INTERCEPTOR, useClass: CustomCacheInterceptor },
-    { provide: APP_INTERCEPTOR, useClass: InvalidateCacheInterceptor },
+    // { provide: APP_INTERCEPTOR, useClass: CustomCacheInterceptor },
+    // { provide: APP_INTERCEPTOR, useClass: InvalidateCacheInterceptor },
     { provide: APP_FILTER, useClass: AllExceptionsFilter },
+    { provide: APP_GUARD, useClass: AccessTokenGuard },
+    { provide: APP_GUARD, useClass: RolesGuard },
+    { provide: APP_GUARD, useClass: PermissionGuard },
     {
       provide: APP_PIPE,
       useValue: new ValidationPipe(validationPipeOptions),
@@ -99,6 +108,6 @@ export class AppModule implements NestModule {
    * @returns {void}
    */
   public configure(consumer: MiddlewareConsumer): void {
-    consumer.apply(helmet()).forRoutes('*');
+    consumer.apply(helmet(), cookieParser()).forRoutes('*');
   }
 }

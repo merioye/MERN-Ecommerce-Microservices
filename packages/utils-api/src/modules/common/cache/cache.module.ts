@@ -1,10 +1,9 @@
 import { DynamicModule } from '@nestjs/common';
 
-import { CacheModuleOptions } from '@/types';
-
+import { HashModule } from '../hash';
 import { CACHE_CONFIG, CACHE_SERVICE } from './constants';
 import { RedisCacheService } from './services';
-import { HashModule } from '../hash';
+import { CacheModuleOptions } from './types';
 
 /**
  * Global Cache Module for NestJS providing centralized caching functionality

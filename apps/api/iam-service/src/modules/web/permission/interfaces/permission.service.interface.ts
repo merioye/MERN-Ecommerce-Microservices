@@ -13,7 +13,7 @@ export interface IPermissionService
     Prisma.PermissionWhereInput,
     Prisma.PermissionSelect,
     Prisma.PermissionInclude,
-    Prisma.PermissionOrderByWithRelationInput,
+    Prisma.PermissionOrderByWithRelationInput[],
     any,
     Prisma.PermissionScalarFieldEnum
   > {

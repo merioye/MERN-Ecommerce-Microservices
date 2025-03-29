@@ -5,13 +5,12 @@ import {
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
-import {
-  ITranslatorService,
-  TRANSLATOR_SERVICE,
-} from '@/modules/common/translator';
 import { ApiResponse } from '@ecohatch/utils-shared';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+import { TRANSLATOR_SERVICE } from '../constants';
+import { ITranslatorService } from '../interfaces';
 
 /**
  * The TranslateMessageInterceptor is a NestJS interceptor that translates the

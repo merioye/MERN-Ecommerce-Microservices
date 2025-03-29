@@ -4,15 +4,15 @@ import {
   Injectable,
   OnModuleInit,
 } from '@nestjs/common';
+import { Request } from 'express';
 import { I18nContext } from 'nestjs-i18n';
 import { createClient } from 'redis';
-
-import { CacheModuleOptions } from '@/types';
 
 import { HASH_SERVICE, HashAlgorithm, IHashService } from '../../hash';
 import { ILogger, LOGGER } from '../../logger';
 import { CACHE_CONFIG } from '../constants';
 import { ICacheService } from '../interfaces';
+import { CacheModuleOptions } from '../types';
 
 /**
  * Service handling Redis cache operations
@@ -20,9 +20,7 @@ import { ICacheService } from '../interfaces';
  * @implements {ICacheService, OnModuleInit}
  */
 @Injectable()
-export class RedisCacheService
-  implements ICacheService, OnModuleInit
-{
+export class RedisCacheService implements ICacheService, OnModuleInit {
   private readonly _client: ReturnType<typeof createClient>;
 
   public constructor(
@@ -92,11 +90,9 @@ export class RedisCacheService
    * @param {string} key - Cache key to retrieve
    * @returns {Promise<T | null>} Cached data or null if not found
    */
-  public async get<T>(
-    key: string
-  ): Promise<T | null> {
+  public async get<T>(key: string): Promise<T | null> {
     const data = await this._client.get(key);
-    return data ? JSON.parse(data) as T : null;
+    return data ? (JSON.parse(data) as T) : null;
   }
 
   /**
@@ -140,16 +136,25 @@ export class RedisCacheService
    * // Returns 'cache:ProductsController:getProduct:abc123:def456:eng'
    * generateCacheKey(context);
    */
-  public async generateCacheKey(context: ExecutionContext, suffix?: string): Promise<string> {
-    const request = context.switchToHttp().getRequest();
+  public async generateCacheKey(
+    context: ExecutionContext,
+    suffix?: string
+  ): Promise<string> {
+    const request = context.switchToHttp().getRequest<Request>();
     const controller = context.getClass().name;
     const handler = context.getHandler().name;
-    const paramsHash = await this._hashService.hash(JSON.stringify(request.params), {
-      algorithm: HashAlgorithm.MD5,
-    });
-    const queryHash = await this._hashService.hash(JSON.stringify(request.query), {
-      algorithm: HashAlgorithm.MD5,
-    });
+    const paramsHash = await this._hashService.hash(
+      JSON.stringify(request.params),
+      {
+        algorithm: HashAlgorithm.MD5,
+      }
+    );
+    const queryHash = await this._hashService.hash(
+      JSON.stringify(request.query),
+      {
+        algorithm: HashAlgorithm.MD5,
+      }
+    );
     const localizationLang = I18nContext.current()?.lang;
 
     return `cache:${controller}:${handler}:${paramsHash}:${queryHash}:${localizationLang}${suffix ? `:${suffix}` : ''}`;

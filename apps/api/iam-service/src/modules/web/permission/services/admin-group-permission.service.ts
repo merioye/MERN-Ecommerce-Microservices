@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import {
   EntityPrimaryKey,
   ILogger,
@@ -9,8 +9,7 @@ import { AdminGroupPermission, Permission } from '@prisma/client';
 
 import { BaseAdminGroupPermissionService, PrismaService } from '@/database';
 
-import { ADMIN_GROUP_SERVICE } from '../../admin/constants';
-import { IAdminGroupService } from '../../admin/interfaces';
+import { ADMIN_GROUP_SERVICE, IAdminGroupService } from '../../admin';
 import { PERMISSION_SERVICE } from '../constants';
 import { AssignUserGroupPermissionDto } from '../dtos';
 import {
@@ -36,7 +35,7 @@ export class AdminGroupPermissionService
     prismaService: PrismaService,
     @Inject(PERMISSION_SERVICE)
     private readonly _permissionService: IPermissionService,
-    @Inject(ADMIN_GROUP_SERVICE)
+    @Inject(forwardRef(() => ADMIN_GROUP_SERVICE))
     private readonly _adminGroupService: IAdminGroupService,
     @Inject(LOGGER) private readonly _logger: ILogger
   ) {
@@ -47,11 +46,13 @@ export class AdminGroupPermissionService
    * Assigns permissions to an admin group.
    *
    * @param {AssignUserGroupPermissionDto} data - The data containing admin group ID and permission IDs.
+   * @param {EntityPrimaryKey} actionByUserAccountId - The ID of the user account making the request.
    * @returns {Promise<AdminGroupPermission[]>} - The assigned permissions.
    * @throws {NotFoundError} If the admin group is not found.
    */
   public async assign(
-    data: AssignUserGroupPermissionDto
+    data: AssignUserGroupPermissionDto,
+    actionByUserAccountId: EntityPrimaryKey
   ): Promise<AdminGroupPermission[]> {
     // Check if admin group exists
     const adminGroup = await this._adminGroupService.findById(
@@ -74,6 +75,8 @@ export class AdminGroupPermissionService
     const createData = foundPermissions.map((permission) => ({
       adminGroupId: data.userGroupId,
       permissionId: permission.id,
+      createdBy: this.parseId(actionByUserAccountId),
+      updatedBy: this.parseId(actionByUserAccountId),
     }));
 
     // Use transaction to ensure all or nothing
@@ -152,9 +155,13 @@ export class AdminGroupPermissionService
     }
 
     // Revoke permission
-    await this.delete({
-      adminGroupId: this.parseId(adminGroupId),
-      permissionId: this.parseId(permissionId),
+    await this.model.delete({
+      where: {
+        adminGroupId_permissionId: {
+          adminGroupId: this.parseId(adminGroupId),
+          permissionId: this.parseId(permissionId),
+        },
+      },
     });
   }
 }

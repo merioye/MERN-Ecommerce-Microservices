@@ -1,6 +1,7 @@
 import { join, resolve } from 'path';
 import { ConfigModuleOptions } from '@nestjs/config';
 import {
+  BaseAuthModuleOptions,
   CacheModuleOptions,
   CronJobModuleOptions,
   Environment,
@@ -41,6 +42,20 @@ const configOptions: ConfigModuleOptions = {
     SWAGGER_USERNAME: Joi.string().required(),
     SWAGGER_PASSWORD: Joi.string().required(),
     CACHE_URL: Joi.string().required(),
+    ADMIN_USER_EMAIL: Joi.string().required(),
+    ADMIN_USER_PASSWORD: Joi.string().required(),
+    SYSTEM_USER_EMAIL: Joi.string().required(),
+    SYSTEM_USER_PASSWORD: Joi.string().required(),
+    MAX_LOGIN_ATTEMPTS_ALLOWED: Joi.number().required(),
+    LOGIN_ATTEMPT_LOCKOUT_DURATION_MILLS: Joi.number().required(),
+    JWT_ACCESS_PRIVATE_KEY: Joi.string().required(),
+    JWT_ACCESS_PUBLIC_KEY: Joi.string().required(),
+    JWT_REFRESH_PRIVATE_KEY: Joi.string().required(),
+    JWT_ACCESS_EXPIRATION_TIME: Joi.number().required(),
+    JWT_REFRESH_EXPIRATION_TIME: Joi.number().required(),
+    JWT_ISSUER: Joi.string().required(),
+    JWT_AUDIENCE: Joi.string().required(),
+    JWKS_URL: Joi.string().required(),
   }),
   validationOptions: {
     abortEarly: true,
@@ -86,10 +101,20 @@ const cronJobModuleOptions: CronJobModuleOptions = {
   jobs: [],
 };
 
+const baseAuthModuleOptions: BaseAuthModuleOptions = {
+  authDbUrl: process.env[Config.DATABASE_URL]!,
+  jwksUrl: process.env[Config.JWKS_URL]!,
+  jwtAudience: process.env[Config.JWT_AUDIENCE]!,
+  jwtIssuer: process.env[Config.JWT_ISSUER]!,
+  refreshTokenSecret: process.env[Config.JWT_REFRESH_PRIVATE_KEY]!,
+  jwksRequestsPerMinute: 10,
+};
+
 export {
   configOptions,
   loggerModuleOptions,
   translatorModuleOptions,
   cacheModuleOptions,
   cronJobModuleOptions,
+  baseAuthModuleOptions,
 };

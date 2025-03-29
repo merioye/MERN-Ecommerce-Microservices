@@ -3,7 +3,7 @@ import {
   TrimString,
   ValidateIfPresent,
 } from '@ecohatch/utils-api';
-import { Role } from '@prisma/client';
+import { Role } from '@ecohatch/utils-shared';
 import {
   IsEmail,
   IsEnum,

@@ -1,8 +1,8 @@
 /* eslint-disable jest/no-jasmine-globals */
 import { ArgumentMetadata, Optional, Paramtype } from '@nestjs/common';
-import { RequestValidationError } from '@/common/errors';
-import { TRANSLATION_KEY_SEPARATOR } from '@/modules/common/translator';
 
+import { RequestValidationError } from '../../../common/errors';
+import { TRANSLATION_KEY_SEPARATOR } from '../../../modules/common/translator';
 import { CustomParseUUIDPipe } from '../custom-parse-uuid.pipe';
 
 describe('CustomParseUUIDPipe', () => {

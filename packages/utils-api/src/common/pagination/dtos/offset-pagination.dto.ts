@@ -1,13 +1,13 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
+import { PAGINATION, SortDirection } from '@ecohatch/utils-shared';
+import { IsBoolean, IsInt, IsPositive, Max } from 'class-validator';
+
 import {
   ParseBoolean,
   ParseJson,
   ParseNumber,
   ValidateIfPresent,
-} from '@/core/decorators';
-import { PAGINATION, SortDirection } from '@ecohatch/utils-shared';
-import { IsBoolean, IsInt, IsPositive, Max } from 'class-validator';
-
+} from '../../../core/decorators';
 import { IsSortByObject } from '../decorators';
 
 export class OffsetPaginationDto {

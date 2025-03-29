@@ -1,7 +1,6 @@
-import { LoggerModuleOptions } from '@/types';
-import { Environment } from '@/enums';
-
+import { Environment } from '../../../../../enums';
 import { ILogger } from '../../interfaces';
+import { LoggerModuleOptions } from '../../types';
 import { WinstonLogger } from '../winston.logger';
 
 interface MockWinstonModule {

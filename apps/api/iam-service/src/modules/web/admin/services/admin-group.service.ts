@@ -37,9 +37,13 @@ export class AdminGroupService
   /**
    * Creates a new admin group.
    * @param {CreateAdminGroupDto} data - The data containing the details of the admin group to create.
+   * @param {EntityPrimaryKey} actionByUserAccountId - The ID of the user's account performing the action.
    * @returns {Promise<AdminGroup>} - The created admin group.
    */
-  public async createOne(data: CreateAdminGroupDto): Promise<AdminGroup> {
+  public async createOne(
+    data: CreateAdminGroupDto,
+    actionByUserAccountId: EntityPrimaryKey
+  ): Promise<AdminGroup> {
     const isExistingGroup = await this.findOne({
       where: { slug: data.slug },
       withDeleted: true,
@@ -48,18 +52,20 @@ export class AdminGroupService
       throw new BadRequestError('adminGroup.error.AdminGroup_already_exists');
     }
 
-    return this.create(data);
+    return this.create(data, actionByUserAccountId);
   }
 
   /**
    * Updates an admin group.
    * @param {UpdateAdminGroupDto} data - The data containing the details of the admin group to update.
    * @param {EntityPrimaryKey} id - The ID of the admin group to update.
+   * @param {EntityPrimaryKey} actionByUserAccountId - The ID of the user's account performing the action.
    * @returns {Promise<AdminGroup>} - The updated admin group.
    */
   public async updateOne(
     id: EntityPrimaryKey,
-    data: UpdateAdminGroupDto
+    data: UpdateAdminGroupDto,
+    actionByUserAccountId: EntityPrimaryKey
   ): Promise<AdminGroup> {
     const isExistingGroup = await this.findById(id);
     if (!isExistingGroup) {
@@ -78,7 +84,11 @@ export class AdminGroupService
       }
     }
 
-    const updatedAdminGroup = await this.update({ id: this.parseId(id) }, data);
+    const updatedAdminGroup = await this.update(
+      { id: this.parseId(id) },
+      data,
+      actionByUserAccountId
+    );
     if (!updatedAdminGroup) {
       throw new InternalServerError('adminGroup.error.AdminGroup_not_updated');
     }
@@ -89,10 +99,17 @@ export class AdminGroupService
   /**
    * Soft deletes an admin group.
    * @param {EntityPrimaryKey} id - The ID of the admin group to delete.
+   * @param {EntityPrimaryKey} actionByUserAccountId - The ID of the user's account performing the action.
    * @returns {Promise<AdminGroup>} - The deleted admin group.
    */
-  public async softDeleteOne(id: EntityPrimaryKey): Promise<AdminGroup> {
-    const deletedAdminGroup = await this.softDelete({ id: this.parseId(id) });
+  public async softDeleteOne(
+    id: EntityPrimaryKey,
+    actionByUserAccountId: EntityPrimaryKey
+  ): Promise<AdminGroup> {
+    const deletedAdminGroup = await this.softDelete(
+      { id: this.parseId(id) },
+      actionByUserAccountId
+    );
     if (!deletedAdminGroup) {
       throw new NotFoundError('adminGroup.error.AdminGroup_not_found');
     }
@@ -146,9 +163,12 @@ export class AdminGroupService
           ]
         : undefined,
     };
+    const orderBy: Prisma.AdminGroupOrderByWithRelationInput[] = Object.keys(
+      sortBy
+    )?.map((key) => ({ [key]: sortBy[key] }));
 
     if (withoutPagination) {
-      return this.findMany({ where, orderBy: sortBy });
+      return this.findMany({ where, orderBy });
     }
 
     return this.offsetPaginate({
@@ -159,7 +179,7 @@ export class AdminGroupService
         sortBy,
       },
       where,
-      orderBy: sortBy,
+      orderBy,
     });
   }
 

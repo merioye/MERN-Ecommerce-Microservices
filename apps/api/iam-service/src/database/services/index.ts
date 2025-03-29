@@ -5,3 +5,6 @@ export * from './base-admin-group-permission.service';
 export * from './base-admin-permission.service';
 export * from './base-permission-group.service';
 export * from './base-permission.service';
+export * from './base-user-logged-in-device.service';
+export * from './base-login-attempt.service';
+export * from './base-refresh-token.service';

@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import {
   EntityPrimaryKey,
   ILogger,
@@ -9,8 +9,7 @@ import { AdminPermission, Permission } from '@prisma/client';
 
 import { BaseAdminPermissionService, PrismaService } from '@/database';
 
-import { ADMIN_SERVICE } from '../../admin/constants';
-import { IAdminService } from '../../admin/interfaces';
+import { ADMIN_SERVICE, IAdminService } from '../../admin';
 import { PERMISSION_SERVICE } from '../constants';
 import { AssignUserPermissionDto } from '../dtos';
 import { IAdminPermissionService, IPermissionService } from '../interfaces';
@@ -30,7 +29,8 @@ export class AdminPermissionService
 {
   public constructor(
     prismaService: PrismaService,
-    @Inject(ADMIN_SERVICE) private readonly _adminService: IAdminService,
+    @Inject(forwardRef(() => ADMIN_SERVICE))
+    private readonly _adminService: IAdminService,
     @Inject(PERMISSION_SERVICE)
     private readonly _permissionService: IPermissionService,
     @Inject(LOGGER) private readonly _logger: ILogger
@@ -42,11 +42,13 @@ export class AdminPermissionService
    * Assigns permissions to an admin user.
    *
    * @param {AssignUserPermissionDto} data - The data containing the admin user ID and permission IDs.
+   * @param {EntityPrimaryKey} actionByUserAccountId - The ID of the user account making the request.
    * @returns {Promise<AdminPermission[]>} - The assigned permissions.
    * @throws {NotFoundError} If the admin user is not found.
    */
   public async assign(
-    data: AssignUserPermissionDto
+    data: AssignUserPermissionDto,
+    actionByUserAccountId: EntityPrimaryKey
   ): Promise<AdminPermission[]> {
     // Check if admin exists
     const admin = await this._adminService.findById(
@@ -69,6 +71,8 @@ export class AdminPermissionService
     const createData = foundPermissions.map((permission) => ({
       adminId: admin.id,
       permissionId: permission.id,
+      createdBy: this.parseId(actionByUserAccountId),
+      updatedBy: this.parseId(actionByUserAccountId),
     }));
 
     // Use transaction to ensure all or nothing
@@ -172,9 +176,13 @@ export class AdminPermissionService
     }
 
     // Revoke permission
-    await this.delete({
-      adminId: this.parseId(adminId),
-      permissionId: this.parseId(permissionId),
+    await this.model.delete({
+      where: {
+        adminId_permissionId: {
+          adminId: this.parseId(adminId),
+          permissionId: this.parseId(permissionId),
+        },
+      },
     });
   }
 }

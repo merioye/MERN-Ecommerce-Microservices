@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 
 import { AuthModule } from '../auth';
 import { ADMIN_GROUP_SERVICE, ADMIN_SERVICE } from './constants';
@@ -13,7 +13,7 @@ import { AdminGroupService, AdminService } from './services';
  * @module AdminModule
  */
 @Module({
-  imports: [AuthModule],
+  imports: [forwardRef(() => AuthModule)],
   controllers: [AdminGroupController, AdminController],
   providers: [
     {

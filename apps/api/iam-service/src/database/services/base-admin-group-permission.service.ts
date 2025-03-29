@@ -21,7 +21,7 @@ export class BaseAdminGroupPermissionService extends BasePrismaService<
   Prisma.AdminGroupPermissionWhereInput,
   Prisma.AdminGroupPermissionSelect,
   Prisma.AdminGroupPermissionInclude,
-  Prisma.AdminGroupPermissionOrderByWithRelationInput,
+  Prisma.AdminGroupPermissionOrderByWithRelationInput[],
   any,
   Prisma.AdminGroupPermissionScalarFieldEnum
 > {

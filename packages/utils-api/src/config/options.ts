@@ -1,6 +1,7 @@
 import { ValidationPipeOptions } from '@nestjs/common';
-import { RequestValidationError } from '@/common/errors';
 import { ErrorFormat } from '@ecohatch/types-shared';
+
+import { RequestValidationError } from '../common/errors';
 
 /**
  * ValidationPipe options

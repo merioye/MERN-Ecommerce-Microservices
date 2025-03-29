@@ -2,7 +2,6 @@ node_modules
 dist
 coverage
 logs
-cache
 .cache
 .turbo
 package-lock.json

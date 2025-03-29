@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { CustomError, RequestValidationError } from '@/common/errors';
+
+import { CustomError, RequestValidationError } from '../../../common/errors';
 import {
   ITranslatorService,
   TRANSLATOR_SERVICE,
-} from '@/modules/common/translator';
-
+} from '../../../modules/common/translator';
 import { IExceptionHandlingStrategy } from '../interfaces';
 import {
   CustomExceptionHandlingStrategy,

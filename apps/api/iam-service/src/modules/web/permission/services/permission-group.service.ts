@@ -50,10 +50,10 @@ export class PermissionGroupService
         orderBy: { sortOrder: SortDirection.ASC },
       },
     };
-    const orderBy: Prisma.PermissionGroupOrderByWithRelationInput = {
-      sortOrder: SortDirection.ASC,
-      ...sortBy,
-    };
+    const orderBy: Prisma.PermissionGroupOrderByWithRelationInput[] = [
+      { sortOrder: SortDirection.ASC },
+      ...Object.keys(sortBy).map((key) => ({ [key]: sortBy[key] })),
+    ];
 
     if (withoutPagination) {
       return this.findMany({

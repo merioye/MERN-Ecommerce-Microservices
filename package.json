@@ -63,6 +63,8 @@
     "db:check:prod": "turbo db:check:prod",
     "db:seed:dev": "turbo db:seed:dev",
     "db:seed:prod": "turbo db:seed:prod",
+    "rsa:keys:create": "turbo rsa:keys:create",
+    "rsa:keys:convert": "turbo rsa:keys:convert",
     "add:changeset": "changeset add",
     "version:packages": "changeset version",
     "prerelease": "pnpm run build",

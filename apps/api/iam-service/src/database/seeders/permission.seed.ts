@@ -1,10 +1,10 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
-import { Action, Resource } from '@ecohatch/utils-shared';
-import { PrismaClient, Role } from '@prisma/client';
+import { Action, Resource, Role } from '@ecohatch/utils-shared';
+import { PrismaClient } from '@prisma/client';
 
 import { logger } from '.';
 
-const data = Object.values(Resource as object).map((resource: string) => ({
+const data = Object.values(Resource).map((resource: string) => ({
   groupName: resource,
   groupSlug: resource.toLowerCase().split(' ').join('-'),
   description: `Permissions for ${resource}`,

@@ -1,9 +1,8 @@
 import { DynamicModule } from '@nestjs/common';
 
-import { LoggerModuleOptions } from '@/types';
-
 import { LOGGER } from './constants';
 import { WinstonLogger } from './loggers';
+import { LoggerModuleOptions } from './types';
 
 /**
  * Global NestJS module for logging

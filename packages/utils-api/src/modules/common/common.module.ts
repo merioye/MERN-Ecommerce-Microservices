@@ -1,8 +1,10 @@
 import { DynamicModule } from '@nestjs/common';
 
+import { BaseAuthModule } from './auth';
 import { CacheModule } from './cache';
 import { CronJobModule } from './cron-job';
 import { HashModule } from './hash';
+import { HelperModule } from './helper';
 import { LoggerModule } from './logger';
 import { TranslatorModule } from './translator';
 import { CommonAppModuleOptions } from './types';
@@ -26,15 +28,18 @@ export class CommonAppModule {
     translator,
     cache,
     cronJob,
+    baseAuth,
   }: CommonAppModuleOptions): DynamicModule {
     return {
       module: CommonAppModule,
       imports: [
         HashModule,
+        HelperModule,
         LoggerModule.forRoot(logger),
         TranslatorModule.forRoot(translator),
         CacheModule.register(cache),
         CronJobModule.register(cronJob),
+        BaseAuthModule.forRoot(baseAuth),
       ],
     };
   }

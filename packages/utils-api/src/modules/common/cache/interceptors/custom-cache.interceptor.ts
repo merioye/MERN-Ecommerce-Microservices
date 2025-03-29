@@ -6,9 +6,8 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { Request } from 'express';
 import { Observable, of, tap } from 'rxjs';
-
-import { CacheModuleOptions } from '@/types';
 
 import { ILogger, LOGGER } from '../../logger';
 import {
@@ -19,7 +18,7 @@ import {
   EXCLUDE_FROM_CACHE_DECORATOR_KEY,
 } from '../constants';
 import { ICacheService } from '../interfaces';
-import { CacheKeySuffixType } from '../types';
+import { CacheKeySuffixType, CacheModuleOptions } from '../types';
 
 /**
  * Cache Interceptor for automatic request caching
@@ -64,6 +63,7 @@ export class CustomCacheInterceptor implements NestInterceptor {
 
     const ttl = this.getTTL(context);
     return next.handle().pipe(
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       tap(async (data) => {
         await this._cacheService.set(key, data, ttl);
       })
@@ -77,7 +77,7 @@ export class CustomCacheInterceptor implements NestInterceptor {
    * @returns {boolean} True if cacheable, false otherwise
    */
   private isCacheableRequest(context: ExecutionContext): boolean {
-    const request = context.switchToHttp().getRequest();
+    const request = context.switchToHttp().getRequest<Request>();
 
     const handlerExcludeFromCache = this._reflector.get<boolean>(
       EXCLUDE_FROM_CACHE_DECORATOR_KEY,
@@ -103,12 +103,15 @@ export class CustomCacheInterceptor implements NestInterceptor {
    */
   private getCacheSuffix(context: ExecutionContext): string | undefined {
     try {
-      const handlerKeySuffix = this._reflector.get<
-      CacheKeySuffixType>(CACHE_KEY_SUFFIX_DECORATOR_KEY, context.getHandler());
+      const handlerKeySuffix = this._reflector.get<CacheKeySuffixType>(
+        CACHE_KEY_SUFFIX_DECORATOR_KEY,
+        context.getHandler()
+      );
 
-      const classKeySuffix = this._reflector.get<
-        CacheKeySuffixType
-      >(CACHE_KEY_SUFFIX_DECORATOR_KEY, context.getClass());
+      const classKeySuffix = this._reflector.get<CacheKeySuffixType>(
+        CACHE_KEY_SUFFIX_DECORATOR_KEY,
+        context.getClass()
+      );
 
       const keySuffix = handlerKeySuffix || classKeySuffix;
       return typeof keySuffix === 'string' ? keySuffix : keySuffix?.(context);

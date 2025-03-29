@@ -1,6 +1,8 @@
-import { CursorPaginationDto, OffsetPaginationDto } from '@/common/pagination';
-
 import { AuditField, SoftDeleteField } from '.';
+import {
+  CursorPaginationDto,
+  OffsetPaginationDto,
+} from '../../common/pagination';
 import { VERSION_COLUMN } from '../constants';
 
 // #################################### Prisma Type Helpers ####################################
